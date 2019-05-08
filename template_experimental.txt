@@ -1,0 +1,98 @@
+!actual text or comment ■ text to match (note if ¶ then same as actuial text) ■+ve feedback comment■-ve feedback comment■task number ■step within task ■dependency step
+version 12.4
+service timestamps debug datetime msec ■ service timestamps ■ timestamps okay ■ timestamps not ok■t1 ■ s1.1 ■ d1.1
+service timestamps log datetime msec
+no service password-encryption
+hostname R1
+boot-start-marker
+boot-end-marker
+no aaa new-model
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+no ip domain lookup
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+interface FastEthernet0/0 ■ ¶ ■ ■ ■t2■S2.1■d2.1
+ no ip address ■¶■ ■ ■t2■s2.2■d2.1
+ shutdown ■¶■ Correctly shutdown interface■ Failed to shutdown interface■t2■s2.2■d2.1
+ duplex half
+!
+interface Serial1/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+logging alarm informational
+no cdp log mismatch duplex
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end

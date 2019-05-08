@@ -1,0 +1,46 @@
+PC: 0
+Marks for assessment: test
+Marked file: C:\Users\Neville\Google Drive\MSVC\NSMTCAConfigs2\Original_Configs\R1_configs_i1_startup-config.cfg
+Task: 0. Command: enable password cisco
+Task: 0. Command: aaa new-model
+Task: 0. Command: aaa authentication login default local enable none
+Task: 0. Command: ip domain name
+Task: 0. Command: login block-for 60 attempts 2 within 30
+Task: 0. Command: crypto isakmp policy 10
+Task: 0. Command:  encr
+Task: 0. Command:  authentication pre-share
+Task: 0. Command:  group 2
+Task: 0. Command:  lifetime 3600
+Task: 0. Command: crypto isakmp key cisco12345 address 10.20.20.1
+Task: 0. Command: crypto ipsec transform-set  
+Task: 0. Command: crypto map 
+Task: 0. Command:  set peer 10.20.20.1
+Task: 0. Command:  set transform-set  
+Task: 0. Command:  match address 
+Task: 0. Command: username admin privilege 15 password 0 cisco
+Task: 0. Command: ip ssh version 2
+Task: 0. Command: interface Loopback1
+Task: 0. Command:  ip address 172.20.1.1 
+Comment: #interface FastEthernet0/0
+Task: 0. Command:  ip address 209.165.200.233 255.255.255.248
+Task: 0. Command:  duplex auto
+Task: 0. Command:  speed auto
+Comment: #interface Serial0/0
+Task: 0. Command:  ip address 10.10.10.1 255.255.255.252
+Task: 0. Command:  clock rate 2000000
+Task: 0. Command:  crypto map CMAP
+Task: 0. Command: ip http server
+Task: 0. Command: ip access-list 
+Task: 0. Command:  permit ip 172.30.3.0 0.0.0.255 172.20.1.0 0.0.0.255
+Task: 0. Command: banner motd
+Comment: #line con 0
+Task: 0. Command:  exec-timeout 15 0
+Task: 0. Command:  privilege level 15
+Task: 0. Command:  password cisco
+Task: 0. Command:  logging synchronous
+Comment: #line vty 0 4
+Task: 0. Command:  password cisco
+Task: 0. Command:  transport input ssh
+Result: 35/36
+Percentage: 97.2
+Overall Result %: 97.2
