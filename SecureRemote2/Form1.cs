@@ -116,7 +116,7 @@ namespace SecureRemote2
             MastercheckBox.Checked = true;
 
             //baseip = "172.16.199.0";
-            this.Text = "Network Assessor                   " + theVersion + "                               (c) 2019                    ";
+            this.Text = "Real Network Assessor                   " + theVersion + "                               (c) 2019                    ";
             try
             {
                 bool isExists = Directory.Exists(ConfigDir);

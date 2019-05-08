@@ -3,7 +3,7 @@
   <asmv1:assemblyIdentity name="SecureRemote2.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SecureRemote2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="SecureRemote2" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
     <commandLine file="SecureRemote2.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SecureRemote2.exe" size="101888">
-      <assemblyIdentity name="SecureRemote2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SecureRemote2.exe" size="105472">
+      <assemblyIdentity name="SecureRemote2" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>nZB9DhPppFGr245cNZgvuTP+reDsCKGfdMqcsSVWLws=</dsig:DigestValue>
+        <dsig:DigestValue>8euFNigl/Qijo6Z19GRPaJ0jNDYm/m8AeP+jh8em0Sk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
