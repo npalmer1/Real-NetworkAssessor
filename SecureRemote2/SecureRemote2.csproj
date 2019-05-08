@@ -7,8 +7,8 @@
     <ProjectGuid>{D78CA217-6AB1-46B7-9C1B-5374B2F176EA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SecureRemote2</RootNamespace>
-    <AssemblyName>SecureRemote2</AssemblyName>
+    <RootNamespace>NetworkAssessor</RootNamespace>
+    <AssemblyName>NetworkAssessor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -120,6 +120,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
