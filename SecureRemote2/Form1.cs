@@ -56,7 +56,7 @@ namespace SecureRemote2
 
         string pc, remoteuser, pass, initdir, Server;
 
-        string ConfigDir = "C:\\SecureRemote";
+        string ConfigDir = "C:\\NetworkAssessor";
         string scriptDir = "C:\\Users\\Administrator\\Documents\\";
         bool checkall = true;
 
@@ -73,11 +73,11 @@ namespace SecureRemote2
         tasks[] tasklist = new tasks[maxtasks];*/
         //int tasktotal = 0;
 
-        string DefaultDir = "C:\\SecureRemote\\";
+        string DefaultDir = "C:\\NetworkAssessor\\";
         string AssessFile = "";
         //string AssessFilePath = "C:";
-        string AssessFilePath = "C:\\SecureRemote\\";
-        string rootDir = "C:\\SecureRemote2\\Root";
+        string AssessFilePath = "C:\\NetworkAssessor\\";
+        string rootDir = "C:\\NetworkAssessor\\Root";
 
 
         Parser parser = new Parser();
@@ -116,7 +116,7 @@ namespace SecureRemote2
             MastercheckBox.Checked = true;
 
             //baseip = "172.16.199.0";
-            this.Text = "Remote Assessor                   " + theVersion + "                               (c) 2018                    ";
+            this.Text = "Network Assessor                   " + theVersion + "                               (c) 2019                    ";
             try
             {
                 bool isExists = Directory.Exists(ConfigDir);
@@ -156,13 +156,13 @@ namespace SecureRemote2
             {
                 if (RunningPlatform() == Platform.Windows)
                 {
-                    DefaultDir = "C:\\SecureRemote\\";
+                    DefaultDir = "C:\\NetworkAssessor\\";
                     Directory.CreateDirectory(DefaultDir);
                 }
                 else if (RunningPlatform() == Platform.Linux)
                 {
                     var homePath = Environment.GetEnvironmentVariable("HOME");
-                    DefaultDir = Path.Combine(homePath, "SecureRemote");
+                    DefaultDir = Path.Combine(homePath, "NetworkAssessor");
                     Directory.CreateDirectory(DefaultDir);
                     DefaultDir = DefaultDir + "/";
                 }
@@ -982,7 +982,7 @@ namespace SecureRemote2
                 try
                 {
 
-                    using (StreamWriter sw = new StreamWriter(ConfigDir + "\\Secure_Remote.conf"))
+                    using (StreamWriter sw = new StreamWriter(ConfigDir + "\\Network_Assessor.conf"))
                     {
                         // Write the settings to file.
                         sw.WriteLine(ipBox.Text.Trim() + " ; " + networkLabel.Text.Trim());
@@ -1048,7 +1048,7 @@ namespace SecureRemote2
 
             try
             {
-                using (StreamReader sw = new StreamReader(ConfigDir + "\\Secure_Remote.conf"))
+                using (StreamReader sw = new StreamReader(ConfigDir + "\\Network_Assessor.conf"))
                 {
                     //baase ip:
                     str = sw.ReadLine();
