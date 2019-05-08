@@ -27,7 +27,6 @@ C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Deb
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\SshNet.Security.Cryptography.dll
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\Renci.SshNet.xml
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\SshNet.Security.Cryptography.xml
-C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csprojAssemblyReference.cache
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\SecureRemote2.Form1.resources
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\SecureRemote2.ShowForm.resources
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\SecureRemote2.NetForm.resources
