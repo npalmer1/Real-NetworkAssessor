@@ -32,6 +32,7 @@ namespace SecureRemote2
         public int defaultMark = 1;
         public bool[] lineused = new bool[maxlines];
         public string rawResult;
+        
 
         public double MarkText() //look at tasklist and find total marks for each task
         {
@@ -85,6 +86,7 @@ namespace SecureRemote2
                 lineused[i] = false;
             }
         }
+        
         public int Parse3(int fileno, bool append, bool checkdefault)
         {
             //string fname = "";
@@ -142,7 +144,7 @@ namespace SecureRemote2
                                 line = sw.ReadLine();  //read line from template file
                                 if (line.Trim().StartsWith("#"))
                                 {
-                                    using (StreamReader nw = new StreamReader(infile[fileno]))
+                                    // using (StreamReader nw = new StreamReader(infile[fileno]))
                                     //its a comment
                                     outp.WriteLine("Comment: " + line);                                                                      
                                 }
@@ -391,6 +393,95 @@ namespace SecureRemote2
                 DialogResult r = MessageBox.Show("Error occurred processing files");
             }
             return linecorrect;
+
+        }
+
+        public int SuggestTemplate(int fileno, bool append)
+        {   //compares solution template to initial file and saves difference                  
+            string line1 = "";
+            string line2 = "";
+            string file1 = "";
+            string ext = "";
+            int line = -1;
+            string[] splits = new string[2];            
+            int status = 0;
+        
+            try
+            {
+                
+                if (!File.Exists(ftemplate[fileno]))
+                {
+                    return -1; //template file not found
+                }
+                    splits = ftemplate[fileno].Split('.');     
+                if (splits.Count() > 1)
+                {
+                    ext = "." + splits[1];
+                }
+                else
+                {
+                    ext = "";
+                }
+                    file1 = splits[0] + "_t1" + ext;
+             
+                 //note in this case template is the solution config, infile is the original config
+                using (StreamReader tw = new StreamReader(ftemplate[fileno]))
+                {
+                    using (StreamWriter outf = new StreamWriter(file1, false)) //open output file for marks
+                    {
+                        outf.WriteLine("Template file: " + file1);
+                        while (!tw.EndOfStream)
+                        {
+                            line1 = tw.ReadLine();  //read line from template file
+                            using (StreamReader iw = new StreamReader(infile[fileno])) //open template file for reading
+                            {
+                              
+                                while (!iw.EndOfStream)
+                                {
+
+
+                                    line2 = iw.ReadLine();
+                                    line++;
+                                    //scroll through the input files looking for a match for the config commmand in the template file
+                                    if (line1 == line2)
+                                    {
+                                        if (line1.Trim() != "!") //cisco comment
+                                        {
+                                            line1 = "###" + line1;
+                                        }
+                                        //outf.WriteLine(line1);                                       
+                                        break;
+                                    }
+                                    
+
+                                }
+                                iw.Close();
+                            }
+                            outf.WriteLine(line1, true); //append
+                        }                      
+                        tw.Close();
+                        outf.Close();
+                    }
+                    
+                }
+                
+
+            } //try
+            
+           catch
+            {
+                DialogResult r = MessageBox.Show("Error occurred processing files");
+                status = -1;
+            }
+            if (status == 0)
+            {
+                MessageBox.Show("Template files created successfully");
+            }
+            else
+            {
+                MessageBox.Show("Problems creating template files");
+            }
+            return status;
 
         }
     }

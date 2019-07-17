@@ -59,6 +59,7 @@ namespace SecureRemote2
         string ConfigDir = "C:\\NetworkAssessor";
         string scriptDir = "C:\\Users\\Administrator\\Documents\\";
         bool checkall = true;
+        static int MaxFiles = 6;
 
         //password to encrypt passwords when saving:
         string encpass = "savesecure";
@@ -1282,6 +1283,9 @@ namespace SecureRemote2
                 case 4:
                     ret = checkBox5.Checked;
                     break;
+                case 5:
+                    ret = checkBox6.Checked;
+                    break;
                 default:
                     ret = false;
                     break;
@@ -1305,11 +1309,15 @@ namespace SecureRemote2
                         return true;
                     break;
                 case 3:
-                    if (checkBox3.Checked)
+                    if (checkBox4.Checked)
                         return true;
                     break;
                 case 4:
-                    if (checkBox4.Checked)
+                    if (checkBox5.Checked)
+                        return true;
+                    break;
+                case 5:
+                    if (checkBox6.Checked)
                         return true;
                     break;
                 default:
@@ -1373,14 +1381,19 @@ namespace SecureRemote2
             }
             catch { }
            
-                for (int i = 0; i < 5; i++) //for all files in the list
+                for (int i = 0; i < MaxFiles; i++) //for all files in the list
                 {
                    
                     if (CheckSelected(i)) //only process selected files
                     {
-                        if (File.Exists(parser.ftemplate[i]) && File.Exists(parser.infile[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
+                        //if (File.Exists(parser.ftemplate[i]) && File.Exists(parser.infile[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
+                        if (File.Exists(parser.ftemplate[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
                         {
-                            ret = parser.Parse3(i, ap, defaultCheckBox.Checked); //call the standard assessment method from the parser class
+                            try
+                            {
+                                ret = parser.Parse3(i, ap, defaultCheckBox.Checked); //call the standard assessment method from the parser class
+                            }
+                            catch { }
                             if (ret >-1)
                             {
                                 ap = true;
@@ -1499,7 +1512,7 @@ namespace SecureRemote2
             {
                 if (PClistBox.GetSelected(n)) //n = position in listbox from 0 (not PC starting 1)
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < MaxFiles; i++)
                     {
                         file1 = Path.GetFileName(parser.ftemplate[i]); //template file name - note this is in the original directory!
                         //parser.ftemplate[i] = path1 + "\\" + file1; //template in root directory
@@ -1654,11 +1667,13 @@ namespace SecureRemote2
             parser.infile[2] = markBox3.Text;
             parser.infile[3] = markBox4.Text;
             parser.infile[4] = markBox5.Text;
+            parser.infile[5] = markBox6.Text;
             parser.ftemplate[0] = tempBox1.Text;
             parser.ftemplate[1] = tempBox2.Text;
             parser.ftemplate[2] = tempBox3.Text;
             parser.ftemplate[3] = tempBox4.Text;
             parser.ftemplate[4] = tempBox5.Text;
+            parser.ftemplate[5] = tempBox6.Text;
             parser.fout = outBox.Text;
             parser.fcomment = commentBox.Text;
         }
@@ -1707,6 +1722,12 @@ namespace SecureRemote2
                                 {
                                     path1 = Directory.GetParent(Path.GetFullPath(markBox5.Text)).FullName;
                                     path2 = Directory.GetParent(Path.GetFullPath(tempBox5.Text)).FullName;
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    path1 = Directory.GetParent(Path.GetFullPath(markBox6.Text)).FullName;
+                                    path2 = Directory.GetParent(Path.GetFullPath(tempBox6.Text)).FullName;
                                     break;
                                 }
                             default:
@@ -1898,6 +1919,9 @@ namespace SecureRemote2
                         break;
                     case 5:
                         ck = checkBox5.Checked;
+                        break;
+                    case 6:
+                        ck = checkBox6.Checked;
                         break;
                     default:
                         ck = false;
@@ -2180,6 +2204,10 @@ namespace SecureRemote2
             {
                 t[4] = '1';
             }
+            if (checkBox6.Checked)
+            {
+                t[5] = '1';
+            }
             return String.Concat(t);
         }
 
@@ -2197,7 +2225,7 @@ namespace SecureRemote2
                     sw.WriteLine("Mark file 3: " + markBox3.Text);
                     sw.WriteLine("Mark file 4: " + markBox4.Text);
                     sw.WriteLine("Mark file 5: " + markBox5.Text);
-                    sw.WriteLine("Mark file 6: ");
+                    sw.WriteLine("Mark file 6: " + markBox6.Text);
                     sw.WriteLine("Mark file 7: ");
                     sw.WriteLine("Mark file 8: ");
                     sw.WriteLine("Mark file 9: ");
@@ -2208,7 +2236,7 @@ namespace SecureRemote2
                     sw.WriteLine("Template file 3: " + tempBox3.Text);
                     sw.WriteLine("Template file 4: " + tempBox4.Text);
                     sw.WriteLine("Template file 5: " + tempBox5.Text);
-                    sw.WriteLine("Template file 6: ");
+                    sw.WriteLine("Template file 6: " + tempBox6.Text);
                     sw.WriteLine("Template file 7: ");
                     sw.WriteLine("Template file 8: ");
                     sw.WriteLine("Template file 9: ");
@@ -2288,7 +2316,8 @@ namespace SecureRemote2
             checkBox3.Checked = false;
             checkBox4.Checked = false;
             checkBox5.Checked = false;
-           
+            checkBox6.Checked = false;
+
             if (str[0] == '1')
             {
                 checkBox1.Checked = true;
@@ -2309,7 +2338,11 @@ namespace SecureRemote2
             {
                 checkBox5.Checked = true;
             }
-           
+            if (str[5] == '1')
+            {
+                checkBox6.Checked = true;
+            }
+
         }
         private void LoadAssessFile(string filename)
         {
@@ -2708,6 +2741,9 @@ namespace SecureRemote2
                     break;
                 case 5:
                     res = checkBox5.Checked;
+                    break;
+                case 6:
+                    res = checkBox6.Checked;
                     break;
                 default:
                     break;
@@ -3198,6 +3234,28 @@ namespace SecureRemote2
             Modify_ListBox();
         }
 
+        private void tempButton_Click(object sender, EventArgs e)
+        {
+            int ret = 0;
+            setPaths();
+
+            for (int i = 0; i < MaxFiles; i++) //for all files in the list
+            {
+                ret = parser.SuggestTemplate(i, true);
+            }
+           
+        }
+
+        private void markButton6_Click(object sender, EventArgs e)
+        {
+            markDialog(6);
+        }
+
+        private void tempButton6_Click(object sender, EventArgs e)
+        {
+            tempDialog(6);
+        }
+
         private void scriptDirBox_TextChanged(object sender, EventArgs e)
         {
             
@@ -3230,6 +3288,7 @@ namespace SecureRemote2
             checkBox3.Checked = false;
             checkBox4.Checked = false;
             checkBox5.Checked = false;
+            checkBox6.Checked = false;
         }
 
         private void clearButton_Click(object sender, EventArgs e)
