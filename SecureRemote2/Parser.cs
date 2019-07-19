@@ -119,6 +119,7 @@ namespace SecureRemote2
             bool startwild = false; //**#
             string endstr = "";
             bool wildfound = false;
+            bool first = true;
           
 
             try
@@ -146,7 +147,10 @@ namespace SecureRemote2
                                 {
                                     // using (StreamReader nw = new StreamReader(infile[fileno]))
                                     //its a comment
-                                    outp.WriteLine("Comment: " + line);                                                                      
+                                    if (File.Exists(infile[fileno]))
+                                    {
+                                        outp.WriteLine("Comment: " + line);
+                                    }
                                 }
                                 else
                                 {
@@ -373,6 +377,14 @@ namespace SecureRemote2
                                                     }
                                                 }  //using infile
                                             } //file exists
+                                            else
+                                            {
+                                                if (first) //only write this once if the file not found
+                                                {
+                                                    outp.WriteLine("No matching configuration");
+                                                    first = false;
+                                                }
+                                            }
 
                                         } //if line
                                     } //if words.length >0
