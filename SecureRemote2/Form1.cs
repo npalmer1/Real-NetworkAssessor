@@ -1405,8 +1405,8 @@ namespace SecureRemote2
                                 splitstr = str.Split('/');
                                 try
                                 {
-                                    totalrawMax = totalrawMax + Convert.ToDouble(splitstr[1]);
-                                    totalrawResult = totalrawResult + Convert.ToDouble(splitstr[0]);
+                                    totalrawMax = totalrawMax + Convert.ToDouble(splitstr[1]);  //total cumulative lines marked
+                                    totalrawResult = totalrawResult + Convert.ToDouble(splitstr[0]); //total cumulative lines correct
                                 }
                                 catch { }
 
@@ -1418,7 +1418,7 @@ namespace SecureRemote2
                                 {
                                     using (StreamWriter outp = new StreamWriter(parser.fout, true))
                                     {
-                                        outp.WriteLine("Result: " + str);   //write results to the output file
+                                        outp.WriteLine("Lines correct: " + str);   //write results to the output file
                                         outp.WriteLine("Percentage: " + score);
                                         outp.Close();
                                     }
@@ -1428,7 +1428,8 @@ namespace SecureRemote2
                                 {
                                     using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
                                     {
-                                        comment.WriteLine("Tasks correct: " + str); //write comnents to comments file
+                                        comment.WriteLine("Lines correct: " + str); //write comnents to comments file
+                                        comment.WriteLine("Percentage: " + score);
                                         comment.Close();
 
                                     }
@@ -1477,6 +1478,7 @@ namespace SecureRemote2
                     {
                         using (StreamWriter outp = new StreamWriter(parser.fout, true))
                         {
+                            outp.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
                             outp.WriteLine("Overall Result %: " + resultstr);   //write overall results to the output file                      
                             outp.Close();
                         }
@@ -1486,6 +1488,7 @@ namespace SecureRemote2
                     {
                         using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
                         {
+                            comment.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
                             comment.WriteLine("Overall Result %: " + resultstr); //write overall result to comments file
                             comment.Close();
                         }
@@ -1519,6 +1522,7 @@ namespace SecureRemote2
 
                         file1 = Path.GetFileName(parser.infile[i]); //file name of input file to be assessed - this is in the PCs directory (or original if no PCs selected)
                         parser.infile[i] = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1) + "\\" + file1; //with its full path, inc PC1 etc
+                         //take criteria from boxes
                     }
                     file1 = Path.GetFileName(parser.fout); //file name of output file for results
                     parser.fout = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1) + "\\" + file1; //with its full path, inc PC1 etc
@@ -1526,6 +1530,7 @@ namespace SecureRemote2
                     file1 = Path.GetFileName(parser.fcomment); //file name of comments file
                     parser.fcomment = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1) + "\\" + file1; //with ts full path
 
+                    
                     assessFile(n, PCDir); //asses the files for PCn
                     return true;
                 }
@@ -1540,6 +1545,44 @@ namespace SecureRemote2
                 return false;
             }
             //}
+        }
+
+        private void setCriteria()
+        {
+            string str = "1";
+            for (int i = 0; i < MaxFiles; i++)
+            {
+                if (i > 5)
+                {
+                    return;
+                }
+                switch (i)
+                {
+                    case 0:
+                        str = criteriaBox1.Text;
+                        break;
+                    case 1:
+                        str = criteriaBox2.Text;
+                        break;
+                    case 2:
+                        str = criteriaBox3.Text;
+                        break;
+                    case 3:
+                        str = criteriaBox4.Text;
+                        break;
+                    case 4:
+                        str = criteriaBox5.Text;
+                        break;
+                    case 5:
+                        str = criteriaBox6.Text;
+                        break;
+                }
+                if (str.Trim() == "")
+                {
+                    str = "1";
+                }
+                parser.Criteria[i] = str;
+            }
         }
         private bool assessPaths() //for each PC set up the path to the corresponding folder for files (eg. each will be in PC1, PC2 etc.)
         {
@@ -1783,6 +1826,7 @@ namespace SecureRemote2
         {
             bool ok = true;
             //do all folder have the same root path?
+            setCriteria(); //extract criteria from boxes
             if (allDirsCheckbox.Checked)
             {
                 ok = checkPaths(); //check to see if all base files initially in same folder (eg. template and input/outpur files
@@ -3254,6 +3298,18 @@ namespace SecureRemote2
         private void tempButton6_Click(object sender, EventArgs e)
         {
             tempDialog(6);
+        }
+
+        private void CRcheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CRcheckBox.Checked)
+            {
+                CrgroupBox.Visible = true;
+            }
+            else
+            {
+                CrgroupBox.Visible = false;
+            }
         }
 
         private void scriptDirBox_TextChanged(object sender, EventArgs e)

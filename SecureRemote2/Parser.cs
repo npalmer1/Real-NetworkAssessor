@@ -17,6 +17,8 @@ namespace SecureRemote2
         static int maxtasks = 200;
         public int totaltasks = 0;
         static int maxPCs = 254;
+        static int maxCriteria = 6;
+        public string[] Criteria = new string[maxCriteria];
                  
 
         public struct tasks
@@ -135,8 +137,14 @@ namespace SecureRemote2
                         
                         using (StreamReader sw = new StreamReader(ftemplate[fileno])) //open template file for reading
                         {
+                            if (Criteria[fileno] == "" || Criteria[fileno] ==null)
+                            {
+                                Criteria[fileno] = "1"; //set default criteria to 1
+                            }
                             outp.WriteLine("Marked file: " + infile[fileno]);
+                            outp.WriteLine("Criteria: " + Criteria[fileno]);
                             comment.WriteLine("Marked file: " + infile[fileno]);
+                            comment.WriteLine("Criteria: " + Criteria[fileno]);
                             task = "0";
                             taskno = 0;
 
