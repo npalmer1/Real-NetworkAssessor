@@ -101,6 +101,8 @@ namespace SecureRemote2
             string cfgcmd = "";
             string task = "";
             string tmptsk = "";
+            string altstr = "";
+            string altend = "";
 
             int mrk = 0;
 
@@ -122,6 +124,8 @@ namespace SecureRemote2
             string endstr = "";
             bool wildfound = false;
             bool first = true;
+            bool alt = false;
+            bool altwild = false;
           
 
             try
@@ -130,6 +134,7 @@ namespace SecureRemote2
                 {
                     return -1; //template file not found
                 }
+                alt = false;
                 using (StreamWriter outp = new StreamWriter(fout, append)) //open output file for marks
                 {
                     using (StreamWriter comment = new StreamWriter(fcomment, append)) //open output file for comments
@@ -150,6 +155,7 @@ namespace SecureRemote2
 
                             while (!sw.EndOfStream) //keep reading lines from template file until end
                             {
+                                alt = false;
                                 line = sw.ReadLine();  //read line from template file
                                 if (line.Trim().StartsWith("#"))
                                 {
@@ -162,8 +168,15 @@ namespace SecureRemote2
                                 }
                                 else
                                 {
-                                   
-                                    nomrk = true;
+                                    if (line.Contains("%ALT%")) //if there is an alternative command line
+                                    {
+                                        //extract all after %ALT% - whihc is the alternative command
+                                        altstr = line.Substring(line.IndexOf("%ALT%" + 5)); //altstr contains alternative commands
+                                        line = line.Substring(0, line.IndexOf("%ALT%"));  //beginning of line without alt line
+                                        alt = true;
+                                    }
+
+                                        nomrk = true;
                                     string[] words = line.Split('■'); // alt 254 special char 
                                     if (words.Length > 0 && line.Trim().Length > 0)
                                     {
@@ -252,8 +265,8 @@ namespace SecureRemote2
                                                 {
 
                                                     found = false;
-                                                    inc = 0;
-                                                    if (cfgcmd.Contains("**?"))
+                                                    inc = 0;    //if command line contains wildcards
+                                                    if (cfgcmd.Contains("**?")) //if **? is wildcard then mark line in two parts
                                                     {
                                                         wild = true;
 
@@ -262,7 +275,7 @@ namespace SecureRemote2
                                                     {
                                                         wild = false;
                                                     }
-                                                    if (cfgcmd.Contains("***"))
+                                                    if (cfgcmd.Contains("***")) //if *** is wildcard then whole line must be correct
                                                     {
                                                         exactwild = true;
                                                     }
@@ -270,7 +283,7 @@ namespace SecureRemote2
                                                     {
                                                         exactwild = false;
                                                     }
-                                                    if (cfgcmd.Contains("**#"))
+                                                    if (cfgcmd.Contains("**#")) //if **# is wildcard then only first part of line need be correct
                                                     {
                                                         startwild = true;
 
@@ -281,14 +294,24 @@ namespace SecureRemote2
                                                     }
                                                     if (wild || exactwild || startwild)
                                                     {
-                                                        endstr = cfgcmd.Substring(cfgcmd.IndexOf("**") + 3).Trim();
-                                                        cfgcmd = cfgcmd.Substring(0, cfgcmd.IndexOf("**"));
+                                                        endstr = cfgcmd.Substring(cfgcmd.IndexOf("**") + 3).Trim(); //end of string after wildcard
+                                                        cfgcmd = cfgcmd.Substring(0, cfgcmd.IndexOf("**")); // string up to wildcard
                                                     }
                                                     else
                                                     {
                                                         endstr = "";
                                                     }
                                                     wildfound = false;
+                                                    if (altstr.Contains("**A")) //if alternative command has a wildcard
+                                                    {
+                                                        altstr = altstr.Substring(0, altstr.IndexOf("**A"));
+                                                        altend = altstr.Substring(altstr.IndexOf("**A" + 3));
+                                                        altwild = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        altend = "";
+                                                    }
                                                     while (!nw.EndOfStream) //while not end of input file
                                                     {
 
@@ -299,17 +322,26 @@ namespace SecureRemote2
                                                         {
                                                             if (!lineused[lineno - 1])
                                                             {
-                                                                
-                                                                if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
+                                                                if (l2.StartsWith(altstr.Trim()) && l2.Contains(altend)) //if alternative command found
                                                                 {
-                                                                    lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands
-
-                                                                                                                               
+                                                                    lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
                                                                     if (taskno == 0)
                                                                     {
                                                                         tasklist[taskno].taskexist = true;
                                                                     }
-                                                                    if (exactwild) //only mark whole line correct if second part correct too
+                                                                    linecorrect++; //counts number of correct lines
+                                                                    inc++;
+                                                                    break; //ensure that the next lines are not procesed
+                                                                }
+                                                                //if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
+                                                                if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(cfgcmd.Trim()) && l2.Contains(endstr.Trim())))   //if the file to be marked contains the command then output it to the file
+                                                                {
+                                                                    lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
+                                                                    if (taskno == 0)
+                                                                    {
+                                                                        tasklist[taskno].taskexist = true;
+                                                                    }
+                                                                    if (exactwild) //only mark whole line correct if second part correct too (***)
                                                                     {                                                                       
                                                                         if (l2.Contains(endstr))
                                                                         {
@@ -321,14 +353,14 @@ namespace SecureRemote2
                                                                             wildfound = true;
                                                                         }
                                                                     }
-                                                                    else //either whole line or wildcard that allows first part to be correct
+                                                                    else //either whole line or first part of line are correct (wildcard **#)
                                                                     {
                                                                         tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
                                                                         linecorrect++; //counts number of correct lines
                                                                         inc++;
                                                                             
                                                                     }
-                                                                    if (wild) //wildcard for second part of line
+                                                                    if (wild) //wildcard for second part of line - (**?) ,mark first and second parts separately
                                                                     {
                                                                         tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //don't forget there's an extra mark!
                                                                         if (l2.Contains(endstr)) //line is treated as two parts with separate mark for each
