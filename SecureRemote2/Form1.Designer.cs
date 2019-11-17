@@ -80,6 +80,17 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.CRcheckBox = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.CrgroupBox = new System.Windows.Forms.GroupBox();
+            this.criteriaBox1 = new System.Windows.Forms.TextBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.criteriaBox2 = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.criteriaBox3 = new System.Windows.Forms.TextBox();
+            this.criteriaBox6 = new System.Windows.Forms.TextBox();
+            this.criteriaBox4 = new System.Windows.Forms.TextBox();
+            this.criteriaBox5 = new System.Windows.Forms.TextBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.label48 = new System.Windows.Forms.Label();
             this.tempButton = new System.Windows.Forms.Button();
@@ -171,6 +182,7 @@
             this.label40 = new System.Windows.Forms.Label();
             this.openTermButton = new System.Windows.Forms.Button();
             this.termBox = new System.Windows.Forms.TextBox();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -196,27 +208,36 @@
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.rootBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.connectableCheckBox = new System.Windows.Forms.CheckBox();
-            this.criteriaBox1 = new System.Windows.Forms.TextBox();
-            this.criteriaBox2 = new System.Windows.Forms.TextBox();
-            this.criteriaBox3 = new System.Windows.Forms.TextBox();
-            this.criteriaBox4 = new System.Windows.Forms.TextBox();
-            this.criteriaBox5 = new System.Windows.Forms.TextBox();
-            this.criteriaBox6 = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.CrgroupBox = new System.Windows.Forms.GroupBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.CRcheckBox = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.checkBox13 = new System.Windows.Forms.CheckBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label55 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label56 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label57 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.CrgroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage7.SuspendLayout();
             this.tabPage6.SuspendLayout();
-            this.CrgroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -227,6 +248,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(-1, -2);
@@ -898,6 +920,104 @@
             this.tabPage3.Size = new System.Drawing.Size(1308, 821);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Assess";
+            // 
+            // CRcheckBox
+            // 
+            this.CRcheckBox.AutoSize = true;
+            this.CRcheckBox.Location = new System.Drawing.Point(1227, 415);
+            this.CRcheckBox.Name = "CRcheckBox";
+            this.CRcheckBox.Size = new System.Drawing.Size(74, 40);
+            this.CRcheckBox.TabIndex = 102;
+            this.CRcheckBox.Text = "Show \r\ncriteria";
+            this.CRcheckBox.UseVisualStyleBackColor = true;
+            this.CRcheckBox.CheckedChanged += new System.EventHandler(this.CRcheckBox_CheckedChanged);
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(0, 0);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(104, 22);
+            this.checkBox7.TabIndex = 101;
+            this.checkBox7.Text = "checkBox7";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // CrgroupBox
+            // 
+            this.CrgroupBox.Controls.Add(this.criteriaBox1);
+            this.CrgroupBox.Controls.Add(this.label50);
+            this.CrgroupBox.Controls.Add(this.criteriaBox2);
+            this.CrgroupBox.Controls.Add(this.label49);
+            this.CrgroupBox.Controls.Add(this.criteriaBox3);
+            this.CrgroupBox.Controls.Add(this.criteriaBox6);
+            this.CrgroupBox.Controls.Add(this.criteriaBox4);
+            this.CrgroupBox.Controls.Add(this.criteriaBox5);
+            this.CrgroupBox.Location = new System.Drawing.Point(1222, 77);
+            this.CrgroupBox.Name = "CrgroupBox";
+            this.CrgroupBox.Size = new System.Drawing.Size(79, 332);
+            this.CrgroupBox.TabIndex = 100;
+            this.CrgroupBox.TabStop = false;
+            this.CrgroupBox.Visible = false;
+            // 
+            // criteriaBox1
+            // 
+            this.criteriaBox1.Location = new System.Drawing.Point(27, 42);
+            this.criteriaBox1.Name = "criteriaBox1";
+            this.criteriaBox1.Size = new System.Drawing.Size(31, 24);
+            this.criteriaBox1.TabIndex = 92;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(13, 281);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(67, 36);
+            this.label50.TabIndex = 99;
+            this.label50.Text = "default 1 \r\nif blank";
+            // 
+            // criteriaBox2
+            // 
+            this.criteriaBox2.Location = new System.Drawing.Point(27, 85);
+            this.criteriaBox2.Name = "criteriaBox2";
+            this.criteriaBox2.Size = new System.Drawing.Size(31, 24);
+            this.criteriaBox2.TabIndex = 93;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(12, 17);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(67, 18);
+            this.label49.TabIndex = 98;
+            this.label49.Text = "Criteria#:";
+            // 
+            // criteriaBox3
+            // 
+            this.criteriaBox3.Location = new System.Drawing.Point(27, 129);
+            this.criteriaBox3.Name = "criteriaBox3";
+            this.criteriaBox3.Size = new System.Drawing.Size(31, 24);
+            this.criteriaBox3.TabIndex = 94;
+            // 
+            // criteriaBox6
+            // 
+            this.criteriaBox6.Location = new System.Drawing.Point(27, 253);
+            this.criteriaBox6.Name = "criteriaBox6";
+            this.criteriaBox6.Size = new System.Drawing.Size(31, 24);
+            this.criteriaBox6.TabIndex = 97;
+            // 
+            // criteriaBox4
+            // 
+            this.criteriaBox4.Location = new System.Drawing.Point(27, 173);
+            this.criteriaBox4.Name = "criteriaBox4";
+            this.criteriaBox4.Size = new System.Drawing.Size(31, 24);
+            this.criteriaBox4.TabIndex = 95;
+            // 
+            // criteriaBox5
+            // 
+            this.criteriaBox5.Location = new System.Drawing.Point(27, 214);
+            this.criteriaBox5.Name = "criteriaBox5";
+            this.criteriaBox5.Size = new System.Drawing.Size(31, 24);
+            this.criteriaBox5.TabIndex = 96;
             // 
             // checkBox6
             // 
@@ -1908,6 +2028,35 @@
             this.termBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.termBox_KeyPress);
             this.termBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.termBox_MouseDown);
             // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.label57);
+            this.tabPage7.Controls.Add(this.textBox6);
+            this.tabPage7.Controls.Add(this.textBox5);
+            this.tabPage7.Controls.Add(this.label56);
+            this.tabPage7.Controls.Add(this.textBox4);
+            this.tabPage7.Controls.Add(this.label55);
+            this.tabPage7.Controls.Add(this.textBox3);
+            this.tabPage7.Controls.Add(this.label54);
+            this.tabPage7.Controls.Add(this.textBox2);
+            this.tabPage7.Controls.Add(this.label53);
+            this.tabPage7.Controls.Add(this.textBox1);
+            this.tabPage7.Controls.Add(this.label52);
+            this.tabPage7.Controls.Add(this.label51);
+            this.tabPage7.Controls.Add(this.checkBox13);
+            this.tabPage7.Controls.Add(this.checkBox12);
+            this.tabPage7.Controls.Add(this.checkBox11);
+            this.tabPage7.Controls.Add(this.checkBox10);
+            this.tabPage7.Controls.Add(this.checkBox9);
+            this.tabPage7.Controls.Add(this.checkBox8);
+            this.tabPage7.Location = new System.Drawing.Point(4, 30);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Live";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -2100,103 +2249,174 @@
             this.connectableCheckBox.UseVisualStyleBackColor = true;
             this.connectableCheckBox.CheckedChanged += new System.EventHandler(this.connectableCheckBOx_CheckedChanged);
             // 
-            // criteriaBox1
+            // checkBox8
             // 
-            this.criteriaBox1.Location = new System.Drawing.Point(27, 42);
-            this.criteriaBox1.Name = "criteriaBox1";
-            this.criteriaBox1.Size = new System.Drawing.Size(31, 24);
-            this.criteriaBox1.TabIndex = 92;
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(65, 77);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(196, 22);
+            this.checkBox8.TabIndex = 0;
+            this.checkBox8.Text = "Diff local and remote files";
+            this.checkBox8.UseVisualStyleBackColor = true;
             // 
-            // criteriaBox2
+            // checkBox9
             // 
-            this.criteriaBox2.Location = new System.Drawing.Point(27, 85);
-            this.criteriaBox2.Name = "criteriaBox2";
-            this.criteriaBox2.Size = new System.Drawing.Size(31, 24);
-            this.criteriaBox2.TabIndex = 93;
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Location = new System.Drawing.Point(65, 207);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(193, 22);
+            this.checkBox9.TabIndex = 1;
+            this.checkBox9.Text = "Extract filename from diff";
+            this.checkBox9.UseVisualStyleBackColor = true;
             // 
-            // criteriaBox3
+            // checkBox10
             // 
-            this.criteriaBox3.Location = new System.Drawing.Point(27, 129);
-            this.criteriaBox3.Name = "criteriaBox3";
-            this.criteriaBox3.Size = new System.Drawing.Size(31, 24);
-            this.criteriaBox3.TabIndex = 94;
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Location = new System.Drawing.Point(66, 299);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(178, 22);
+            this.checkBox10.TabIndex = 2;
+            this.checkBox10.Text = "Search in extracted file";
+            this.checkBox10.UseVisualStyleBackColor = true;
             // 
-            // criteriaBox4
+            // checkBox11
             // 
-            this.criteriaBox4.Location = new System.Drawing.Point(27, 173);
-            this.criteriaBox4.Name = "criteriaBox4";
-            this.criteriaBox4.Size = new System.Drawing.Size(31, 24);
-            this.criteriaBox4.TabIndex = 95;
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.Location = new System.Drawing.Point(635, 38);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(137, 22);
+            this.checkBox11.TabIndex = 3;
+            this.checkBox11.Text = "Search in diff file";
+            this.checkBox11.UseVisualStyleBackColor = true;
             // 
-            // criteriaBox5
+            // checkBox12
             // 
-            this.criteriaBox5.Location = new System.Drawing.Point(27, 214);
-            this.criteriaBox5.Name = "criteriaBox5";
-            this.criteriaBox5.Size = new System.Drawing.Size(31, 24);
-            this.criteriaBox5.TabIndex = 96;
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.Location = new System.Drawing.Point(635, 299);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(183, 22);
+            this.checkBox12.TabIndex = 4;
+            this.checkBox12.Text = "Check process running";
+            this.checkBox12.UseVisualStyleBackColor = true;
             // 
-            // criteriaBox6
+            // checkBox13
             // 
-            this.criteriaBox6.Location = new System.Drawing.Point(27, 253);
-            this.criteriaBox6.Name = "criteriaBox6";
-            this.criteriaBox6.Size = new System.Drawing.Size(31, 24);
-            this.criteriaBox6.TabIndex = 97;
+            this.checkBox13.AutoSize = true;
+            this.checkBox13.Location = new System.Drawing.Point(635, 494);
+            this.checkBox13.Name = "checkBox13";
+            this.checkBox13.Size = new System.Drawing.Size(112, 22);
+            this.checkBox13.TabIndex = 5;
+            this.checkBox13.Text = "checkBox13";
+            this.checkBox13.UseVisualStyleBackColor = true;
             // 
-            // label49
+            // label51
             // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(12, 17);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(67, 18);
-            this.label49.TabIndex = 98;
-            this.label49.Text = "Criteria#:";
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.Location = new System.Drawing.Point(65, 30);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(222, 20);
+            this.label51.TabIndex = 6;
+            this.label51.Text = "Live system interrogation";
             // 
-            // label50
+            // label52
             // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(13, 281);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(67, 36);
-            this.label50.TabIndex = 99;
-            this.label50.Text = "default 1 \r\nif blank";
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(87, 112);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(163, 18);
+            this.label52.TabIndex = 7;
+            this.label52.Text = "Local copy of file to diff:";
             // 
-            // CrgroupBox
+            // textBox1
             // 
-            this.CrgroupBox.Controls.Add(this.criteriaBox1);
-            this.CrgroupBox.Controls.Add(this.label50);
-            this.CrgroupBox.Controls.Add(this.criteriaBox2);
-            this.CrgroupBox.Controls.Add(this.label49);
-            this.CrgroupBox.Controls.Add(this.criteriaBox3);
-            this.CrgroupBox.Controls.Add(this.criteriaBox6);
-            this.CrgroupBox.Controls.Add(this.criteriaBox4);
-            this.CrgroupBox.Controls.Add(this.criteriaBox5);
-            this.CrgroupBox.Location = new System.Drawing.Point(1222, 77);
-            this.CrgroupBox.Name = "CrgroupBox";
-            this.CrgroupBox.Size = new System.Drawing.Size(79, 332);
-            this.CrgroupBox.TabIndex = 100;
-            this.CrgroupBox.TabStop = false;
-            this.CrgroupBox.Visible = false;
+            this.textBox1.Location = new System.Drawing.Point(256, 109);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(289, 24);
+            this.textBox1.TabIndex = 8;
             // 
-            // checkBox7
+            // label53
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(0, 0);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(104, 22);
-            this.checkBox7.TabIndex = 101;
-            this.checkBox7.Text = "checkBox7";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(47, 142);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(203, 18);
+            this.label53.TabIndex = 9;
+            this.label53.Text = "Location of remote file to  diff:";
             // 
-            // CRcheckBox
+            // textBox2
             // 
-            this.CRcheckBox.AutoSize = true;
-            this.CRcheckBox.Location = new System.Drawing.Point(1227, 415);
-            this.CRcheckBox.Name = "CRcheckBox";
-            this.CRcheckBox.Size = new System.Drawing.Size(74, 40);
-            this.CRcheckBox.TabIndex = 102;
-            this.CRcheckBox.Text = "Show \r\ncriteria";
-            this.CRcheckBox.UseVisualStyleBackColor = true;
-            this.CRcheckBox.CheckedChanged += new System.EventHandler(this.CRcheckBox_CheckedChanged);
+            this.textBox2.Location = new System.Drawing.Point(256, 142);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(289, 24);
+            this.textBox2.TabIndex = 10;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(47, 239);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(169, 18);
+            this.label54.TabIndex = 11;
+            this.label54.Text = "Line containing filename:";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(222, 236);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(323, 24);
+            this.textBox3.TabIndex = 12;
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(94, 337);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(130, 18);
+            this.label55.TabIndex = 13;
+            this.label55.Text = "Strings to look for:";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(96, 367);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(449, 183);
+            this.textBox4.TabIndex = 14;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(658, 333);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(145, 18);
+            this.label56.TabIndex = 15;
+            this.label56.Text = "Processes to check:";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(661, 354);
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(280, 98);
+            this.textBox5.TabIndex = 16;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(661, 96);
+            this.textBox6.Multiline = true;
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(434, 176);
+            this.textBox6.TabIndex = 17;
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Location = new System.Drawing.Point(658, 75);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(130, 18);
+            this.label57.TabIndex = 18;
+            this.label57.Text = "Strings to look for:";
             // 
             // Form1
             // 
@@ -2229,15 +2449,17 @@
             this.groupBox1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.CrgroupBox.ResumeLayout(false);
+            this.CrgroupBox.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage7.ResumeLayout(false);
+            this.tabPage7.PerformLayout();
             this.tabPage6.ResumeLayout(false);
-            this.CrgroupBox.ResumeLayout(false);
-            this.CrgroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2424,6 +2646,26 @@
         private System.Windows.Forms.GroupBox CrgroupBox;
         private System.Windows.Forms.CheckBox CRcheckBox;
         private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.CheckBox checkBox13;
+        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.CheckBox checkBox8;
     }
 }
 
