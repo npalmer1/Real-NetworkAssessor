@@ -183,6 +183,8 @@
             this.openTermButton = new System.Windows.Forms.Button();
             this.termBox = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.Gobutton = new System.Windows.Forms.Button();
+            this.Filebutton = new System.Windows.Forms.Button();
             this.label57 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
@@ -227,9 +229,9 @@
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.rootBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.connectableCheckBox = new System.Windows.Forms.CheckBox();
-            this.Filebutton = new System.Windows.Forms.Button();
-            this.Gobutton = new System.Windows.Forms.Button();
             this.openFileDialog4 = new System.Windows.Forms.OpenFileDialog();
+            this.label58 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -2033,6 +2035,8 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.textBox7);
+            this.tabPage7.Controls.Add(this.label58);
             this.tabPage7.Controls.Add(this.Gobutton);
             this.tabPage7.Controls.Add(this.Filebutton);
             this.tabPage7.Controls.Add(this.label57);
@@ -2061,6 +2065,30 @@
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Live";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // Gobutton
+            // 
+            this.Gobutton.Location = new System.Drawing.Point(704, 570);
+            this.Gobutton.Name = "Gobutton";
+            this.Gobutton.Size = new System.Drawing.Size(89, 23);
+            this.Gobutton.TabIndex = 20;
+            this.Gobutton.Text = "Run Tests";
+            this.Gobutton.UseVisualStyleBackColor = true;
+            this.Gobutton.Click += new System.EventHandler(this.Gobutton_Click);
+            // 
+            // Filebutton
+            // 
+            this.Filebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Filebutton.Location = new System.Drawing.Point(596, 109);
+            this.Filebutton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.Filebutton.Name = "Filebutton";
+            this.Filebutton.Size = new System.Drawing.Size(29, 24);
+            this.Filebutton.TabIndex = 19;
+            this.Filebutton.TabStop = false;
+            this.Filebutton.Text = "...";
+            this.Filebutton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Filebutton.UseVisualStyleBackColor = true;
+            this.Filebutton.Click += new System.EventHandler(this.button1_Click);
             // 
             // label57
             // 
@@ -2098,7 +2126,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(96, 367);
+            this.textBox4.Location = new System.Drawing.Point(96, 413);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(485, 183);
@@ -2107,7 +2135,7 @@
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(94, 337);
+            this.label55.Location = new System.Drawing.Point(94, 383);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(130, 18);
             this.label55.TabIndex = 13;
@@ -2133,7 +2161,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(256, 142);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(289, 24);
+            this.textBox2.Size = new System.Drawing.Size(325, 24);
             this.textBox2.TabIndex = 10;
             // 
             // label53
@@ -2204,7 +2232,7 @@
             // checkBox10
             // 
             this.checkBox10.AutoSize = true;
-            this.checkBox10.Location = new System.Drawing.Point(66, 299);
+            this.checkBox10.Location = new System.Drawing.Point(66, 345);
             this.checkBox10.Name = "checkBox10";
             this.checkBox10.Size = new System.Drawing.Size(178, 22);
             this.checkBox10.TabIndex = 2;
@@ -2423,33 +2451,25 @@
             this.connectableCheckBox.UseVisualStyleBackColor = true;
             this.connectableCheckBox.CheckedChanged += new System.EventHandler(this.connectableCheckBOx_CheckedChanged);
             // 
-            // Filebutton
-            // 
-            this.Filebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Filebutton.Location = new System.Drawing.Point(596, 109);
-            this.Filebutton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.Filebutton.Name = "Filebutton";
-            this.Filebutton.Size = new System.Drawing.Size(29, 24);
-            this.Filebutton.TabIndex = 19;
-            this.Filebutton.TabStop = false;
-            this.Filebutton.Text = "...";
-            this.Filebutton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Filebutton.UseVisualStyleBackColor = true;
-            this.Filebutton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Gobutton
-            // 
-            this.Gobutton.Location = new System.Drawing.Point(704, 570);
-            this.Gobutton.Name = "Gobutton";
-            this.Gobutton.Size = new System.Drawing.Size(89, 23);
-            this.Gobutton.TabIndex = 20;
-            this.Gobutton.Text = "Run Tests";
-            this.Gobutton.UseVisualStyleBackColor = true;
-            this.Gobutton.Click += new System.EventHandler(this.Gobutton_Click);
-            // 
             // openFileDialog4
             // 
             this.openFileDialog4.FileName = "openFileDialog4";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Location = new System.Drawing.Point(50, 279);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(218, 18);
+            this.label58.TabIndex = 21;
+            this.label58.Text = "Additional string to search in file:";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(222, 300);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(359, 24);
+            this.textBox7.TabIndex = 22;
             // 
             // Form1
             // 
@@ -2702,6 +2722,8 @@
         private System.Windows.Forms.Button Filebutton;
         private System.Windows.Forms.Button Gobutton;
         private System.Windows.Forms.OpenFileDialog openFileDialog4;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label58;
     }
 }
 
