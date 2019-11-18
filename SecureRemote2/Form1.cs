@@ -3312,6 +3312,32 @@ namespace SecureRemote2
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog4.ShowDialog();
+        }
+
+        private void Gobutton_Click(object sender, EventArgs e)
+        {
+            RunTests();
+        }
+        private bool RunTests()
+        {
+           //check checkboxes
+            //open local diff file and remote one
+            // open temporary output file
+            //go through remote file line by line comparing to diff - iof diff found copy into new temp file
+            //close files
+            //open temp file
+            //go trhoughg line by line until string found 
+            //extract filename
+            //check if files exist - if so open it
+            //open another results output file
+            //go yrhough file line by line looking for search string to look for
+            //if found register this and record in output file
+            return true;
+        }
+
         private void scriptDirBox_TextChanged(object sender, EventArgs e)
         {
             
