@@ -93,11 +93,15 @@ namespace SecureRemote2
         string prompt = ""; //iused to record command line prompt 
         string cmd = "";  //command string
 
+        string secondFile = "";
+        bool timerCount = false;
+
 
         SshClient ssh; //used by ssh shell later on
         ShellStream SSHstream; //stream used by ssh shell
 
         bool BlinkTest = false;
+        string commandResult = ""; //return reult of command
 
         public Form1()
         {
@@ -183,11 +187,11 @@ namespace SecureRemote2
             }
         }
 
-        public enum Platform   
+        public enum Platform
         {
             Windows,
             Linux,
-            Mac,             
+            Mac,
         }
 
         public static Platform RunningPlatform()    //find platform that this application is running on
@@ -266,7 +270,7 @@ namespace SecureRemote2
                     { PClistBox.Items.Add("PC" + (i).ToString()); }
                     else if (connPCs[i] == 2) //linux
                     {
-                       PClistBox.Items.Add("LC" + (i).ToString());
+                        PClistBox.Items.Add("LC" + (i).ToString());
                     }
                     else if (connPCs[i] == 3)
                     {
@@ -323,7 +327,7 @@ namespace SecureRemote2
             return ok;
         }
 
-       
+
         private bool Ping_Host(string ip)
         {
             //ping host lab PC to see if it is connected
@@ -341,7 +345,7 @@ namespace SecureRemote2
 
             try
             {
-                var reply = ping.Send(ip, 1, buffer, options);                                
+                var reply = ping.Send(ip, 1, buffer, options);
                 if (reply == null)
                 {
                     return false;
@@ -363,33 +367,33 @@ namespace SecureRemote2
         }
 
         private int findOS(string ip)
-        {            
+        {
             //string cmd = "ver";
             string cmd = "uname";
             string ret = "";
 
-           
+
             /*if (ret == "nc")
             {
                 return 0;
             }*/
-            if (SendCommand(ip,cmd).Contains("NT"))
+            if (SendCommand(ip, cmd).Contains("NT"))
             {
                 return 1;   //windows
             }
             //cmd = "uname";
-            
+
             if (SendCommand(ip, cmd).Contains("inux"))
             {
                 return 2;   //linux
             }
             cmd = Environment.NewLine + "show";
-            
-            if (SendCommand(ip,cmd).Contains("%"))
+
+            if (SendCommand(ip, cmd).Contains("%"))
             {
                 return 3;   //cisco IOS
-            }     
-            return 0;            
+            }
+            return 0;
         }
         /*private void findPCs()
         {
@@ -414,7 +418,7 @@ namespace SecureRemote2
             //put a list of connected PCs into array connPCs
             try
             {
-                Parallel.Invoke(() => PingAll(1, 10, H), () => PingAll(11, 20,H), () => PingAll(21, 30,H), () => PingAll(31, 40,H), () => PingAll(41, 50,H), () => PingAll(51, 60,H), () => PingAll(61, 70,H), () => PingAll(71, 80,H), () => PingAll(81, 90,H), () => PingAll(91, 100,H), () => PingAll(101, 110,H), () => PingAll(111, 120,H), () => PingAll(121, 130,H), () => PingAll(131, 140,H), () => PingAll(141, 150,H), () => PingAll(151, 160,H), () => PingAll(161, 170,H), () => PingAll(171, 180,H), () => PingAll(181, 190,H), () => PingAll(191, 200,H), () => PingAll(201, 210,H), () => PingAll(211, 220,H), () => PingAll(221, 230,H), () => PingAll(231, 240,H), () => PingAll(241, 250,H), () => PingAll(251, 254,H));
+                Parallel.Invoke(() => PingAll(1, 10, H), () => PingAll(11, 20, H), () => PingAll(21, 30, H), () => PingAll(31, 40, H), () => PingAll(41, 50, H), () => PingAll(51, 60, H), () => PingAll(61, 70, H), () => PingAll(71, 80, H), () => PingAll(81, 90, H), () => PingAll(91, 100, H), () => PingAll(101, 110, H), () => PingAll(111, 120, H), () => PingAll(121, 130, H), () => PingAll(131, 140, H), () => PingAll(141, 150, H), () => PingAll(151, 160, H), () => PingAll(161, 170, H), () => PingAll(171, 180, H), () => PingAll(181, 190, H), () => PingAll(191, 200, H), () => PingAll(201, 210, H), () => PingAll(211, 220, H), () => PingAll(221, 230, H), () => PingAll(231, 240, H), () => PingAll(241, 250, H), () => PingAll(251, 254, H));
             }
 
             catch { Show_Label("Error - check base IP address"); }
@@ -445,7 +449,7 @@ namespace SecureRemote2
                             if (noPCs < i)
                             {
                                 noPCs = i;
-                            }                            
+                            }
                         }
                         else
                         {
@@ -498,7 +502,7 @@ namespace SecureRemote2
             return connectionInfo;
         }
 
-       
+
         private void RunCommands(string ip)
         {
             string cmd = "";
@@ -511,7 +515,7 @@ namespace SecureRemote2
                     {
                         ssh.Connect();
                     }
-                    catch { 
+                    catch {
                         MessageBox.Show("Cannot connect - check connection");
                         return;
                     }
@@ -536,9 +540,9 @@ namespace SecureRemote2
             catch { }
         }
 
-        private void RunACommand(string ip, string cmd)
+        private string RunACommand(string ip, string cmd)
         {
-                        
+            var result = "";
             try
             {
                 using (var ssh = new SshClient(CreateConnectionInfo(ip)))
@@ -547,24 +551,27 @@ namespace SecureRemote2
                     {
                         ssh.Connect();
                     }
-                    catch { }
+                    catch { return result; }
                     try
                     {
                         var command = ssh.CreateCommand(cmd);
-                        var result = command.Execute();
+                        result = command.Execute();
                     }
                     catch { MessageBox.Show("ERROR"); }
                     try
                     {
                         ssh.Disconnect();
+                        return result;
                     }
-                    catch { }
+                    catch {
+                        return result;
+                    }
                 }
             }
-            catch { }
+            catch { return result;  }
         }
 
-        private void commandButton_Click(object sender, EventArgs e)
+        private bool CallRunCommands()
         {
             bool a;
 
@@ -594,13 +601,12 @@ namespace SecureRemote2
                 {
                     if (PClistBox.Items[i].ToString().Contains("C"))
                     {
-                        istr = (f).ToString();
+                        istr = (i+f).ToString();
                         pc = baseip.Substring(0, baseip.Length - 1) + istr;
                         RunCommands(pc);
                         sel = true;
                     }
-                }
-                f++;
+                }                
             }
             sendLabel.Visible = false;
             //BlinkTest = false;
@@ -608,6 +614,12 @@ namespace SecureRemote2
             {
                 MessageBox.Show("No PCs selected or none connected");
             }
+            return true;
+        }
+
+        private void commandButton_Click(object sender, EventArgs e)
+        {
+            CallRunCommands();
         }
 
 
@@ -620,19 +632,19 @@ namespace SecureRemote2
             }
         }
 
-        private bool checkBlankDir() //check to see if local and remote boxes are blank
+        private bool checkBlankDir(bool device,  string remotefile, string localfile) //check to see if local and remote boxes are blank
         {
             bool local = false;
             bool remote = false;
-            if (localBox.Text.Trim() == "")
+            if (localfile.Trim() == "")
             {
                 local = false;
             }
             else
             { local = true; }
-            if (!deviceCheckBox.Checked)
+            if (!device)
             {
-                if (remoteBox.Text.Trim() == "")
+                if (remotefile.Trim() == "")
                 {
                     remote = false;
                 }
@@ -663,10 +675,10 @@ namespace SecureRemote2
         }
 
         private bool FindRemoteFolder(string ip, string remote)
-        {          
+        {
             string cmd = "";
-            string response1 = "";           
-          
+            string response1 = "";
+
             /*cmd = "\"test\" >> " + remote + "/test.txt";
             response1 = SendCommand(ip, cmd).ToUpper();
             cmd = "\"test\" >> " + remote + "\\test.txt";
@@ -678,7 +690,7 @@ namespace SecureRemote2
             if (response1.Contains("NO SUCH FILE OR DIRECTORY") || response1.Contains("FILE NOT FOUND") || response1.Trim() == "")
             {
                 return false;   //folder not found or empty
-            }           
+            }
             else
             {
                 //folder found           
@@ -719,7 +731,7 @@ namespace SecureRemote2
         private string SendCommand(string ip, string cmd)   //send a single command
         {
             string result = "";
-           
+
             try
             {
                 using (var ssh = new SshClient(CreateConnectionInfo(ip)))
@@ -731,9 +743,9 @@ namespace SecureRemote2
                     catch { return "nc"; }
 
                     //var command = ssh.CreateCommand(cmd);
-                    result = ssh.RunCommand(cmd).Result;                  
+                    result = ssh.RunCommand(cmd).Result;
                     //var result = command.Execute();
-                    
+
                     try
                     {
                         ssh.Disconnect();
@@ -748,41 +760,44 @@ namespace SecureRemote2
         {
             string config = "";
             string cmd = "";
-          
-                if (checkBlankDir())
-                {
-                   
-                            try
-                            {
-                                if (!Directory.Exists(local))
-                                {
-                                    Directory.CreateDirectory(local);
-                                }
-                            }
-                            catch
-                            {
-                                MessageBox.Show("Cannot create local directory- check pathname");
-                                return false;
-                            }
-                            cmd = Environment.NewLine + "show running-config";
-                            //cmd = Environment.NewLine + "ls -l";
-                            config = SendCommand(ip,cmd );
-                            if (config.Trim() != "nc")
-                            {
 
-                                try
-                                {
-                                    using (StreamWriter sw = new StreamWriter(localBox.Text + "\\" + "running-config"))
-                                    {
-                                        sw.Write(config);
-                                        sw.Close();
-                                    }
-                                }
-                                catch { MessageBox.Show("Cannot save to local file"); }
-                                runningRichBox.Text = config;
-                                //scp.Download(remote, new DirectoryInfo(@local));    //otherwise from remote to local    
-                            }
+            if (checkBlankDir(true, "", local))
+            {
+
+                try
+                {
+                    if (!Directory.Exists(local))
+                    {
+                        Directory.CreateDirectory(local);
+                    }
                 }
+                catch
+                {
+                    MessageBox.Show("Cannot create local directory- check pathname");
+                    return false;
+                }
+                cmd = Environment.NewLine + "show running-config";
+                //cmd = Environment.NewLine + "ls -l";
+                config = SendCommand(ip, cmd);
+                if (config.Trim() != "nc")
+                {
+
+                    try
+                    {
+                        using (StreamWriter sw = new StreamWriter(local + "\\" + "running-config"))
+                        {
+                            sw.Write(config);
+                            sw.Close();
+                        }
+                    }
+                    catch { MessageBox.Show("Cannot save to local file"); }
+                    if (tabControl1.SelectedTab.Text == "Transfer")
+                    {
+                        runningRichBox.Text = config;
+                    }
+                    //scp.Download(remote, new DirectoryInfo(@local));    //otherwise from remote to local    
+                }
+            }
             return true;
         }
         private bool GetFiles(string remote, string local, string ip, bool to) //to transfer a file from linux to this PC
@@ -791,7 +806,7 @@ namespace SecureRemote2
             {
                 try
                 {
-                    scp.OperationTimeout = new TimeSpan(0, 0, 2);  
+                    scp.OperationTimeout = new TimeSpan(0, 0, 2);
                     scp.Connect();
                     //scp.Download("C:/test", new DirectoryInfo(@"C:\Temp\ScpDownloadTest"));
                     //scp.Download("/etc/firefox", new DirectoryInfo(@"C:\Temp\ScpDownloadTest"));
@@ -802,7 +817,7 @@ namespace SecureRemote2
                     checkall = false;
                     return false;
                 }
-                if (checkBlankDir())
+                if (checkBlankDir(false,  remote, local))
                 {
                     try
                     {
@@ -810,7 +825,7 @@ namespace SecureRemote2
                         {
                             //scp.Download(local, new DirectoryInfo(@remote));
                             RunACommand(ip, "mkdir " + remote);
-                            scp.Upload(new DirectoryInfo(@local), remote);                           
+                            scp.Upload(new DirectoryInfo(@local), remote);
                         }
                         else  //retrieve folder from remote to local
                         {
@@ -825,9 +840,9 @@ namespace SecureRemote2
                             {
                                 MessageBox.Show("Cannot create local directory- check pathname");
                                 return false;
-                            }                                                     
+                            }
                             scp.Download(remote, new DirectoryInfo(@local));    //otherwise from remote to local
-                            
+
                         }
                         scp.Disconnect();
                     }
@@ -843,29 +858,29 @@ namespace SecureRemote2
             return true;
         }
 
-        private bool GetFiles_PC_List(string remote, string local, bool to)
+        private bool GetFiles_PC_List(bool device, bool useBase, string BaseDir, string remote, string local, bool to)
         {
-           
-            bool a;            
+
+            bool a;
             bool noselected = true;
             int i;
             string istr;
             a = false;
             pc = "";
-            int f;
+            int offset =1;
             int count = 0;
             int foldercount = 0;
             bool noconn = false;
             int rem1 = 0;
-            string basedir = local;
+            string based = local;
 
             if (IPrangeCheckBox.Checked)
             {
-                f = ipfrom;
+                offset = ipfrom;
             }
             else
             {
-                f = 1;
+                offset = 1;
             }
             //baseip = "172.16.199.0";
             for (i = 0; i < PClistBox.Items.Count; i++)
@@ -873,30 +888,34 @@ namespace SecureRemote2
                 if (PClistBox.GetSelected(i))
                 {
                     if (!PClistBox.Items[i].ToString().Contains("xx")) //if connected, ie. doesn't contain xx
-                    {                       
-                        if (dirBox.Text.Trim().Length > 0 && !to)
+                    {
+                        if (BaseDir.Trim().Length > 0 && !to)
                         {
                             if (singleCheckBox.Checked)
                             {
-                                if (useBasecheckBox.Checked)
+                                if (useBase)
                                 {
-                                    local = basedir + "\\" + dirBox.Text.Trim() + Convert.ToString(f);
+                                    local = based + "\\" + BaseDir.Trim() + Convert.ToString(offset + i);
                                 }
+                                else
+                                { local = based; }
                             }
                             else
                             {
-                                local = basedir + "\\" + dirBox.Text.Trim() + Convert.ToString(f);
+                                local = based + "\\" + BaseDir.Trim() + Convert.ToString(offset +i);                                
                             }
                         }
-                        istr = (f).ToString();
+                        i = i + offset;
+                        istr = (i).ToString();
+                       
                         pc = baseip.Substring(0, baseip.Length - 1) + istr;
-                        if (!deviceCheckBox.Checked)
+                        if (!device) //if its not a network device
                         {
                             //if (FindRemoteFolder(pc, remote))   //folder found and not empty
                             //{
-                                a = GetFiles(remote, local, pc, to);
-                                noconn = false;
-                                foldercount++;
+                            a = GetFiles(remote, local, pc, to);
+                            noconn = false;
+                            foldercount++;
                             //}                            
                         }
                         else
@@ -906,12 +925,11 @@ namespace SecureRemote2
                         count++;
                     }
                     noselected = false;
-                }
-                f++;
+                }                ;
             }
-            if (!noselected && foldercount ==0)
-            {                
-                MessageBox.Show("Folder on remote is empty or not found");             
+            if (!noselected && foldercount == 0)
+            {
+                MessageBox.Show("Folder on remote is empty or not found");
                 return false;
             }
             else if (!noselected && foldercount < count)
@@ -930,17 +948,14 @@ namespace SecureRemote2
             return a;
         }
 
-        private void Transfer()
+        private void Transfer(bool to)
         {
-            remoteStr = remoteBox.Text;
+            
             //localStr = localBox.Text + "\\" + dirBox.Text;
-            localStr = localBox.Text;
-            bool to = false;
+            
             checkall = true;
-            if (radioButton1.Checked)
-            { to = false; }
-            else { to = true; }
-            if (GetFiles_PC_List(remoteStr, localStr, to))
+           
+            if (GetFiles_PC_List(deviceCheckBox.Checked, useBasecheckBox.Checked, dirBox.Text, remoteStr, localStr, to))
             {
                 if (checkall)
                 { MessageBox.Show("Folder transferred"); }
@@ -952,10 +967,16 @@ namespace SecureRemote2
                 }
             }
         }
-       
+
         private void transferButton_Click(object sender, EventArgs e)
         {
-            Transfer();   //transfer to/from remote 
+            remoteStr = remoteBox.Text;
+            localStr = localBox.Text;
+            bool to = false;
+            if (radioButton1.Checked)
+            { to = false; }
+            else { to = true; }
+            Transfer(to);   //transfer to/from remote 
         }
 
 
@@ -1119,7 +1140,7 @@ namespace SecureRemote2
                     splitstr1 = str.Split('=');
                     if (splitstr1[1].Trim() == "true")
                     {
-                        allowDiffcheckbox.Checked = true;                        
+                        allowDiffcheckbox.Checked = true;
                     }
                     else
                     {
@@ -1327,7 +1348,7 @@ namespace SecureRemote2
 
         }
 
-        private void assessFile(int n, string PCDir) //assess files against templates in the text boxes
+        private void assessFile(int nnn, int PCno, string PCDir) //assess files against templates in the text boxes
         {
             double result = 0.0;
             string score = "";
@@ -1342,8 +1363,10 @@ namespace SecureRemote2
             double totalrawMax = 0.0;
             double overallrawResult = 0.0;
             string resultstr = "";
-           
+
             string[] splitstr = new string[2];
+            string s = Convert.ToString(PCno);
+            if (PCno == -1) { s = "n/a"; }
 
             if (defaultCheckBox.Checked) //is a default mark selected?
             {
@@ -1363,7 +1386,8 @@ namespace SecureRemote2
             {
                 using (StreamWriter outp = new StreamWriter(parser.fout, ap))
                 {
-                    outp.WriteLine("PC: " + Convert.ToString(n+1));
+                   
+                    outp.WriteLine("PC: " + s);
                     outp.WriteLine("Marks for assessment: " + assessTitleBox.Text);
                     outp.Close();
                 }
@@ -1373,140 +1397,140 @@ namespace SecureRemote2
             {
                 using (StreamWriter comment = new StreamWriter(parser.fcomment, ap))
                 {
-                    comment.WriteLine("PC: " + Convert.ToString(n+1));
+                    comment.WriteLine("PC: " + s);
                     comment.WriteLine("Feedback for assessment: " + assessTitleBox.Text);
                     comment.Close();
                     ap = true;
                 }
             }
             catch { }
-           
-                for (int i = 0; i < MaxFiles; i++) //for all files in the list
+
+            for (int i = 0; i < MaxFiles; i++) //for all files in the list
+            {
+
+                if (CheckSelected(i)) //only process selected files
                 {
-                   
-                    if (CheckSelected(i)) //only process selected files
+                    //if (File.Exists(parser.ftemplate[i]) && File.Exists(parser.infile[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
+                    if (File.Exists(parser.ftemplate[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
                     {
-                        //if (File.Exists(parser.ftemplate[i]) && File.Exists(parser.infile[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
-                        if (File.Exists(parser.ftemplate[i]) && parser.fout.Trim() != "" && parser.fcomment.Trim() != "")
+                        try
                         {
+                            ret = parser.Parse3(i, ap, defaultCheckBox.Checked); //call the standard assessment method from the parser class
+                        }
+                        catch { }
+                        if (ret > -1)
+                        {
+                            ap = true;
+                            result = parser.MarkText(); //use parser class to calculate marks for input file from this PC - result is %
+                            totalResult = totalResult + result;
+                            numfiles++;
+                            str = parser.rawResult; //show results in box
+                            rawResultBox.Text = str; //rawresult of form xx/xx
+                            splitstr = str.Split('/');
                             try
                             {
-                                ret = parser.Parse3(i, ap, defaultCheckBox.Checked); //call the standard assessment method from the parser class
+                                totalrawMax = totalrawMax + Convert.ToDouble(splitstr[1]);  //total cumulative lines marked
+                                totalrawResult = totalrawResult + Convert.ToDouble(splitstr[0]); //total cumulative lines correct
                             }
                             catch { }
-                            if (ret >-1)
-                            {
-                                ap = true;
-                                result = parser.MarkText(); //use parser class to calculate marks for input file from this PC - result is %
-                                totalResult = totalResult + result;
-                                numfiles++;
-                                str = parser.rawResult; //show results in box
-                                rawResultBox.Text = str; //rawresult of form xx/xx
-                                splitstr = str.Split('/');
-                                try
-                                {
-                                    totalrawMax = totalrawMax + Convert.ToDouble(splitstr[1]);  //total cumulative lines marked
-                                    totalrawResult = totalrawResult + Convert.ToDouble(splitstr[0]); //total cumulative lines correct
-                                }
-                                catch { }
 
-                               
-                                score = Convert.ToString(result); //%
-                            
-                            
-                                try
-                                {
-                                    using (StreamWriter outp = new StreamWriter(parser.fout, true))
-                                    {
-                                        outp.WriteLine("Lines correct: " + str);   //write results to the output file
-                                        outp.WriteLine("Percentage: " + score);
-                                        outp.Close();
-                                    }
-                                }
-                                catch { }
-                                try
-                                {
-                                    using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
-                                    {
-                                        comment.WriteLine("Lines correct: " + str); //write comnents to comments file
-                                        comment.WriteLine("Percentage: " + score);
-                                        comment.Close();
 
-                                    }
+                            score = Convert.ToString(result); //%
+
+
+                            try
+                            {
+                                using (StreamWriter outp = new StreamWriter(parser.fout, true))
+                                {
+                                    outp.WriteLine("Lines correct: " + str);   //write results to the output file
+                                    outp.WriteLine("Percentage: " + score);
+                                    outp.Close();
                                 }
-                                catch { }
-                            }                            
-                            else if (ret == -1)
-                            {
-                                    MessageBox.Show("Template file not found");
                             }
-                            else
+                            catch { }
+                            try
                             {
-                                    MessageBox.Show("PC number out of range");
+                                using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
+                                {
+                                    comment.WriteLine("Lines correct: " + str); //write comnents to comments file
+                                    comment.WriteLine("Percentage: " + score);
+                                    comment.Close();
+
+                                }
                             }
-                            
+                            catch { }
+                        }
+                        else if (ret == -1)
+                        {
+                            MessageBox.Show("Template file not found");
                         }
                         else
-                        { 
-                            errors = true; 
+                        {
+                            MessageBox.Show("PC number out of range");
                         }
-                    }
-                } // i 0 to <5
-               
-                    totalResult = totalResult / numfiles; //average percentage of all files
-                    overallrawResult = Math.Round((totalrawResult / totalrawMax) * 100, 1);  //average percentage of all tasks
-                    
-                   
-                    if (resultselectcheckBox.Checked)
-                    {
-                        resultstr = Convert.ToString(totalResult);
+
                     }
                     else
                     {
-                        resultstr = Convert.ToString(overallrawResult);
+                        errors = true;
                     }
-                    resultBox.Text = resultstr; //put result in % into resultbox
-                    rawResultBox.Text = totalrawResult.ToString() + "/" + totalrawMax.ToString(); //write total marks from tasks to rawresultbox
-                    if (oneDir > 0)
-                    {
-                        rawresultPCs[n] = rawResultBox.Text; //put raw result as a/b into array
-                        resultPCs[n] = Convert.ToDouble(resultstr); //put result % in an array so that they can be recalled
-                        rPCs[n] = PCDir;    //including raw result
-                    }
-                   
-                    try
-                    {
-                        using (StreamWriter outp = new StreamWriter(parser.fout, true))
-                        {
-                            outp.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
-                            outp.WriteLine("Overall Result %: " + resultstr);   //write overall results to the output file                      
-                            outp.Close();
-                        }
-                    }
-                    catch { }
-                    try
-                    {
-                        using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
-                        {
-                            comment.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
-                            comment.WriteLine("Overall Result %: " + resultstr); //write overall result to comments file
-                            comment.Close();
-                        }
-                    }
-                    catch { }
-
-                
-                if (errors)
-                {
-                    MessageBox.Show("Not all files processed - check filenames");
                 }
-                else
+            } // i 0 to <5
+
+            totalResult = totalResult / numfiles; //average percentage of all files
+            overallrawResult = Math.Round((totalrawResult / totalrawMax) * 100, 1);  //average percentage of all tasks
+
+
+            if (resultselectcheckBox.Checked)
+            {
+                resultstr = Convert.ToString(totalResult);
+            }
+            else
+            {
+                resultstr = Convert.ToString(overallrawResult);
+            }
+            resultBox.Text = resultstr; //put result in % into resultbox
+            rawResultBox.Text = totalrawResult.ToString() + "/" + totalrawMax.ToString(); //write total marks from tasks to rawresultbox
+            if (oneDir > 0) //if more than one dir
+            {
+                rawresultPCs[nnn] = rawResultBox.Text; //put raw result as a/b into array
+                resultPCs[nnn] = Convert.ToDouble(resultstr); //put result % in an array so that they can be recalled
+                rPCs[nnn] = PCDir;    //including raw result
+            }
+
+            try
+            {
+                using (StreamWriter outp = new StreamWriter(parser.fout, true))
                 {
-                    MessageBox.Show("Files processed");
-                }            
+                    outp.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
+                    outp.WriteLine("Overall Result %: " + resultstr);   //write overall results to the output file                      
+                    outp.Close();
+                }
+            }
+            catch { }
+            try
+            {
+                using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
+                {
+                    comment.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
+                    comment.WriteLine("Overall Result %: " + resultstr); //write overall result to comments file
+                    comment.Close();
+                }
+            }
+            catch { }
+
+
+            if (errors)
+            {
+                MessageBox.Show("Not all files processed - check filenames");
+            }
+            else
+            {
+                MessageBox.Show("Files processed");
+            }
         }
 
-        private bool goFiles(string path2, string path1, int n, string PCDir)
+        private bool goFiles(string path2, string path1, int n, int PCno, string PCDir)
         {   //path1 is origianl root path - template file is here, path2 is correct path where assesment files and outpur/comment and output files to go
             string file1 = "";
             /*for (int n = 0; n < noPCs; n++)
@@ -1521,17 +1545,17 @@ namespace SecureRemote2
                         //parser.ftemplate[i] = path1 + "\\" + file1; //template in root directory
 
                         file1 = Path.GetFileName(parser.infile[i]); //file name of input file to be assessed - this is in the PCs directory (or original if no PCs selected)
-                        parser.infile[i] = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1) + "\\" + file1; //with its full path, inc PC1 etc
-                         //take criteria from boxes
+                        parser.infile[i] = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(PCno) + "\\" + file1; //with its full path, inc PC1 etc
+                                                                                                                        //take criteria from boxes
                     }
                     file1 = Path.GetFileName(parser.fout); //file name of output file for results
-                    parser.fout = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1) + "\\" + file1; //with its full path, inc PC1 etc
+                    parser.fout = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(PCno) + "\\" + file1; //with its full path, inc PC1 etc
 
                     file1 = Path.GetFileName(parser.fcomment); //file name of comments file
-                    parser.fcomment = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1) + "\\" + file1; //with ts full path
+                    parser.fcomment = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(PCno) + "\\" + file1; //with ts full path
 
-                    
-                    assessFile(n, PCDir); //asses the files for PCn
+
+                    assessFile(n, PCno, PCDir); //asses the files for PCn
                     return true;
                 }
                 else
@@ -1595,31 +1619,32 @@ namespace SecureRemote2
             int len1 = 0;
             int no = 0;
             bool ok = false;
-            int f = 0;
-            int g = 0;
-           
+            int offset = 1;
+            int rangemax = 0;
+            
+
             bool allex = true;
             bool pcSel = false;
             if (IPrangeCheckBox.Checked)
             {
-                f = ipfrom;
-                g = ipto;
+                offset = ipfrom;
+                rangemax = ipto;
             }
             else
             {
-                f = 1;
-                g = noPCs;
+                offset = 1;
+                rangemax = noPCs;
             }
             //origrootpath = Directory.GetParent(Path.GetFullPath(parser.ftemplate[0])).FullName; //parent directory
             origrootpath = rootDir;
-            
+
             PCDir = dirBox2.Text.Trim();
             if (windows)
             {
                 PCDir = PCDir.ToUpper();
                 origrootpath = origrootpath.ToUpper();
-            }    
-            
+            }
+
             pos1 = origrootpath.LastIndexOf(PCDir); //may have PCx in it!
             len1 = dirBox2.Text.Trim().Length;
             if (pos1 > -1)
@@ -1627,7 +1652,7 @@ namespace SecureRemote2
                 try
                 {
                     correctrootpath = origrootpath.Substring(0, pos1); //remove the PC# from path
-                  
+
                     Show_Label("Removing " + Directory.GetParent(Path.GetFullPath(parser.ftemplate[0])).Name + " from directory to form root path");
                 }
                 catch { }
@@ -1639,35 +1664,36 @@ namespace SecureRemote2
             if (windows)
             {
                 correctrootpath = correctrootpath.ToUpper();
-            }   
-            for (int n = f-1; n < g; n++)
+            }
+            for (int n = 0; n <= rangemax - offset; n++)
             {
                 try
                 {
-                    if (PClistBox.GetSelected(n)) //if PC selected 
+                  
+                    if (PClistBox.GetSelected(n)) //if PC selected with offset
                     {
                         pcSel = true;
-                        PCDir = dirBox2.Text.Trim() + Convert.ToString(n+1); //eg. PC1
+                        PCDir = dirBox2.Text.Trim() + Convert.ToString(n + offset); //eg. PC1
                         //path1 = Directory.GetParent(Path.GetFullPath(parser.ftemplate[0])).FullName; //parent directory
                         if (windows)
                         {
-                            PCDir = PCDir.ToUpper();                          
-                        }                                              
+                            PCDir = PCDir.ToUpper();
+                        }
 
                         //if (origrootpath.LastIndexOf(PCDir) > 0)
                         //{
-                            if (Directory.Exists(correctrootpath + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + 1)))
+                        if (Directory.Exists(correctrootpath + "\\" + dirBox2.Text.Trim() + Convert.ToString(n + offset)))
+                        {
+                            no = n;
+                            if (goFiles(correctrootpath, origrootpath, n, n+offset, PCDir)) //now start assessing PCn - path2 root path, n = listbox entry for PC., PCDir - PC1 etc
                             {
-                                no = n;
-                                if (goFiles(correctrootpath, origrootpath, n, PCDir)) //now start assessing PCn - path2 root path, n = listbox entry for PC., PCDir - PC1 etc
-                                {
-                                    ok = true;
-                                }
+                                ok = true;
                             }
-                            else
-                            {
-                                allex = false;
-                            }
+                        }
+                        else
+                        {
+                            allex = false;
+                        }
 
                         //}
                         //else if (!windows && (path1up.LastIndexOf(PCDir.ToUpper()) > 0))
@@ -1846,7 +1872,7 @@ namespace SecureRemote2
                 if (ok)
                 {
                     setPaths();
-                    assessFile(oneDir, "");
+                    assessFile(oneDir, oneDir, ""); //onedir = -1 (eg. one file only not from listbox)
                 }
             }
         }
@@ -1891,7 +1917,7 @@ namespace SecureRemote2
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
-            parser.ftemplate[selectedFile-1] = openFileDialog1.FileName;
+            parser.ftemplate[selectedFile - 1] = openFileDialog1.FileName;
             switch (selectedFile)
             {
                 case 1:
@@ -1922,7 +1948,7 @@ namespace SecureRemote2
             openFileDialog2.FileName = "";
             //if (n > selectedFile)
             //{
-                selectedFile = n;   //file currently selected - global variable
+            selectedFile = n;   //file currently selected - global variable
             //}
             openFileDialog2.ShowDialog();
         }
@@ -1944,7 +1970,7 @@ namespace SecureRemote2
             return ret;
         }
         private void markDialog(int n)
-        {          
+        {
             bool ck = false;
             if (validRoot())
             {
@@ -2227,7 +2253,7 @@ namespace SecureRemote2
         private string buildChecked()
         {
             char[] t = new char[10];
-            
+
             if (checkBox1.Checked)
             {
                 t[0] = '1';
@@ -2540,7 +2566,7 @@ namespace SecureRemote2
                             {
                                 allDirsCheckbox.Checked = false;
                             }
-                            
+
                         }
                     }
                     sw.Close();
@@ -2586,7 +2612,7 @@ namespace SecureRemote2
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             assessFileButton.Visible = false;
-          
+
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -2805,9 +2831,9 @@ namespace SecureRemote2
                     openFileDialog1.DefaultExt = "";
                     openFileDialog1.Filter = "";
                     openFileDialog1.FileName = "";
-                    
+
                     openFileDialog1.ShowDialog();
-                   
+
                 }
                 else { Show_Label("Need to select the checkbox"); };
             }
@@ -2873,10 +2899,10 @@ namespace SecureRemote2
                     str = PClistBox.SelectedItem.ToString();
                     int n = findPC(str);
                     if (n > 0)
-                    {                        
+                    {
                         str = rawresultPCs[n];
-                        if (str != null) 
-                        { 
+                        if (str != null)
+                        {
                             rawResultBox.Text = str; //  xx/xx
                             str = Convert.ToString(resultPCs[n]);
                             resultBox.Text = str; //%
@@ -3228,8 +3254,9 @@ namespace SecureRemote2
             if (dlgResult.Equals(DialogResult.OK))
             {
                 //Show selected folder path in textbox.
-                rootBox.Text = rootBrowserDialog.SelectedPath;
-                rootDir = rootBox.Text;
+                rootDir = rootBrowserDialog.SelectedPath;
+                rootBox.Text = rootDir;
+                liveRootBox.Text = rootDir;
                 initialRootBox.Text = rootDir;
                 try
                 {
@@ -3254,14 +3281,14 @@ namespace SecureRemote2
         }
 
         private void deviceCheckBox_CheckedChanged(object sender, EventArgs e)
-        {           
-                remoteBox.Visible = !deviceCheckBox.Checked;
-                label8.Visible = !deviceCheckBox.Checked;
-                label11.Visible = !deviceCheckBox.Checked;
-                deviceLabel.Visible = deviceCheckBox.Checked;
-                groupBox1.Visible = !deviceCheckBox.Checked;
-                runningRichBox.Visible = deviceCheckBox.Checked;
-                outputLabel.Visible = deviceCheckBox.Checked;
+        {
+            remoteBox.Visible = !deviceCheckBox.Checked;
+            label8.Visible = !deviceCheckBox.Checked;
+            label11.Visible = !deviceCheckBox.Checked;
+            deviceLabel.Visible = deviceCheckBox.Checked;
+            groupBox1.Visible = !deviceCheckBox.Checked;
+            runningRichBox.Visible = deviceCheckBox.Checked;
+            outputLabel.Visible = deviceCheckBox.Checked;
         }
 
         private void connectableCheckBOx_CheckedChanged(object sender, EventArgs e)
@@ -3287,7 +3314,7 @@ namespace SecureRemote2
             {
                 ret = parser.SuggestTemplate(i, true);
             }
-           
+
         }
 
         private void markButton6_Click(object sender, EventArgs e)
@@ -3319,11 +3346,23 @@ namespace SecureRemote2
 
         private void Gobutton_Click(object sender, EventArgs e)
         {
-            RunTests();
+            if (RunTests())
+            {
+                MessageBox.Show("Live tests run");
+            }
+            else
+            {
+                MessageBox.Show("Not all tests successful");
+            }
         }
         private bool RunTests()
         {
-           //check checkboxes
+            string ip = textBox9.Text;
+            string rootpath = rootDir + "\\" + ip;
+            string savedfile = "";
+            string slash = "";
+            bool appendfile = false;
+            //check checkboxes
             //open local diff file and remote one
             // open temporary output file
             //go through remote file line by line comparing to diff - iof diff found copy into new temp file
@@ -3335,18 +3374,820 @@ namespace SecureRemote2
             //open another results output file
             //go yrhough file line by line looking for search string to look for
             //if found register this and record in output file
+            if (checkBox9.Checked) //if ip from text box on form
+            {
+                if (checkBox8.Checked)  //checkbox to allow comparison between template file and comparison file
+                {
+                    try
+                    {
+                        GetFiles(liveRemoteBox.Text, rootpath , ip, false); //to transfer a file from remote to this PC
+                        savedfile = ExtractFilefromPath(liveRemoteBox.Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Unable to transfer files from remote");
+                        return false;
+                    }
+                    if (Diff(liveTempBox.Text, rootpath + "\\" + savedfile,  rootpath + "\\temp.txt", richDiffResult)) //local template, remote file to compare, temp diff file as output
+                    {
+                         //create new output file then append to it
+                        if (checkBox10.Checked && DiffSearchBox.Text != null && DiffSearchBox.Text.Trim() != "") //search in Diff file
+                        {
+                            SearchDiff("", rootpath + "\\temp.txt", rootpath + "\\" + OutFileBox.Text, appendfile, DiffSearchBox, richTextResult2);
+                            appendfile = true;
+                        }
+                        if (checkBox11.Checked && secondFile != null && secondFile != "") //search in additional file pointed to by diff
+                        {
+                            string fp = secondFile;
+                            if (optPathBox.Text.Trim() != "")
+                            {
+                                if (optPathBox.Text.Contains("/"))
+                                {
+                                    slash = "/";
+                                }
+                                else if (optPathBox.Text.Contains("\\"))
+                                {
+                                    slash = "\\";
+                                }
+                                else
+                                {
+                                    slash = "";
+                                    fp = secondFile;
+                                }
+                                if (optPathBox.Text.Trim().LastIndexOf(slash) == optPathBox.Text.Trim().Length)
+                                {
+                                    slash = "";
+                                }
+                                fp = optPathBox.Text.Trim() + slash + secondFile.Trim();
+                               
+                            }
+                            try
+                            {
+                                GetFiles(fp, rootpath, ip, false); //to transfer a file from remote to this PC
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Unable to locate second file");
+                                return false;
+                            }
+                            slash = "\\";
+                            if (rootpath.Trim().LastIndexOf("\\") == rootpath.Trim().Length)
+                            {
+                                slash = "";                                
+                            }
+
+                            SearchSecondFile(rootpath + slash + secondFile, rootpath + slash + OutFileBox.Text, appendfile, richTextResult2);
+                        }
+                    }
+                }
+                else
+                {   //not device, use base, base dir, remote dir, local dir, from and not to
+                    //GetFiles_PC_List(false, true, dirBox3.Text.Trim(), liveRemoteBox.Text, rootpath, false);
+                }
+                if (checkBox14.Checked) //additonal file to search
+                {
+                    if (GetFiles(addBox1.Text, rootpath, ip, false)) //to transfer a file from remote to this PC
+                    {
+                        savedfile = ExtractFilefromPath(addBox1.Text);
+                        SearchDiff(addBox1.Text, rootpath + "\\temp.txt", rootpath + "\\" + OutFileBox.Text, appendfile, addStringBox1, richTextResult3);
+                        appendfile = true;
+                    }
+                }
+                if (checkBox15.Checked) //additonal file to search
+                {
+                    if (GetFiles(addBox2.Text, rootpath, ip, false)) //to transfer a file from remote to this PC
+                    {
+                        savedfile = ExtractFilefromPath(addBox2.Text);
+                        SearchDiff(addBox2.Text, rootpath + "\\temp.txt", rootpath + "\\" + OutFileBox.Text, appendfile, addStringBox2, richTextResult4);
+                        appendfile = true;
+                    }
+                }
+                if (checkBox12.Checked)
+                {
+                    if (ProcessBox.Text.Trim() != "")
+                    {
+                        CheckProcess(ip, rootpath + slash + OutFileBox.Text, appendfile);
+                    }
+                }
+                if (checkBox13.Checked)
+                {
+                    if (TestBox.Text.Trim() != "")
+                    {
+                        RunTestCommands(ip, rootpath + slash + OutFileBox.Text, appendfile);
+                    }
+                }
+            }
+            else //if not single ip but taken from listbox
+            {
+                rootpath = rootDir;
+                savedfile = ExtractFilefromPath(liveRemoteBox.Text);
+                //not device, use base, base dir, remote dir, local dir, from and not to
+                //GetFiles_PC_List(false, true, dirBox3.Text.Trim(), liveRemoteBox.Text, rootpath, false);
+                CycleDiffFiles(true, dirBox3.Text,  OutFileBox.Text, rootpath, savedfile);
+            }
+
             return true;
         }
 
-        private void scriptDirBox_TextChanged(object sender, EventArgs e)
+        private void CycleDiffFiles(bool useBase, string BaseDir, string outfile, string local, string savedfile)
         {
+            int i = 0;
+            int f = 0;
+            bool appendfile = false;
+            string ipstr = "";
+            string str = "";
+            string net = "";
+            string host = "";
+            string based = local;
+
+            bool single = checkBox9.Checked; //using ip box on form or not?
+
+            if (IPrangeCheckBox.Checked)
+            {
+                f = ipfrom;
+            }
+            else
+            {
+                f = 1;
+            }
+            string savedPath = "";
             
+            for (i = 0; i < PClistBox.Items.Count; i++)
+            {
+                if (PClistBox.GetSelected(i))
+                {
+                    if (!PClistBox.Items[i].ToString().Contains("xx")) //if connected, ie. doesn't contain xx
+                    {
+                        if (BaseDir.Trim().Length > 0 )
+                        {
+                            if (singleCheckBox.Checked)
+                            {
+                                if (useBase)
+                                {
+                                    local = based + "\\" + BaseDir.Trim() + Convert.ToString(f+i);
+                                }
+                                else
+                                {
+                                    local = based;
+                                }
+                            }
+                            else
+                            {
+                                local = based + "\\" + BaseDir.Trim() + Convert.ToString(f+i);
+                            }
+                        }
+                       
+                        ipstr = (i+f).ToString(); //offset if filter on
+
+                        net = baseip.Substring(0, baseip.Length - 1);
+                        host = Convert.ToString(ipstr);
+                        savedPath =local;
+
+                        if (checkBox8.Checked)
+                        {
+                            GetFiles(liveRemoteBox.Text, savedPath, net+host, false);
+
+                            PCTests(savedPath, savedfile, savedPath + "\\Temp.txt", appendfile, net+host);
+                            appendfile = true;
+                        }
+                        if (checkBox14.Checked) //additonal file to search
+                        {
+                            if (GetFiles(addBox1.Text, savedPath, net + host, false)) //to transfer a file from remote to this PC
+                            {
+                                savedfile = ExtractFilefromPath(addBox1.Text);
+                                SearchDiff(addBox1.Text, savedPath + "\\temp.txt", savedPath + "\\" + OutFileBox.Text, appendfile, addStringBox1, richTextResult2);
+                                appendfile = true;
+                            }
+                        }
+                        if (checkBox15.Checked) //additonal file to search
+                        {
+                            if (GetFiles(addBox2.Text, savedPath, net + host, false)) //to transfer a file from remote to this PC
+                            {
+                                savedfile = ExtractFilefromPath(addBox2.Text);
+                                SearchDiff(addBox2.Text, savedPath + "\\temp.txt", savedPath + "\\" + OutFileBox.Text, appendfile, addStringBox2, richTextResult2);
+                                appendfile = true;
+                            }
+                        }
+                        CycleTests(net+host, savedPath + "\\" + OutFileBox.Text, appendfile);
+                    }
+                }
+            }
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void CycleTests(string ip, string outfile, bool append)
         {
-            
+            if (checkBox12.Checked)
+            {
+                if (ProcessBox.Text.Trim() != "")
+                {
+                    CheckProcess(ip, outfile, append);
+                }
+            }
+            if (checkBox13.Checked)
+            {
+                if (TestBox.Text.Trim() != "")
+                {
+                    RunTestCommands(ip, outfile, append);
+                }
+            }
         }
+        
+        private void PCTests(string savedPath, string savedfile, string tempPath, bool appendfile, string ip)
+        {
+            string slash = "";
+            if (Diff(liveTempBox.Text, savedPath + "\\" + savedfile, tempPath, richDiffResult)) //local template, remote file to compare, temp diff file as output
+            {
+                //create new output file then append to it
+                if (checkBox10.Checked && DiffSearchBox.Text != null && DiffSearchBox.Text.Trim() != "")
+                {
+                    SearchDiff("", tempPath, savedPath + "\\" + OutFileBox.Text, appendfile, DiffSearchBox, richTextResult2);
+                    appendfile = true;
+                }
+                if (checkBox11.Checked && secondFile != null && secondFile != "")
+                {
+                    string fp = secondFile;
+                    if (optPathBox.Text.Trim() != "")
+                    {
+                        if (optPathBox.Text.Contains("/"))
+                        {
+                            slash = "/";
+                        }
+                        else if (optPathBox.Text.Contains("\\"))
+                        {
+                            slash = "\\";
+                        }
+                        else
+                        {
+                            slash = "";
+                            fp = secondFile;
+                        }
+                        if (optPathBox.Text.Trim().LastIndexOf(slash) == optPathBox.Text.Trim().Length)
+                        {
+                            slash = "";
+                        }
+                        fp = optPathBox.Text.Trim() + slash + secondFile.Trim();
+
+                    }
+                    try
+                    {
+                        GetFiles(fp, savedPath, ip, false); //to transfer a file from remote to this PC
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Unable to locate second file");
+                        return;
+                    }
+                    slash = "\\";
+                    if (savedPath.Trim().LastIndexOf("\\") == savedPath.Trim().Length)
+                    {
+                        slash = "";
+                    }
+
+                    SearchSecondFile(savedPath + slash + secondFile, savedPath + slash + OutFileBox.Text, appendfile, richTextResult2);
+                }
+            }
+        }
+               
+
+        private string ExtractFilefromPath(string filename)
+        {
+            string str = "";
+            int i = 0;
+            try
+            {
+                str = filename.Replace('\\', '/');
+                if (filename.Contains("/"))
+                {
+                    i = filename.LastIndexOf("/") +1;
+                    str = filename.Substring(i);
+                    return str;
+                }
+                else
+                { return filename; }
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        private bool Diff(string Templatefile, string Compfile, string Diffile, RichTextBox RichDiff)
+        {   //compare the Compfile against a Templatefile - out anything that is different into the Diffile
+            try
+            {
+                string c, t, d;
+                bool found = false;
+                RichDiff.Text = "";
+                if (!File.Exists(Templatefile))
+                {
+                    MessageBox.Show("Template file to compare against does not exist");
+                    return false;
+                }
+                if (!File.Exists(Compfile))
+                {
+                    MessageBox.Show("File to compare does not exist");
+                    return false;
+                }
+                //StreamReader temp = new StreamReader(Templatefile);
+                StreamReader comp = new StreamReader(Compfile);
+                if (File.Exists(Diffile))
+                {
+                    File.Delete(Diffile);
+                }
+                StreamWriter diff = new StreamWriter(Diffile); //temporary diff file                
+                
+                using (diff)
+                {
+                    diff.WriteLine("File found: " + Compfile);
+                    diff.WriteLine("--------------------------------------------");
+                    using (comp) //file to compare against
+                    {
+                        while (!comp.EndOfStream)
+                        { 
+                            c = comp.ReadLine();
+                            using (StreamReader temp = new StreamReader(Templatefile))    //template file
+                            {
+                                found = false;
+                                while (!temp.EndOfStream)
+                                {
+                                    t = temp.ReadLine();
+                                    if (t == c)
+                                    {
+                                        found = true;
+                                    }
+                                }
+                                if (!found)
+                                {
+                                    diff.WriteLine(c); //if the line doesn't exist in the template file - put it in the diff file
+                                    RichDiff.Text = RichDiff.Text + c + Environment.NewLine;
+                                }
+                                temp.Close();
+                            }                            
+                        }
+                        comp.Close();                        
+                    }
+                    diff.Close(); 
+                }
+                return true;
+            }
+            catch (System.Exception excep)
+            {
+                StackTrace stackTrace = new StackTrace();
+                MessageBox.Show("In: " + stackTrace.GetFrame(0).GetMethod().Name + ", " + excep.Message);
+                return false;
+            }
+
+        }
+        private bool SearchDiff(string foundFName, string Diffile, string outfile, bool append, TextBox SearchBox, RichTextBox RichBox)
+        {       //search in Diffile for string contained in DiffSearchBox
+            string s = "";
+            string d = "";
+            string s1 = "";
+            string s2 = "";
+            string s3 = "";
+            bool f = false;
+            int lines = 0;
+            string tmp = "";
+
+            try
+            {
+                //TextReader read = new System.IO.StringReader(DiffSearchBox.Text);              
+
+                lines = SearchBox.Lines.Length;
+                secondFile = "";
+                if (lines > 0)
+                {
+                   if (File.Exists(Diffile)) //temporary diff file
+                   {
+                        StreamReader diff = new StreamReader(Diffile);
+
+                        
+                        StreamWriter outf = new StreamWriter(outfile, append);
+
+                        if (foundFName != "")
+                        {
+                            outf.WriteLine("File found: " + foundFName);
+                        }
+                        for (int i = 0; i < lines; i++)
+                        {
+                            f = false;
+                            s1 = "";
+                            s2 = "";
+                            s = SearchBox.Lines[i];
+                            if (s.Contains("%filename%"))   //if the search box contains a filename
+                            {
+                                s = s.Trim(); //remove spaces
+                                s1 = s.Substring(0, s.IndexOf("%filename%"));
+                                s2 = s.Substring(s.IndexOf("%filename") + "%filename%".Length);
+                                f = true;
+                            }
+                            using (diff)
+                            {
+                               
+                                using (outf) //true to append
+                                {
+                                    while (!diff.EndOfStream)
+                                    {
+                                        d = diff.ReadLine();
+                                        d = d.Trim();
+                                        if (f)  //if a filename found extract its name into secondFile
+                                        {
+                                            if (d.StartsWith(s1) && d.EndsWith(s2))
+                                            {
+                                                s3 = d.Replace(s1, "");
+                                                secondFile = s3.Replace(s2, ""); //extract the nameof a second file to search through (eg. DNS zone file)
+                                                tmp = "Filename: " + secondFile;
+                                                outf.WriteLine(tmp);
+                                                RichBox.Text = RichBox.Text + tmp + Environment.NewLine;
+                                            }
+                                        }
+                                        else if (d.Contains(s)) //if its not a file its a string
+                                        {
+                                            tmp = "Found: " + s + " in: " + d;
+                                                outf.WriteLine(tmp); //if found contents of DiffSearchBox in diff file write it out
+                                                RichBox.Text = RichBox.Text + tmp + Environment.NewLine;
+                                        }
+                                        else
+                                        {
+                                            RichBox.Text = RichBox.Text + d + Environment.NewLine;
+                                        }
+
+                                    }
+                                    outf.WriteLine("------------------------------------------------");
+                                    outf.Close();
+                                }
+                                diff.Close();
+                            }                            
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Diff file not found");
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No lines in box");
+                    return false;
+                }
+            }
+            catch (System.Exception excep)
+            {
+                StackTrace stackTrace = new StackTrace();
+                MessageBox.Show("In: " + stackTrace.GetFrame(0).GetMethod().Name + ", " + excep.Message);
+                return false;
+            }
+        }
+        private bool SearchSecondFile(string fname, string outfile, bool append, RichTextBox richBox)
+        {   //search for strings in second search file (extracted from pervious search)
+            string s = "";
+            string fs = "";
+            int lines = 0;
+            string tmp = "";
+            bool found = false;
+            try
+            {
+                if (File.Exists(fname))
+                {
+                    lines = fileintextBox.Lines.Length;
+                   for (int i =0; i < lines; i++)
+                    {
+                        s = fileintextBox.Lines[i];
+                        using (StreamReader f = new StreamReader(fname))
+                        {
+                            using (StreamWriter outf = new StreamWriter(outfile, append))
+                            {
+                               
+                                while (!f.EndOfStream)
+                                {
+                                    fs = f.ReadLine();
+                                    if (fs.Contains(s))
+                                    {
+                                        tmp = "Found: " + s + " in: " + fs;
+                                        outf.WriteLine(tmp);
+                                        richBox.Text = richBox.Text + tmp + Environment.NewLine;
+                                        found = true;
+                                    }
+                                    else
+                                    {
+                                        outf.WriteLine(fs);
+                                        richBox.Text = richBox.Text + fs + Environment.NewLine;
+                                    }
+                                }
+                                outf.WriteLine("------------------------------------------------");
+                                outf.Close();
+                                
+                            }
+                            f.Close();
+                        }
+                    }
+                   if (found)
+                    {
+                        return true;
+                    }
+                   else
+                    {
+                        return false;
+                    }                    
+                }
+                else
+                {
+                    MessageBox.Show("Second file not found");
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool CheckProcess(string ip, string outfile, bool append)
+        {   //check to see if processes running
+            string process = "";
+            string cmd = "";
+            string result = "";
+            int lines = 0;
+            ProcessRichResult.Text = "";
+            bool ret = false;
+            string nl = Environment.NewLine;
+            try
+            {
+                using (StreamWriter outf = new StreamWriter(outfile, append))
+                {                   
+                    try
+                    {
+                        outf.WriteLine("-------------------------------------------------");
+                        outf.WriteLine("Process checks:");
+                        lines = ProcessBox.Lines.Length;
+                        for (int i = 0; i < lines; i++)
+                        {
+                            process = ProcessBox.Text.Trim();
+                            cmd = "ps -e | grep " + process;
+                            
+                            result = RunReturnCommand(ip, cmd);
+                            if (result.Trim() != "" && result != null)
+                            {
+                                if (result.Contains(process))
+                                {
+                                    ProcessRichResult.Text = "Running: " + process +nl;                                   
+                                    ret = true;
+                                }
+                                else if (result.Contains("No connection"))
+                                {
+                                    ProcessRichResult.Text = "Not connected" +nl;
+                                    ret = false;
+                                }
+                                else
+                                {
+                                    ProcessRichResult.Text = "Not found: " + process +nl;
+                                    ret = false;
+                                }
+                            }
+                            else
+                            {
+                                ProcessRichResult.Text = "Not found: " + process +nl;
+                                ret = false;
+                            }
+                            outf.WriteLine(ProcessRichResult.Text);
+                        }
+                    }
+                    catch
+                    {
+                        ret = false;
+                    }
+                    outf.Close();
+                }
+            }
+            catch { }
+            return ret;
+        }
+
+        private bool RunTestCommands(string ip, string outfile, bool append)
+        {
+            string cmd = "";
+            bool run = false;
+            int lines = 0;
+            string s = "";
+            string result = "";
+            bool ret = false;
+            string nl = Environment.NewLine;
+            RichTestResultBox.Text = "";
+            try
+            {
+                using (StreamWriter outf = new StreamWriter(outfile, append))
+                {
+                    try
+                    {
+                        outf.WriteLine("-------------------------------------------------");
+                        outf.WriteLine("Tests run:");
+                        lines = TestBox.Lines.Length;
+                        for (int i = 0; i < lines; i++)
+                        {
+                            s = TestBox.Lines[i];
+                            cmd = s.Trim();
+                            result = RunReturnCommand(ip, cmd);
+                            if (result.Trim() != "" && result != null)
+                            {
+                                RichTestResultBox.Text = RichTestResultBox.Text + result +nl;
+                                run = true;
+                            }
+                            else if (result.Contains("No connection"))
+                            {
+                                RichTestResultBox.Text = "Not connected" +nl;
+                            }
+                            else
+                            {
+                                RichTestResultBox.Text = "No return result" +nl;
+                            }
+
+                        }
+                    }
+                    catch
+                    {
+                        ret = false;
+                    }
+                    if (run)
+                    {
+                        ret =true;
+                    }
+                    else
+                    {
+                        ret = false;
+                    }
+                    outf.WriteLine(RichTestResultBox.Text);
+                    outf.Close();
+                }
+            }
+            catch { }
+            return ret;
+
+        }
+        public void wait(int milliseconds)
+        {
+            System.Windows.Forms.Timer timer1 = new System.Windows.Forms.Timer();
+            if (milliseconds == 0 || milliseconds < 0) return;
+            
+            timer1.Interval = milliseconds;
+            timer1.Enabled = true;
+            timer1.Start();
+            timer1.Tick += (s, e) =>
+            {
+                
+                timer1.Enabled = false;
+                timer1.Stop();
+               
+            };
+            while (timer1.Enabled)
+            {
+                Application.DoEvents();
+            }
+        }
+
+        private string RunReturnCommand(string ip, string cmd)
+        {
+            //string commandResult = "";
+            var commandResult = "";
+            TimeSpan interval = new TimeSpan(0, 0, 15); //timeout of 15 seconds for commands
+
+            //timer1.Interval = 2000; //allow 10 second for command to complete - if not stop it
+
+            try
+            {
+                               
+                using (var ssh = new SshClient(CreateConnectionInfo(ip)))
+                {
+                    try
+                    {
+                        ssh.Connect();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Cannot connect - check connection");
+                        return "No connection";
+                    }
+                    SshCommand command = ssh.CreateCommand(cmd);
+                    //commandResult = ssh.RunCommand(cmd).BeginExecute().ToString();
+                    //IAsyncResult Aresult = command.BeginExecute();
+                    command.CommandTimeout = interval;
+                    command.Execute();
+                    commandResult = command.Result;
+                    /*//timerCount = false;
+                    int c = 0;
+                    int i = -1;
+                    while (i != 0 && c <10)
+                    {
+                        wait(1000);
+                        i = command.ExitStatus;
+                        if (i == 0)
+                        {
+                            c = 10;
+                        }
+                        c++;                                                                                             
+                    }
+                   
+                    var result = ssh.RunCommand(cmd).EndExecute(Aresult);
+                    commandResult = result;*/
+
+                    try
+                    {
+                        ssh.Disconnect();
+                        ssh.Dispose();
+                        return commandResult;
+                    }
+                    catch { return commandResult; }
+                }
+                return commandResult;
+            }
+            catch { return commandResult; }
+        }
+
+
+        private void checkBox8_CheckedChanged(object sender, EventArgs e)
+        {
+            bool b = checkBox8.Checked;
+            groupBox3.Visible = b;
+            groupBox4.Visible = b;
+            groupBox6.Visible = b;
+            groupBox7.Visible = b;
+            
+
+        }
+
+        private void DiffSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            if (DiffSearchBox.Text.Contains("%filename%"))
+            {
+                optPathBox.Visible = true;
+                optPathlabel.Visible = true;
+            }
+            else
+            {
+                optPathBox.Visible = false;
+                optPathlabel.Visible = false;
+            }
+        }
+
+        private void openFileDialog4_FileOk(object sender, CancelEventArgs e)
+        {
+            liveTempBox.Text = openFileDialog4.FileName;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timerCount = true;
+            //timer1.Stop();
+            
+            //timer1.Enabled = false;
+        }
+
+        private void initialRootBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void liveRootbutton_Click(object sender, EventArgs e)
+        {
+            handleRoot();
+        }
+
+        private void dirBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void optPathBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox10_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void dirBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox5.Visible = !checkBox9.Checked;
+            textBox9.Visible = checkBox9.Checked;
+        }
+
 
         private void clearForm()
         {
