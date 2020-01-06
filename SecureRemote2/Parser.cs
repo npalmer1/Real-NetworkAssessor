@@ -54,8 +54,8 @@ namespace SecureRemote2
                 }
                 if (tasklist[i].taskexist)
                 {
-                    max = max + tasklist[i].taskmax;
-                    total = total + tasklist[i].tasktotal;
+                    max = max + tasklist[i].taskmax; //max number of tasks 
+                    total = total + tasklist[i].tasktotal; //task total
                 }
             }
             if (total > max || max == 0)
@@ -89,7 +89,7 @@ namespace SecureRemote2
             }
         }
         
-        public int Parse3(int fileno, bool append, bool checkdefault)
+        public int Parse3(int fileno, bool append, bool checkdefault) //find number of lines correct in a file (infile) compared to template (ftemplate)
         {
             //string fname = "";
             //string ftemp = @"C:\output.txt";
@@ -322,7 +322,7 @@ namespace SecureRemote2
                                                         {
                                                             if (!lineused[lineno - 1])
                                                             {
-                                                                if (l2.StartsWith(altstr.Trim()) && l2.Contains(altend)) //if alternative command found
+                                                                if (l2.StartsWith(altstr.Trim()) && l2.Contains(altend) && altstr.Trim().Length > 0) //if alternative command found
                                                                 {
                                                                     lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
                                                                     if (taskno == 0)
