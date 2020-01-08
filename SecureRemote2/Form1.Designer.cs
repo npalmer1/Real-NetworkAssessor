@@ -82,7 +82,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.CRcheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.CrgroupBox = new System.Windows.Forms.GroupBox();
             this.criteriaBox1 = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
@@ -184,6 +183,10 @@
             this.openTermButton = new System.Windows.Forms.Button();
             this.termBox = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.richTextResult2 = new System.Windows.Forms.RichTextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.richDiffResult = new System.Windows.Forms.RichTextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label65 = new System.Windows.Forms.Label();
             this.dirBox3 = new System.Windows.Forms.TextBox();
@@ -202,10 +205,10 @@
             this.optPathBox = new System.Windows.Forms.TextBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.label55 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
             this.OutFileBox = new System.Windows.Forms.TextBox();
             this.label54 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label60 = new System.Windows.Forms.Label();
             this.Gobutton = new System.Windows.Forms.Button();
             this.Filebutton = new System.Windows.Forms.Button();
             this.liveRemoteBox = new System.Windows.Forms.TextBox();
@@ -228,6 +231,10 @@
             this.label56 = new System.Windows.Forms.Label();
             this.checkBox12 = new System.Windows.Forms.CheckBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.label71 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.richTextResult4 = new System.Windows.Forms.RichTextBox();
+            this.richTextResult3 = new System.Windows.Forms.RichTextBox();
             this.label69 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
             this.addStringBox2 = new System.Windows.Forms.TextBox();
@@ -265,14 +272,6 @@
             this.connectableCheckBox = new System.Windows.Forms.CheckBox();
             this.openFileDialog4 = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.richDiffResult = new System.Windows.Forms.RichTextBox();
-            this.richTextResult2 = new System.Windows.Forms.RichTextBox();
-            this.richTextResult3 = new System.Windows.Forms.RichTextBox();
-            this.richTextResult4 = new System.Windows.Forms.RichTextBox();
-            this.label70 = new System.Windows.Forms.Label();
-            this.label71 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -283,14 +282,14 @@
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.tabPage6.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -349,7 +348,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage1.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuration";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -654,7 +653,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage2.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Transfer";
             // 
@@ -892,7 +891,6 @@
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.tabPage3.Controls.Add(this.CRcheckBox);
-            this.tabPage3.Controls.Add(this.checkBox7);
             this.tabPage3.Controls.Add(this.CrgroupBox);
             this.tabPage3.Controls.Add(this.checkBox6);
             this.tabPage3.Controls.Add(this.label48);
@@ -972,7 +970,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage3.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Assess";
             // 
@@ -987,17 +985,6 @@
             this.CRcheckBox.Text = "Show \r\ncriteria";
             this.CRcheckBox.UseVisualStyleBackColor = true;
             this.CRcheckBox.CheckedChanged += new System.EventHandler(this.CRcheckBox_CheckedChanged);
-            // 
-            // checkBox7
-            // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(0, 0);
-            this.checkBox7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(104, 22);
-            this.checkBox7.TabIndex = 101;
-            this.checkBox7.Text = "checkBox7";
-            this.checkBox7.UseVisualStyleBackColor = true;
             // 
             // CrgroupBox
             // 
@@ -1934,7 +1921,7 @@
             this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage4.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Commands";
             // 
@@ -2046,7 +2033,7 @@
             this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage5.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage5.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Terminal";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2132,6 +2119,44 @@
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Live1";
             this.tabPage7.Click += new System.EventHandler(this.tabPage7_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.richTextResult2);
+            this.groupBox7.Location = new System.Drawing.Point(653, 611);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(622, 283);
+            this.groupBox7.TabIndex = 43;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Results:";
+            this.groupBox7.Visible = false;
+            // 
+            // richTextResult2
+            // 
+            this.richTextResult2.Location = new System.Drawing.Point(11, 29);
+            this.richTextResult2.Name = "richTextResult2";
+            this.richTextResult2.Size = new System.Drawing.Size(594, 233);
+            this.richTextResult2.TabIndex = 0;
+            this.richTextResult2.Text = "";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.richDiffResult);
+            this.groupBox6.Location = new System.Drawing.Point(653, 244);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(611, 334);
+            this.groupBox6.TabIndex = 42;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Difference result:";
+            this.groupBox6.Visible = false;
+            // 
+            // richDiffResult
+            // 
+            this.richDiffResult.Location = new System.Drawing.Point(16, 32);
+            this.richDiffResult.Name = "richDiffResult";
+            this.richDiffResult.Size = new System.Drawing.Size(578, 276);
+            this.richDiffResult.TabIndex = 0;
+            this.richDiffResult.Text = "";
             // 
             // groupBox5
             // 
@@ -2320,6 +2345,15 @@
             this.label55.TabIndex = 13;
             this.label55.Text = "Strings to look for:";
             // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Location = new System.Drawing.Point(121, 263);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(427, 18);
+            this.label60.TabIndex = 25;
+            this.label60.Text = "*line containing %filename% is a pointer to another file to search";
+            // 
             // OutFileBox
             // 
             this.OutFileBox.Location = new System.Drawing.Point(178, 195);
@@ -2345,15 +2379,6 @@
             this.textBox9.Size = new System.Drawing.Size(219, 24);
             this.textBox9.TabIndex = 29;
             this.textBox9.Visible = false;
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(121, 263);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(427, 18);
-            this.label60.TabIndex = 25;
-            this.label60.Text = "*line containing %filename% is a pointer to another file to search";
             // 
             // Gobutton
             // 
@@ -2593,6 +2618,40 @@
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "Live3";
             // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.Location = new System.Drawing.Point(667, 384);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(62, 18);
+            this.label71.TabIndex = 13;
+            this.label71.Text = "Results:";
+            // 
+            // label70
+            // 
+            this.label70.AutoSize = true;
+            this.label70.Location = new System.Drawing.Point(664, 51);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(62, 18);
+            this.label70.TabIndex = 12;
+            this.label70.Text = "Results:";
+            // 
+            // richTextResult4
+            // 
+            this.richTextResult4.Location = new System.Drawing.Point(664, 407);
+            this.richTextResult4.Name = "richTextResult4";
+            this.richTextResult4.Size = new System.Drawing.Size(544, 274);
+            this.richTextResult4.TabIndex = 11;
+            this.richTextResult4.Text = "";
+            // 
+            // richTextResult3
+            // 
+            this.richTextResult3.Location = new System.Drawing.Point(664, 77);
+            this.richTextResult3.Name = "richTextResult3";
+            this.richTextResult3.Size = new System.Drawing.Size(544, 278);
+            this.richTextResult3.TabIndex = 10;
+            this.richTextResult3.Text = "";
+            // 
             // label69
             // 
             this.label69.AutoSize = true;
@@ -2687,7 +2746,7 @@
             this.tabPage6.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage6.Size = new System.Drawing.Size(1308, 821);
+            this.tabPage6.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage6.TabIndex = 4;
             this.tabPage6.Text = "Help";
             this.tabPage6.Click += new System.EventHandler(this.tabPage5_Click);
@@ -2882,78 +2941,6 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.richDiffResult);
-            this.groupBox6.Location = new System.Drawing.Point(653, 244);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(611, 334);
-            this.groupBox6.TabIndex = 42;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Difference result:";
-            this.groupBox6.Visible = false;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.richTextResult2);
-            this.groupBox7.Location = new System.Drawing.Point(653, 611);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(622, 283);
-            this.groupBox7.TabIndex = 43;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Results:";
-            this.groupBox7.Visible = false;
-            // 
-            // richDiffResult
-            // 
-            this.richDiffResult.Location = new System.Drawing.Point(16, 32);
-            this.richDiffResult.Name = "richDiffResult";
-            this.richDiffResult.Size = new System.Drawing.Size(578, 276);
-            this.richDiffResult.TabIndex = 0;
-            this.richDiffResult.Text = "";
-            // 
-            // richTextResult2
-            // 
-            this.richTextResult2.Location = new System.Drawing.Point(11, 29);
-            this.richTextResult2.Name = "richTextResult2";
-            this.richTextResult2.Size = new System.Drawing.Size(594, 233);
-            this.richTextResult2.TabIndex = 0;
-            this.richTextResult2.Text = "";
-            // 
-            // richTextResult3
-            // 
-            this.richTextResult3.Location = new System.Drawing.Point(664, 77);
-            this.richTextResult3.Name = "richTextResult3";
-            this.richTextResult3.Size = new System.Drawing.Size(544, 278);
-            this.richTextResult3.TabIndex = 10;
-            this.richTextResult3.Text = "";
-            // 
-            // richTextResult4
-            // 
-            this.richTextResult4.Location = new System.Drawing.Point(664, 407);
-            this.richTextResult4.Name = "richTextResult4";
-            this.richTextResult4.Size = new System.Drawing.Size(544, 274);
-            this.richTextResult4.TabIndex = 11;
-            this.richTextResult4.Text = "";
-            // 
-            // label70
-            // 
-            this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(664, 51);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(62, 18);
-            this.label70.TabIndex = 12;
-            this.label70.Text = "Results:";
-            // 
-            // label71
-            // 
-            this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(667, 384);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(62, 18);
-            this.label71.TabIndex = 13;
-            this.label71.Text = "Results:";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -2995,6 +2982,8 @@
             this.tabPage5.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -3006,8 +2995,6 @@
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
             this.tabPage6.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3193,7 +3180,6 @@
         private System.Windows.Forms.TextBox criteriaBox1;
         private System.Windows.Forms.GroupBox CrgroupBox;
         private System.Windows.Forms.CheckBox CRcheckBox;
-        private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.TextBox fileintextBox;

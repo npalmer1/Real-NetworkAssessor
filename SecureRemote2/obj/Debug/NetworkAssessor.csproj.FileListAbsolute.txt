@@ -38,3 +38,4 @@ C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Deb
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csproj.CopyComplete
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.exe
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.pdb
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csprojAssemblyReference.cache
