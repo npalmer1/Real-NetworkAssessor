@@ -272,6 +272,8 @@
             this.connectableCheckBox = new System.Windows.Forms.CheckBox();
             this.openFileDialog4 = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.Runbutton1 = new System.Windows.Forms.Button();
+            this.Runbutton2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -2465,6 +2467,7 @@
             // tabPage8
             // 
             this.tabPage8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.tabPage8.Controls.Add(this.Runbutton1);
             this.tabPage8.Controls.Add(this.ProcessRichResult);
             this.tabPage8.Controls.Add(this.label64);
             this.tabPage8.Controls.Add(this.label63);
@@ -2597,6 +2600,7 @@
             // tabPage9
             // 
             this.tabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.tabPage9.Controls.Add(this.Runbutton2);
             this.tabPage9.Controls.Add(this.label71);
             this.tabPage9.Controls.Add(this.label70);
             this.tabPage9.Controls.Add(this.richTextResult4);
@@ -2691,9 +2695,9 @@
             this.checkBox15.AutoSize = true;
             this.checkBox15.Location = new System.Drawing.Point(56, 370);
             this.checkBox15.Name = "checkBox15";
-            this.checkBox15.Size = new System.Drawing.Size(112, 22);
+            this.checkBox15.Size = new System.Drawing.Size(133, 22);
             this.checkBox15.TabIndex = 5;
-            this.checkBox15.Text = "checkBox15";
+            this.checkBox15.Text = "Search for file 2";
             this.checkBox15.UseVisualStyleBackColor = true;
             // 
             // checkBox14
@@ -2701,9 +2705,9 @@
             this.checkBox14.AutoSize = true;
             this.checkBox14.Location = new System.Drawing.Point(40, 22);
             this.checkBox14.Name = "checkBox14";
-            this.checkBox14.Size = new System.Drawing.Size(112, 22);
+            this.checkBox14.Size = new System.Drawing.Size(133, 22);
             this.checkBox14.TabIndex = 4;
-            this.checkBox14.Text = "checkBox14";
+            this.checkBox14.Text = "Search for file 1";
             this.checkBox14.UseVisualStyleBackColor = true;
             // 
             // label67
@@ -2940,6 +2944,26 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // Runbutton1
+            // 
+            this.Runbutton1.Location = new System.Drawing.Point(770, 61);
+            this.Runbutton1.Name = "Runbutton1";
+            this.Runbutton1.Size = new System.Drawing.Size(101, 49);
+            this.Runbutton1.TabIndex = 46;
+            this.Runbutton1.Text = "Run Tests";
+            this.Runbutton1.UseVisualStyleBackColor = true;
+            this.Runbutton1.Click += new System.EventHandler(this.Runbutton1_Click);
+            // 
+            // Runbutton2
+            // 
+            this.Runbutton2.Location = new System.Drawing.Point(524, 46);
+            this.Runbutton2.Name = "Runbutton2";
+            this.Runbutton2.Size = new System.Drawing.Size(92, 50);
+            this.Runbutton2.TabIndex = 14;
+            this.Runbutton2.Text = "Run Tests";
+            this.Runbutton2.UseVisualStyleBackColor = true;
+            this.Runbutton2.Click += new System.EventHandler(this.Runbutton2_Click);
             // 
             // Form1
             // 
@@ -3245,6 +3269,8 @@
         private System.Windows.Forms.Label label70;
         private System.Windows.Forms.RichTextBox richTextResult4;
         private System.Windows.Forms.RichTextBox richTextResult3;
+        private System.Windows.Forms.Button Runbutton1;
+        private System.Windows.Forms.Button Runbutton2;
     }
 }
 
