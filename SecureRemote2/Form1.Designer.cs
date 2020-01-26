@@ -183,6 +183,8 @@
             this.openTermButton = new System.Windows.Forms.Button();
             this.termBox = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.loadLivebutton = new System.Windows.Forms.Button();
+            this.saveLivebutton = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.richTextResult2 = new System.Windows.Forms.RichTextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -218,6 +220,7 @@
             this.label51 = new System.Windows.Forms.Label();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.Runbutton1 = new System.Windows.Forms.Button();
             this.ProcessRichResult = new System.Windows.Forms.RichTextBox();
             this.label64 = new System.Windows.Forms.Label();
             this.label63 = new System.Windows.Forms.Label();
@@ -231,6 +234,7 @@
             this.label56 = new System.Windows.Forms.Label();
             this.checkBox12 = new System.Windows.Forms.CheckBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.Runbutton2 = new System.Windows.Forms.Button();
             this.label71 = new System.Windows.Forms.Label();
             this.label70 = new System.Windows.Forms.Label();
             this.richTextResult4 = new System.Windows.Forms.RichTextBox();
@@ -272,8 +276,9 @@
             this.connectableCheckBox = new System.Windows.Forms.CheckBox();
             this.openFileDialog4 = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.Runbutton1 = new System.Windows.Forms.Button();
-            this.Runbutton2 = new System.Windows.Forms.Button();
+            this.folderBrowserDialog3 = new System.Windows.Forms.FolderBrowserDialog();
+            this.saveliveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openliveFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -2093,6 +2098,8 @@
             this.tabPage7.AutoScroll = true;
             this.tabPage7.AutoScrollMinSize = new System.Drawing.Size(0, 1100);
             this.tabPage7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.tabPage7.Controls.Add(this.loadLivebutton);
+            this.tabPage7.Controls.Add(this.saveLivebutton);
             this.tabPage7.Controls.Add(this.groupBox7);
             this.tabPage7.Controls.Add(this.groupBox6);
             this.tabPage7.Controls.Add(this.groupBox5);
@@ -2121,6 +2128,28 @@
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Live1";
             this.tabPage7.Click += new System.EventHandler(this.tabPage7_Click);
+            // 
+            // loadLivebutton
+            // 
+            this.loadLivebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadLivebutton.Location = new System.Drawing.Point(1176, 183);
+            this.loadLivebutton.Name = "loadLivebutton";
+            this.loadLivebutton.Size = new System.Drawing.Size(88, 36);
+            this.loadLivebutton.TabIndex = 45;
+            this.loadLivebutton.Text = "Load Tests";
+            this.loadLivebutton.UseVisualStyleBackColor = true;
+            this.loadLivebutton.Click += new System.EventHandler(this.loadLivebutton_Click);
+            // 
+            // saveLivebutton
+            // 
+            this.saveLivebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveLivebutton.Location = new System.Drawing.Point(1039, 183);
+            this.saveLivebutton.Name = "saveLivebutton";
+            this.saveLivebutton.Size = new System.Drawing.Size(91, 36);
+            this.saveLivebutton.TabIndex = 44;
+            this.saveLivebutton.Text = "Save Tests";
+            this.saveLivebutton.UseVisualStyleBackColor = true;
+            this.saveLivebutton.Click += new System.EventHandler(this.saveLivebutton_Click);
             // 
             // groupBox7
             // 
@@ -2487,6 +2516,16 @@
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "Live2";
             // 
+            // Runbutton1
+            // 
+            this.Runbutton1.Location = new System.Drawing.Point(770, 61);
+            this.Runbutton1.Name = "Runbutton1";
+            this.Runbutton1.Size = new System.Drawing.Size(101, 49);
+            this.Runbutton1.TabIndex = 46;
+            this.Runbutton1.Text = "Run Tests";
+            this.Runbutton1.UseVisualStyleBackColor = true;
+            this.Runbutton1.Click += new System.EventHandler(this.Runbutton1_Click);
+            // 
             // ProcessRichResult
             // 
             this.ProcessRichResult.Location = new System.Drawing.Point(390, 61);
@@ -2621,6 +2660,16 @@
             this.tabPage9.Size = new System.Drawing.Size(1312, 1166);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "Live3";
+            // 
+            // Runbutton2
+            // 
+            this.Runbutton2.Location = new System.Drawing.Point(524, 46);
+            this.Runbutton2.Name = "Runbutton2";
+            this.Runbutton2.Size = new System.Drawing.Size(92, 50);
+            this.Runbutton2.TabIndex = 14;
+            this.Runbutton2.Text = "Run Tests";
+            this.Runbutton2.UseVisualStyleBackColor = true;
+            this.Runbutton2.Click += new System.EventHandler(this.Runbutton2_Click);
             // 
             // label71
             // 
@@ -2945,25 +2994,14 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Runbutton1
+            // saveliveFileDialog
             // 
-            this.Runbutton1.Location = new System.Drawing.Point(770, 61);
-            this.Runbutton1.Name = "Runbutton1";
-            this.Runbutton1.Size = new System.Drawing.Size(101, 49);
-            this.Runbutton1.TabIndex = 46;
-            this.Runbutton1.Text = "Run Tests";
-            this.Runbutton1.UseVisualStyleBackColor = true;
-            this.Runbutton1.Click += new System.EventHandler(this.Runbutton1_Click);
+            this.saveliveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveliveFileDialog_FileOk);
             // 
-            // Runbutton2
+            // openliveFileDialog
             // 
-            this.Runbutton2.Location = new System.Drawing.Point(524, 46);
-            this.Runbutton2.Name = "Runbutton2";
-            this.Runbutton2.Size = new System.Drawing.Size(92, 50);
-            this.Runbutton2.TabIndex = 14;
-            this.Runbutton2.Text = "Run Tests";
-            this.Runbutton2.UseVisualStyleBackColor = true;
-            this.Runbutton2.Click += new System.EventHandler(this.Runbutton2_Click);
+            this.openliveFileDialog.FileName = "openFileDialog5";
+            this.openliveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openliveFileDialog_FileOk);
             // 
             // Form1
             // 
@@ -3271,6 +3309,11 @@
         private System.Windows.Forms.RichTextBox richTextResult3;
         private System.Windows.Forms.Button Runbutton1;
         private System.Windows.Forms.Button Runbutton2;
+        private System.Windows.Forms.Button saveLivebutton;
+        private System.Windows.Forms.Button loadLivebutton;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog3;
+        private System.Windows.Forms.SaveFileDialog saveliveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openliveFileDialog;
     }
 }
 
