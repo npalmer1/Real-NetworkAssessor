@@ -2595,6 +2595,7 @@
             this.TestBox.Name = "TestBox";
             this.TestBox.Size = new System.Drawing.Size(494, 132);
             this.TestBox.TabIndex = 37;
+            this.TestBox.TextChanged += new System.EventHandler(this.TestBox_TextChanged);
             // 
             // checkBox13
             // 

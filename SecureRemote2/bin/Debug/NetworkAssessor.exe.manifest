@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NetworkAssessor.exe" size="142848">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NetworkAssessor.exe" size="144896">
       <assemblyIdentity name="NetworkAssessor" version="1.0.1.3" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Dg+3F2wu9R50zq4TOnrrFdofMeI+nulpJ1SrUVfo2GI=</dsig:DigestValue>
+        <dsig:DigestValue>0YN+o6DOU9T5Q9PaDYz3xX4e12GECjcFxuK2nsuTRR0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
