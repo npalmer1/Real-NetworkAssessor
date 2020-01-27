@@ -3869,9 +3869,7 @@ namespace SecureRemote2
         private bool CycleDiffFiles(bool useBase, string BaseDir, string outfilename, string local, string savedfile)
         {
             int i = 0;
-            int f = 0;
-            //bool appendfile = false;
-            //string savedPath = "";
+            int f = 0;          
             string ipstr = "";
             
             string based = local;
@@ -4005,6 +4003,7 @@ namespace SecureRemote2
                         fp = optPathBox.Text.Trim() + slash + secondFile.Trim();
 
                     }
+                   
                     try
                     {
                         GetFiles(fp, savedPath, ip, false, true); //to transfer a file from remote to this PC
@@ -4019,8 +4018,8 @@ namespace SecureRemote2
                     {
                         slash = "";
                     }
-
-                    richTextResult2.Text = SearchSecondFile(savedPath + slash + secondFile, outfile, appendfile);
+                    string secondFilename = ExtractFilefromPath(secondFile);
+                    richTextResult2.Text = SearchSecondFile(savedPath + slash + secondFilename, outfile, appendfile);
                 }
                 else if (exist == 'N')
                 {
@@ -4074,8 +4073,7 @@ namespace SecureRemote2
                 {
                     MessageBox.Show("File to compare does not exist");
                     return "";
-                }
-                //StreamReader temp = new StreamReader(Templatefile);
+                }              
                 StreamReader comp = new StreamReader(Compfile);
                 if (File.Exists(Diffile))
                 {
