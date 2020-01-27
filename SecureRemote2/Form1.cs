@@ -3786,7 +3786,7 @@ namespace SecureRemote2
 
             savedPath = local;
             string outfilepath = savedPath + "\\" + outfilename;
-            WriteOutputFile(outfilepath, false, "#Live test: " + DateTime.Today.ToString() + nl + "------------------------------");
+            WriteOutputFile(outfilepath, false, "#Live test: " + DateTime.Now.ToString() + nl + "#PC: " + ipstr + nl + "#------------------------------");
             appendfile = true;
 
             if (checkBox8.Checked)

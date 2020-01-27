@@ -2327,7 +2327,7 @@
             // optPathlabel
             // 
             this.optPathlabel.AutoSize = true;
-            this.optPathlabel.Location = new System.Drawing.Point(16, 282);
+            this.optPathlabel.Location = new System.Drawing.Point(10, 294);
             this.optPathlabel.Name = "optPathlabel";
             this.optPathlabel.Size = new System.Drawing.Size(110, 36);
             this.optPathlabel.TabIndex = 36;
@@ -2379,7 +2379,7 @@
             // label60
             // 
             this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(121, 263);
+            this.label60.Location = new System.Drawing.Point(82, 262);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(427, 18);
             this.label60.TabIndex = 25;
