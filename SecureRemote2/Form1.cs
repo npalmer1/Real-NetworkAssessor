@@ -788,7 +788,7 @@ namespace SecureRemote2
             }
             else if (str.Contains("cygwin_nt"))
             {
-                OSVer = "windows";
+                OSVer = "cygwin_nt";
             }
 
             else if (str.Contains("linux"))
@@ -893,6 +893,23 @@ namespace SecureRemote2
                         return 'E';
                     }
                 }
+                else if (OSVer.Contains("cygwin"))
+                {
+                    cmd = "dir " + "\"" + remotefilepath + "\"";
+                    result = RunACommand(ip, cmd);
+                    if (result.ToLower().Contains(Path.GetFileName(fname).ToLower()))
+                    {
+                        return 'F';
+                    }
+                    else if (result.ToLower().Contains("not found"))
+                    {
+                        return 'N';
+                    }
+                    else
+                    {
+                        return 'E';
+                    }
+                }
             }
             catch
             {
@@ -933,7 +950,7 @@ namespace SecureRemote2
             catch
             { }
         }
-        private bool GetFiles(string remote, string local, string ip, bool to, bool deleteOld) //to transfer a file from linux to this PC
+        private bool GetFiles(string remote, string local, string ip, bool to, bool deleteOld, bool Folder) //to transfer a file from linux to this PC
         {
 
             string fname = remote.Replace('/', '\\');
@@ -989,14 +1006,27 @@ namespace SecureRemote2
                         if (to) //send local folder to remote PC
                         {
                             //scp.Download(local, new DirectoryInfo(@remote));
-                            RunACommand(ip, "mkdir " + remote);
-                            scp.Upload(new DirectoryInfo(@local), remote);
+                            if (Folder)
+                            {
+                                RunACommand(ip, "mkdir " + remote);
+                                scp.Upload(new DirectoryInfo(@local), remote);
+                            }
+                            else
+                            {
+                                scp.Upload(new FileInfo(@local + "\\" + fname), remote);
+                            }
                         }
                         else  //retrieve folder from remote to local
                         {
-
-                            scp.Download(remote, new DirectoryInfo(@local));    //otherwise from remote to local
-
+                            if (Folder)
+                            {
+                                scp.Download(remote, new DirectoryInfo(@local));    //otherwise from remote to local
+                            }
+                            else
+                            {
+                                scp.Download(remote, new FileInfo(@local + "\\" + fname)); //file and not folder
+                            }
+                          
                         }
                         scp.Disconnect();
                     }
@@ -1015,7 +1045,7 @@ namespace SecureRemote2
             return true;
         }
 
-        private bool GetFiles_PC_List(bool device, bool useBase, string BaseDir, string remote, string local, bool to)
+        private bool GetFiles_PC_List(bool device, bool useBase, string BaseDir, string remote, string local, bool to, bool FolderorFile)
         {
 
             bool a;
@@ -1030,6 +1060,7 @@ namespace SecureRemote2
             bool noconn = false;
             int rem1 = 0;
             string based = local;
+           
 
             if (IPrangeCheckBox.Checked)
             {
@@ -1071,7 +1102,7 @@ namespace SecureRemote2
                         {
                             //if (FindRemoteFolder(pc, remote))   //folder found and not empty
                             //{
-                            a = GetFiles(remote, local, pc, to, true);
+                            a = GetFiles(remote, local, pc, to, true, FolderorFile ); 
                             noconn = false;
                             foldercount++;
                             //}                            
@@ -1112,8 +1143,9 @@ namespace SecureRemote2
             //localStr = localBox.Text + "\\" + dirBox.Text;
 
             checkall = true;
+            bool Folder = true;
 
-            if (GetFiles_PC_List(deviceCheckBox.Checked, useBasecheckBox.Checked, dirBox.Text, remoteStr, localStr, to))
+            if (GetFiles_PC_List(deviceCheckBox.Checked, useBasecheckBox.Checked, dirBox.Text, remoteStr, localStr, to, Folder))
             {
                 if (checkall)
                 { MessageBox.Show("Folder transferred"); }
@@ -3776,6 +3808,7 @@ namespace SecureRemote2
             string host = "";
             string based = local;            
             bool connected = true;
+            bool getFile = false;
             
             net = baseip.Substring(0, baseip.Length - 1);
             host = Convert.ToString(ipstr);
@@ -3794,7 +3827,7 @@ namespace SecureRemote2
                 char exist = CheckRemoteFile(liveRemoteBox.Text, host); //if remote file exists
                 if (exist == 'F')   //if remote file found
                 {
-                    connected = GetFiles(liveRemoteBox.Text, savedPath, host, false, true);   //transfer files from remote
+                    connected = GetFiles(liveRemoteBox.Text, savedPath, host, false, true, getFile);   //transfer files from remote
                     if (connected)
                     {
                         PCTests(savedPath, savedfile, savedPath + "\\Temp.txt", appendfile, host, outfilepath);
@@ -3819,7 +3852,7 @@ namespace SecureRemote2
                 char exist = CheckRemoteFile(addBox1.Text, host); //if remote file exists
                 if (exist == 'F')   //if remote file found
                 {
-                    if (GetFiles(addBox1.Text, savedPath, host, false, true)) //to transfer a file from remote to this PC
+                    if (GetFiles(addBox1.Text, savedPath, host, false, true, getFile)) //to transfer a file from remote to this PC
                     {
                         savedfile = ExtractFilefromPath(addBox1.Text);
                         richTextResult3.Text = SearchDiff(addBox1.Text, savedPath + "\\" + savedfile, outfilepath, appendfile, addStringBox1);
@@ -3844,7 +3877,7 @@ namespace SecureRemote2
                 char exist = CheckRemoteFile(addBox1.Text, host); //if remote file exists
                 if (exist == 'F')   //if remote file found
                 {
-                    if (GetFiles(addBox2.Text, savedPath, host, false, true)) //to transfer a file from remote to this PC
+                    if (GetFiles(addBox2.Text, savedPath, host, false, true, getFile)) //to transfer a file from remote to this PC
                     {
                         savedfile = ExtractFilefromPath(addBox2.Text);
                         richTextResult4.Text = SearchDiff(addBox2.Text, savedPath + "\\" + savedfile, outfilepath, appendfile, addStringBox2);
@@ -3950,9 +3983,12 @@ namespace SecureRemote2
         {
             string OSVer = OSVersion(ip);
             string slash = "";
+            string outP = "";
             string fpath = optPathBox.Text.Trim();
-            richDiffResult.Text = Diff(liveTempBox.Text, savedPath + "\\" + savedfile, tempPath, outfile, appendfile, liveRemoteBox.Text); //local template, remote file to compare, temp diff file as output
+            outP =  Diff(liveTempBox.Text, savedPath + "\\" + savedfile, tempPath, outfile, appendfile, liveRemoteBox.Text); //local template, remote file to compare, temp diff file as outpu
+            richDiffResult.Text = richDiffResult.Text + outP + nl;
             appendfile = true;
+            bool getFile = false;
             if (richDiffResult.Text.Trim() != "")
             {
                 //create new output file then append to it
@@ -3964,7 +4000,7 @@ namespace SecureRemote2
                 if (optPathBox.Text.Trim() !="")
                 {
                     
-                    if (OSVer.Contains("linux"))
+                    if (OSVer.Contains("linux") || (OSVer.Contains("cygwin")))
                     {
                         slash = "/";
                     }
@@ -4006,7 +4042,7 @@ namespace SecureRemote2
                    
                     try
                     {
-                        GetFiles(fp, savedPath, ip, false, true); //to transfer a file from remote to this PC
+                        GetFiles(fp, savedPath, ip, false, true, getFile); //to transfer a file from remote to this PC
                     }
                     catch
                     {
@@ -4048,7 +4084,12 @@ namespace SecureRemote2
                     str = filename.Substring(i);
                     return str;
                 }
-                else
+                else if (filename.Contains("\\"))
+                {
+                    i = filename.LastIndexOf("\\") + 1;
+                    str = filename.Substring(i);
+                    return str;
+                }
                 { return filename; }
             }
             catch
@@ -4063,6 +4104,7 @@ namespace SecureRemote2
             {
                 string c, t, d;
                 bool found = false;
+                bool hasDiff = false;
                                
                 if (!File.Exists(Templatefile))
                 {
@@ -4086,6 +4128,9 @@ namespace SecureRemote2
                     using (diff)
                     {
                         diff.WriteLine("File found: " + Compfile);
+                        richDiffResult.Text = richDiffResult.Text + "File found: " + Compfile + nl;
+                        richDiffResult.Text = richDiffResult.Text + "------------------------------------" + nl;
+                        richDiffResult.Text = richDiffResult.Text + "#-----------------Difference BEGIN---------------------------" +nl;
                         diff.WriteLine("--------------------------------------------");
                         outF.WriteLine("#Remote File found: " + remoteFile);
                         outF.WriteLine("#-----------------Difference BEGIN---------------------------");
@@ -4102,11 +4147,12 @@ namespace SecureRemote2
                                         t = temp.ReadLine();
                                         if (t == c)
                                         {
-                                            found = true;
+                                            found = true;                                           
                                         }
                                     }
                                     if (!found)
                                     {
+                                        hasDiff = true;
                                         diff.WriteLine(c); //if the line doesn't exist in the template file - put it in the diff file
                                         outF.WriteLine(c);
                                         rstr = rstr + c + Environment.NewLine;
@@ -4119,7 +4165,13 @@ namespace SecureRemote2
                         }
                         diff.Close();
                     }
+                    if (!hasDiff)
+                    {
+                        outF.WriteLine("#------No Diff--------");
+                        richDiffResult.Text = richDiffResult.Text + "#-------No Diff--------" + nl;
+                    }
                     outF.WriteLine("#-----------------Difference END---------------------");
+                    richDiffResult.Text = richDiffResult.Text + "#-----------------Difference END---------------------------" + nl;
                     outF.Close();
                 }
                 return rstr;
