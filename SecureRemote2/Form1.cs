@@ -4387,7 +4387,7 @@ namespace SecureRemote2
                                 cmd = "ps -e | grep " + process;
                                 result = RunReturnCommand(ip, cmd);
                             }
-                            else if (OSVers.Contains("windows"))           //windows                                        )
+                            else if (OSVers.Contains("windows") || OSVers.Contains("cygwin"))           //windows                                        )
                             {
                                 cmd = "tasklist /FI \"IMAGENAME eq " + process + "\"";
                                 result = RunReturnCommand(ip, cmd);                              
