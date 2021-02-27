@@ -4737,6 +4737,11 @@ namespace SecureRemote2
 
         }
 
+        private void label52_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void dirBox3_TextChanged(object sender, EventArgs e)
         {
 
