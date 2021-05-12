@@ -146,10 +146,10 @@ namespace SecureRemote2
                             {
                                 Criteria[fileno] = "1"; //set default criteria to 1
                             }
+                            outp.WriteLine("Criteria: " + (fileno + 1).ToString());
                             outp.WriteLine("Marked file: " + infile[fileno]);
-                            outp.WriteLine("Criteria: " + (fileno+1).ToString());
-                            comment.WriteLine("Marked file: " + infile[fileno]);
-                            comment.WriteLine("Criteria: " + (fileno+1).ToString());
+                            comment.WriteLine("Criteria: " + (fileno + 1).ToString());
+                            comment.WriteLine("Marked file: " + infile[fileno]);                            
                             task = "0";
                             taskno = 0;
 
