@@ -403,8 +403,8 @@ namespace SecureRemote2
                                                     } //wend
                                                     if (!found)
                                                     {
-                                                        outp.Write("Task NOT found: " + task + ". ");
-                                                        outp.WriteLine("Command: " + cfgcmd + endstr);
+                                                        outp.Write("Task: " + task + ". ");
+                                                        outp.WriteLine("Command NOT found: "  + cfgcmd + endstr);
                                                     }
                                                   
                                                     nw.Close();
