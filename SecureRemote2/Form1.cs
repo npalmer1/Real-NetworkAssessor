@@ -122,7 +122,7 @@ namespace SecureRemote2
             MastercheckBox.Checked = true;
 
             //baseip = "172.16.199.0";
-            this.Text = "Real Network Assessor                   " + theVersion + "                               (c) 2021 /5                    ";
+            this.Text = "Real Network Assessor                   " + theVersion + "                               (c) 2022 /5                    ";
             try
             {
                 bool isExists = Directory.Exists(ConfigDir);
@@ -1559,6 +1559,12 @@ namespace SecureRemote2
             string s = Convert.ToString(PCno);
             if (PCno == -1) { s = "n/a"; }
 
+            //Ultramnarker output file:
+            string ext = Path.GetExtension(parser.fout);
+            string umf = Path.GetFileNameWithoutExtension(parser.fout);
+            string umpath = Path.GetDirectoryName(parser.fout);
+            parser.umfout = umpath + "\\" + umf + ".UM";
+
             if (defaultCheckBox.Checked) //is a default mark selected?
             {
 
@@ -1582,10 +1588,23 @@ namespace SecureRemote2
                     outp.WriteLine("Marks for assessment: " + assessTitleBox.Text);
                     outp.Close();
                 }
+                
             }
             catch { }
             try
             {
+                using (StreamWriter umoutp = new StreamWriter(parser.umfout, ap))
+                {
+
+                    umoutp.WriteLine("Ultramarker Export format");
+                    umoutp.WriteLine("PC: " + s);
+                    umoutp.WriteLine("Marks for assessment: " + assessTitleBox.Text);
+                    umoutp.Close();
+                }
+            }
+            catch { }
+            try
+            {                
                 using (StreamWriter comment = new StreamWriter(parser.fcomment, ap))
                 {
                     comment.WriteLine("PC: " + s);
@@ -1637,8 +1656,20 @@ namespace SecureRemote2
                                     outp.WriteLine("Percentage: " + score);
                                     outp.Close();
                                 }
+                                
                             }
                             catch { }
+                            try
+                            {
+                                using (StreamWriter umoutp = new StreamWriter(parser.umfout, true))
+                                {
+                                    umoutp.WriteLine("Lines correct: " + str);   //write results to the output file
+                                    umoutp.WriteLine("Percentage: " + score);
+                                    umoutp.Close();
+                                }
+                            }
+                            catch
+                            { }
                             try
                             {
                                 using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
@@ -1697,8 +1728,20 @@ namespace SecureRemote2
                     outp.WriteLine("Overall Result %: " + resultstr);   //write overall results to the output file                      
                     outp.Close();
                 }
+                
             }
             catch { }
+            try
+            {
+                using (StreamWriter umoutp = new StreamWriter(parser.umfout, true))
+                {
+                    umoutp.WriteLine("Overall lines: " + rawResultBox.Text); //write lines correct out of total
+                    umoutp.WriteLine("Overall Result %: " + resultstr);   //write overall results to the output file                      
+                    umoutp.Close();
+                }
+            }
+            catch
+            { }
             try
             {
                 using (StreamWriter comment = new StreamWriter(parser.fcomment, true))
@@ -1741,6 +1784,7 @@ namespace SecureRemote2
                     }
                     file1 = Path.GetFileName(parser.fout); //file name of output file for results
                     parser.fout = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(PCno) + "\\" + file1; //with its full path, inc PC1 etc
+
 
                     file1 = Path.GetFileName(parser.fcomment); //file name of comments file
                     parser.fcomment = path2 + "\\" + dirBox2.Text.Trim() + Convert.ToString(PCno) + "\\" + file1; //with ts full path
