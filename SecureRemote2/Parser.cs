@@ -233,9 +233,21 @@ namespace SecureRemote2
                                             string[] words = line.Split('■'); // alt 254 special char 
                                             if (words.Length > 0 && line.Trim().Length > 0)
                                             {
-                                                if (words.Length > 2)
+                                                string mt = "";
+                                                if (words.Length > 1)
                                                 {
-                                                    task = words[2].ToUpper(); //task number - can be put at end of line
+                                                    mt = words[1].ToUpper();
+                                                }
+                                                if (mt.Contains("T"))   //if we have ■T
+                                                {
+                                                    task = mt;
+                                                }
+                                                else if (words.Length > 2)
+                                                {
+                                                    task = words[2].ToUpper();  //if we have ■M ■T
+                                                }
+                                               
+                                                     //task number - can be put at end of line
                                                     if (task.Contains("T"))
                                                     {
                                                         try
@@ -251,7 +263,7 @@ namespace SecureRemote2
                                                         }
                                                         catch { }
                                                     }
-                                                }
+                                                
                                                 cfgcmd = words[0]; //this is the command read from the template for comaparison
 
                                                 if (words.Length > 1)
