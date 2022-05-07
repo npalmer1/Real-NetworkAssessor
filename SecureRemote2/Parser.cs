@@ -127,6 +127,8 @@ namespace SecureRemote2
             bool alt = false;
             bool altwild = false;
             string sq = "";
+            bool ends = false;
+            bool hashcomment = false;
 
 
             try
@@ -136,6 +138,7 @@ namespace SecureRemote2
                     return -1; //template file not found
                 }
                 alt = false;
+                ends = false;
                 //string ext = Path.GetExtension(fout);
                 //string umfout = Path.GetFileNameWithoutExtension(fout);
                 //string umpath = Path.GetDirectoryName(fout);
@@ -165,302 +168,364 @@ namespace SecureRemote2
                                 while (!sw.EndOfStream) //keep reading lines from template file until end
                                 {
                                     alt = false;
-                                    line = sw.ReadLine();  //read line from template file
-                                    if (line.Trim().StartsWith("#"))
+                                    line = sw.ReadLine().Trim();  //read line from template file
+                                    if (line.StartsWith("#") || line.StartsWith("# ")  || line.StartsWith("  #") )  //is it a comment? - don't mark it, but write it as a comment
                                     {
+                                        hashcomment = true;
+                                        string strt = "";
+                                        string strt2 = "";
+                                        string[] words = line.Split('■');
+                                        
+                                        if (words.Length > 1)
+                                        {
+                                            if (words[1].Contains("T"))
+                                            {
+                                                strt2 = words[1];
+                                                strt2 = strt2.Replace("T", " - Task ");
+                                            }
+                                            else if (words.Length >2)
+                                            {
+                                                strt2 = words[2];
+                                                strt2 = strt2.Replace("T", " - Task ");
+                                            }
+                                            strt = words[0];
+                                            strt2 = words[0] + strt2;                                           
+                                        }
+                                        else
+                                        {
+                                            strt = line;
+                                            strt2 = line + " - Task 0";
+                                        }
+                                        
                                         // using (StreamReader nw = new StreamReader(infile[fileno]))
                                         //its a comment
                                         if (File.Exists(infile[fileno]))
                                         {
-                                            outp.WriteLine("Comment: " + line);
-                                            umoutp.WriteLine("Comment: " + line);
+                                            outp.WriteLine("Comment: " + strt);
+                                            umoutp.WriteLine("Comment: " + strt2);
                                         }
+                                        line = ""; //stop being re-written
                                     }
                                     else
                                     {
-                                        if (line.Contains("%ALT%")) //if there is an alternative command line
+                                        hashcomment = false;
+                                    }
+                                    if (line.Contains("■") && line.Contains("NOTES:"))
+                                    {
+                                        ends = true;    //end of marked lines - now comments only
+                                        umoutp.WriteLine("+++");
+                                        umoutp.WriteLine(line);
+                                    }
+                                    else 
+                                    {
+                                        if (!ends && !hashcomment)
                                         {
-                                            //extract all after %ALT% - whihc is the alternative command
-                                            altstr = line.Substring(line.IndexOf("%ALT%" + 5)); //altstr contains alternative commands
-                                            line = line.Substring(0, line.IndexOf("%ALT%"));  //beginning of line without alt line
-                                            alt = true;
-                                        }
-
-                                        nomrk = true;
-                                        task = "0";
-                                        string[] words = line.Split('■'); // alt 254 special char 
-                                        if (words.Length > 0 && line.Trim().Length > 0)
-                                        {
-                                            if (words.Length > 2)
+                                            if (line.Contains("%ALT%")) //if there is an alternative command line
                                             {
-                                                task = words[2].ToUpper(); //task number - can be put at end of line
-                                                if (task.Contains("T"))
-                                                {
-                                                    try
-                                                    {
-                                                        //task = task.Substring(task.IndexOf("T") +1, task.Length - task.IndexOf("T"));
-                                                        task = task.Substring(task.IndexOf("T")+1).Trim();
-                                                        taskno = Convert.ToInt32(task);
-                                                        if (taskno < maxtasks)
-                                                        {
-                                                            tasklist[taskno].taskexist = true;
-                                                            if (taskno > totaltasks) { totaltasks = taskno; }
-                                                        }
-                                                    }
-                                                    catch { }
-                                                }
-                                            }
-                                            cfgcmd = words[0]; //this is the command read from the template for comaparison
-                                            
-                                            if (words.Length > 1)
-                                            {
-
-                                                /*      no longer supported - use ■T instead
-                                                //can either put a task number  in the config command string or put it as a separate heading at top of a list of commands
-                                                tmptsk = words[1].Trim();
-                                                if (tmptsk.Contains("Task:")) //if general heading of ■Task: and a task number
-                                                {
-                                                    tmptsk = tmptsk.Substring(tmptsk.IndexOf("Task:") + 1).Trim();
-                                                    try
-                                                    {
-                                                        taskno = Convert.ToInt32(tmptsk);
-                                                        if (taskno < maxtasks)
-                                                        {
-                                                            tasklist[taskno].taskexist = true;
-                                                            if (taskno > totaltasks) { totaltasks = taskno; }
-                                                        }
-                                                    }
-                                                    catch { }
-                                                    break;
-                                                }
-                                                */
-
-                                                mrkstr = words[1].ToUpper(); //mark for this configuration command   
-                                                if (mrkstr.Contains("M"))
-                                                {
-                                                    sq = " ■ ";
-                                                    try
-                                                    {
-                                                        string mrkN = mrkstr.Substring(mrkstr.IndexOf("M") + 1).Trim();
-                                                        mrk = Convert.ToInt32(mrkN);
-                                                        if (taskno < maxtasks && !checkdefault) //if task less than max and default override not checked
-                                                        {
-                                                            tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //mark this if a mark found in template
-                                                        }   //default mark overrides this
-                                                        nomrk = false;
-                                                      
-                                                    }
-                                                    catch { nomrk = true; }
-                                                }
-                                                else
-                                                {
-                                                    sq = "";
-                                                    mrkstr = "";
-                                                }
-                                                
-
-                                            }
-                                            line = line.Trim();
-                                            if (line != exc) //if line isn't an ! on its own
-                                            {
-                                                if (checkdefault || nomrk)   //use default mark if check box checked to override marks
-                                                {
-                                                    mrk = defaultMark;
-                                                    tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax;
-                                                }
+                                                //extract all after %ALT% - whihc is the alternative command
+                                                altstr = line.Substring(line.IndexOf("%ALT%" + 5)); //altstr contains alternative commands
+                                                line = line.Substring(0, line.IndexOf("%ALT%"));  //beginning of line without alt line
+                                                alt = true;
                                             }
 
-                                            if (words.Length > 2)
+                                            nomrk = true;
+                                            task = "0";
+                                            string[] words = line.Split('■'); // alt 254 special char 
+                                            if (words.Length > 0 && line.Trim().Length > 0)
                                             {
-                                                commt = words[2]; //comment for feedback
-                                            }
-
-                                            lineno = 0;
-                                            if (line.Length > 0 && line != exc)
-                                            {
-
-                                                if (File.Exists(infile[fileno]))
+                                                if (words.Length > 2)
                                                 {
-
-                                                    //scroll through the input files looking for a match for the config commmand in the template file
-                                                    using (StreamReader nw = new StreamReader(infile[fileno]))
+                                                    task = words[2].ToUpper(); //task number - can be put at end of line
+                                                    if (task.Contains("T"))
                                                     {
-
-                                                        found = false;
-                                                        inc = 0;    //if command line contains wildcards
-                                                        if (cfgcmd.Contains("**?")) //if **? is wildcard then mark line in two parts
+                                                        try
                                                         {
-                                                            wild = true;
-
-                                                        }
-                                                        else
-                                                        {
-                                                            wild = false;
-                                                        }
-                                                        if (cfgcmd.Contains("***")) //if *** is wildcard then whole line must be correct
-                                                        {
-                                                            exactwild = true;
-                                                        }
-                                                        else
-                                                        {
-                                                            exactwild = false;
-                                                        }
-                                                        if (cfgcmd.Contains("**#")) //if **# is wildcard then only first part of line need be correct
-                                                        {
-                                                            startwild = true;
-
-                                                        }
-                                                        else
-                                                        {
-                                                            startwild = false;
-                                                        }
-                                                        if (wild || exactwild || startwild)
-                                                        {
-                                                            endstr = cfgcmd.Substring(cfgcmd.IndexOf("**") + 3).Trim(); //end of string after wildcard
-                                                            cfgcmd = cfgcmd.Substring(0, cfgcmd.IndexOf("**")); // string up to wildcard
-                                                        }
-                                                        else
-                                                        {
-                                                            endstr = "";
-                                                        }
-                                                        wildfound = false;
-                                                        if (altstr.Contains("**A")) //if alternative command has a wildcard
-                                                        {
-                                                            altstr = altstr.Substring(0, altstr.IndexOf("**A"));
-                                                            altend = altstr.Substring(altstr.IndexOf("**A" + 3));
-                                                            altwild = true;
-                                                        }
-                                                        else
-                                                        {
-                                                            altend = "";
-                                                        }
-                                                        
-                                                        
-                                                        while (!nw.EndOfStream) //while not end of input file
-                                                        {
-
-                                                            l2 = nw.ReadLine(); //keep reading from input file (until end)
-                                                            l2 = l2.Trim();
-                                                            lineno++;
-                                                            if (inc < 1)
+                                                            //task = task.Substring(task.IndexOf("T") +1, task.Length - task.IndexOf("T"));
+                                                            task = task.Substring(task.IndexOf("T") + 1).Trim();
+                                                            taskno = Convert.ToInt32(task);
+                                                            if (taskno < maxtasks)
                                                             {
-                                                                if (!lineused[lineno - 1])
-                                                                {
-                                                                    if (l2.StartsWith(altstr.Trim()) && l2.Contains(altend) && altstr.Trim().Length > 0) //if alternative command found
-                                                                    {
-                                                                        lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
-                                                                        if (taskno == 0)
-                                                                        {
-                                                                            tasklist[taskno].taskexist = true;
-                                                                        }
-                                                                        linecorrect++; //counts number of correct lines
-                                                                        inc++;
-                                                                        break; //ensure that the next lines are not procesed
-                                                                    }
-                                                                    //if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
-                                                                    if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(cfgcmd.Trim()) && l2.Contains(endstr.Trim())))   //if the file to be marked contains the command then output it to the file
-                                                                    {
-                                                                        lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
-                                                                        if (taskno == 0)
-                                                                        {
-                                                                            tasklist[taskno].taskexist = true;
-                                                                        }
-                                                                        if (exactwild) //only mark whole line correct if second part correct too (***)
-                                                                        {
-                                                                            if (l2.Contains(endstr))
-                                                                            {
-                                                                                wild = false;
+                                                                tasklist[taskno].taskexist = true;
+                                                                if (taskno > totaltasks) { totaltasks = taskno; }
+                                                            }
+                                                        }
+                                                        catch { }
+                                                    }
+                                                }
+                                                cfgcmd = words[0]; //this is the command read from the template for comaparison
 
-                                                                                tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
-                                                                                linecorrect++; //counts number of correct lines
-                                                                                inc++;
-                                                                                wildfound = true;
-                                                                            }
-                                                                        }
-                                                                        else //either whole line or first part of line are correct (wildcard **#)
-                                                                        {
-                                                                            tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
-                                                                            linecorrect++; //counts number of correct lines
-                                                                            inc++;
+                                                if (words.Length > 1)
+                                                {
 
-                                                                        }
-                                                                        if (wild) //wildcard for second part of line - (**?) ,mark first and second parts separately
-                                                                        {
-                                                                            tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //don't forget there's an extra mark!
-                                                                            if (l2.Contains(endstr)) //line is treated as two parts with separate mark for each
-                                                                            {
-                                                                                tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
-                                                                                linecorrect++; //counts number of correct lines
-                                                                                inc++;
-                                                                                wildfound = true;
-                                                                            }
-                                                                        }
-                                                                        outp.Write("Task: " + task + ". ");
-                                                                        umoutp.Write("Task: " + task + ". ");
-                                                                       
-                                                                        if (wild || exactwild) //if **? or *** wildcard and first and second part found/not found
-                                                                        {
-                                                                            if (wildfound)
-                                                                            {
-                                                                                outp.WriteLine("Command: " + cfgcmd + " " + endstr);
-                                                                                umoutp.WriteLine("Command: " + cfgcmd + " " + endstr + sq + mrkstr);
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                outp.WriteLine("Command: partially correct: " + cfgcmd + " " + endstr);
-                                                                                umoutp.WriteLine("Command: partially correct: " + cfgcmd + " " + endstr + sq + mrkstr);
-                                                                            }
+                                                    /*      no longer supported - use ■T instead
+                                                    //can either put a task number  in the config command string or put it as a separate heading at top of a list of commands
+                                                    tmptsk = words[1].Trim();
+                                                    if (tmptsk.Contains("Task:")) //if general heading of ■Task: and a task number
+                                                    {
+                                                        tmptsk = tmptsk.Substring(tmptsk.IndexOf("Task:") + 1).Trim();
+                                                        try
+                                                        {
+                                                            taskno = Convert.ToInt32(tmptsk);
+                                                            if (taskno < maxtasks)
+                                                            {
+                                                                tasklist[taskno].taskexist = true;
+                                                                if (taskno > totaltasks) { totaltasks = taskno; }
+                                                            }
+                                                        }
+                                                        catch { }
+                                                        break;
+                                                    }
+                                                    */
 
-                                                                        }
-                                                                        else if (startwild)
-                                                                        {
-                                                                            outp.WriteLine("Command: " + endstr);
-                                                                            umoutp.WriteLine("Command: " + endstr + sq + mrkstr);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            outp.WriteLine("Command: " + cfgcmd);
-                                                                            umoutp.WriteLine("Command: " + cfgcmd + sq + mrkstr);
-                                                                        }
-                                                                        found = true;
-                                                                    }
+                                                    mrkstr = words[1].ToUpper(); //mark for this configuration command   
+                                                    if (mrkstr.Contains("M"))
+                                                    {
+                                                        sq = " ■ ";
+                                                        try
+                                                        {
+                                                            string mrkN = mrkstr.Substring(mrkstr.IndexOf("M") + 1).Trim();
+                                                            mrk = Convert.ToInt32(mrkN);
+                                                            if (taskno < maxtasks && !checkdefault) //if task less than max and default override not checked
+                                                            {
+                                                                tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //mark this if a mark found in template
+                                                            }   //default mark overrides this
+                                                            nomrk = false;
 
-                                                                } //lineused
+                                                        }
+                                                        catch { nomrk = true; }
+                                                    }
+                                                    else
+                                                    {
+                                                        sq = "";
+                                                        mrkstr = "";
+                                                    }
+
+
+                                                }
+
+                                                line = line.Trim();
+                                                if (line != exc) //if line isn't an ! on its own
+                                                {
+                                                    if (checkdefault || nomrk)   //use default mark if check box checked to override marks
+                                                    {
+                                                        mrk = defaultMark;
+                                                        tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax;
+                                                    }
+                                                }
+
+                                                if (words.Length > 2)
+                                                {
+                                                    commt = words[2]; //comment for feedback
+                                                }
+
+                                                lineno = 0;
+                                                if (line.Length > 0 && line != exc && !hashcomment)
+                                                {
+
+                                                    if (File.Exists(infile[fileno]))
+                                                    {
+
+                                                        //scroll through the input files looking for a match for the config commmand in the template file
+                                                        using (StreamReader nw = new StreamReader(infile[fileno]))
+                                                        {
+
+                                                            found = false;
+                                                            inc = 0;    //if command line contains wildcards
+                                                            if (cfgcmd.Contains("**?")) //if **? is wildcard then mark line in two parts
+                                                            {
+                                                                wild = true;
 
                                                             }
+                                                            else
+                                                            {
+                                                                wild = false;
+                                                            }
+                                                            if (cfgcmd.Contains("***")) //if *** is wildcard then whole line must be correct
+                                                            {
+                                                                exactwild = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                exactwild = false;
+                                                            }
+                                                            if (cfgcmd.Contains("**#")) //if **# is wildcard then only first part of line need be correct
+                                                            {
+                                                                startwild = true;
+
+                                                            }
+                                                            else
+                                                            {
+                                                                startwild = false;
+                                                            }
+                                                            if (wild || exactwild || startwild)
+                                                            {
+                                                                endstr = cfgcmd.Substring(cfgcmd.IndexOf("**") + 3).Trim(); //end of string after wildcard
+                                                                cfgcmd = cfgcmd.Substring(0, cfgcmd.IndexOf("**")); // string up to wildcard
+                                                            }
+                                                            else
+                                                            {
+                                                                endstr = "";
+                                                            }
+                                                            wildfound = false;
+                                                            if (altstr.Contains("**A")) //if alternative command has a wildcard
+                                                            {
+                                                                altstr = altstr.Substring(0, altstr.IndexOf("**A"));
+                                                                altend = altstr.Substring(altstr.IndexOf("**A" + 3));
+                                                                altwild = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                altend = "";
+                                                            }
+
+                                                            if (!ends)
+                                                            {
+
+                                                                while (!nw.EndOfStream) //while not end of input file
+                                                                {
+
+                                                                    l2 = nw.ReadLine(); //keep reading from input file (until end)
+                                                                    l2 = l2.Trim();
+
+                                                                    lineno++;
+                                                                    if (inc < 1)
+                                                                    {
+                                                                        if (!lineused[lineno - 1])
+                                                                        {
+                                                                            if (l2.StartsWith(altstr.Trim()) && l2.Contains(altend) && altstr.Trim().Length > 0) //if alternative command found
+                                                                            {
+                                                                                lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
+                                                                                if (taskno == 0)
+                                                                                {
+                                                                                    tasklist[taskno].taskexist = true;
+                                                                                }
+                                                                                linecorrect++; //counts number of correct lines
+                                                                                inc++;
+                                                                                break; //ensure that the next lines are not procesed
+                                                                            }
+                                                                            //if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
+                                                                            if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(cfgcmd.Trim()) && l2.Contains(endstr.Trim())))   //if the file to be marked contains the command then output it to the file
+                                                                            {
+                                                                                lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
+                                                                                if (taskno == 0)
+                                                                                {
+                                                                                    tasklist[taskno].taskexist = true;
+                                                                                }
+                                                                                if (exactwild) //only mark whole line correct if second part correct too (***)
+                                                                                {
+                                                                                    if (l2.Contains(endstr))
+                                                                                    {
+                                                                                        wild = false;
+
+                                                                                        tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
+                                                                                        linecorrect++; //counts number of correct lines
+                                                                                        inc++;
+                                                                                        wildfound = true;
+                                                                                    }
+                                                                                }
+                                                                                else //either whole line or first part of line are correct (wildcard **#)
+                                                                                {
+                                                                                    tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
+                                                                                    linecorrect++; //counts number of correct lines
+                                                                                    inc++;
+
+                                                                                }
+                                                                                if (wild) //wildcard for second part of line - (**?) ,mark first and second parts separately
+                                                                                {
+                                                                                    tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //don't forget there's an extra mark!
+                                                                                    if (l2.Contains(endstr)) //line is treated as two parts with separate mark for each
+                                                                                    {
+                                                                                        tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
+                                                                                        linecorrect++; //counts number of correct lines
+                                                                                        inc++;
+                                                                                        wildfound = true;
+                                                                                    }
+                                                                                }
+                                                                                outp.Write("Task: " + task + ". ");
+                                                                                umoutp.Write("Task: " + task + ". ");
+
+                                                                                if (wild || exactwild) //if **? or *** wildcard and first and second part found/not found
+                                                                                {
+                                                                                    if (wildfound)
+                                                                                    {
+                                                                                        outp.WriteLine("Command: " + cfgcmd + " " + endstr);
+                                                                                        umoutp.WriteLine("Command: " + cfgcmd + " " + endstr + sq + mrkstr);
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        outp.WriteLine("Command: partially correct: " + cfgcmd + " " + endstr);
+                                                                                        umoutp.WriteLine("Command: partially correct: " + cfgcmd + " " + endstr + sq + mrkstr);
+                                                                                    }
+
+                                                                                }
+                                                                                else if (startwild)
+                                                                                {
+                                                                                    outp.WriteLine("Command: " + endstr);
+                                                                                    umoutp.WriteLine("Command: " + endstr + sq + mrkstr);
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    outp.WriteLine("Command: " + cfgcmd);
+                                                                                    umoutp.WriteLine("Command: " + cfgcmd + sq + mrkstr);
+                                                                                }
+                                                                                found = true;
+                                                                            }
+
+                                                                        } //lineused
+
+                                                                    }
+                                                                } //if !ends
 
 
-                                                        } //wend
-                                                        if (!found)
-                                                        {
-                                                            outp.Write("Task: " + task + ". ");
-                                                            outp.WriteLine("Command NOT found: " + cfgcmd + endstr);
-                                                            umoutp.Write("Task: " + task + ". ");
-                                                            umoutp.WriteLine("Command NOT found: " + cfgcmd + endstr + sq + mrkstr);
-                                                        }
+                                                            } //wend
+                                                            if (!found && !ends)
+                                                            {
+                                                                outp.Write("Task: " + task + ". ");
+                                                                outp.WriteLine("Command NOT found: " + cfgcmd + endstr);
+                                                                umoutp.Write("Task: " + task + ". ");
+                                                                umoutp.WriteLine("Command NOT found: " + cfgcmd + endstr + sq + mrkstr);
+                                                            }
 
-                                                        nw.Close();
-                                                        if (commt.Trim().Length > 0 && !found)
-                                                        {
-                                                            comment.WriteLine(commt); //comment for feedback if task not achieved
-                                                            commt = "";
-                                                            comment.Write("Task: " + task + ". ");
-                                                            comment.WriteLine("Not found: " + cfgcmd);
-                                                        }
-                                                    }  //using infile
-                                                } //file exists
-                                                else
-                                                {
-                                                    if (first) //only write this once if the file not found
+                                                            nw.Close();
+                                                            if (commt.Trim().Length > 0 && !found && !ends && !hashcomment)
+                                                            {
+                                                                comment.WriteLine(commt); //comment for feedback if task not achieved
+                                                                commt = "";
+                                                                comment.Write("Task: " + task + ". ");
+                                                                comment.WriteLine("Not found: " + cfgcmd);
+                                                            }
+                                                            /*if (hashcomment) //if its just a comment line don't mark it, but write it
+                                                            {
+                                                                outp.Write("Task: " + task + ". ");
+                                                                outp.WriteLine("Comment: " + cfgcmd + endstr);
+                                                                umoutp.Write("Task: " + task + ". ");
+                                                                umoutp.WriteLine("Comment: " + cfgcmd + endstr);
+                                                                comment.Write("Task: " + task + ". ");
+                                                                comment.Write("Comment: " + cfgcmd + endstr);
+                                                            }
+                                                            */
+
+                                                        }  //using infile
+                                                    } //file exists
+                                                    else
                                                     {
-                                                        outp.WriteLine("No matching configuration");
-                                                        umoutp.WriteLine("No matching configuration");
-                                                        first = false;
+                                                        if (first) //only write this once if the file not found
+                                                        {
+                                                            outp.WriteLine("No matching configuration");
+                                                            umoutp.WriteLine("No matching configuration");
+                                                            first = false;
+                                                        }
                                                     }
-                                                }
 
-                                            } //if line
-                                        } //if words.length >0
+                                                } //if line
+
+                                            } //if words.length >0
+                                        } //if !ends
+                                        else if (!hashcomment)
+                                        {
+                                            umoutp.WriteLine(line);
+                                        }
+
                                     } //if not startswith a # (comment)
 
 

@@ -1654,6 +1654,8 @@ namespace SecureRemote2
                                 {
                                     outp.WriteLine("Lines correct: " + str);   //write results to the output file
                                     outp.WriteLine("Percentage: " + score);
+                                    outp.WriteLine("----------");
+                                    outp.WriteLine();
                                     outp.Close();
                                 }
                                 
@@ -1665,6 +1667,8 @@ namespace SecureRemote2
                                 {
                                     umoutp.WriteLine("Lines correct: " + str);   //write results to the output file
                                     umoutp.WriteLine("Percentage: " + score);
+                                    umoutp.WriteLine("----------");
+                                    umoutp.WriteLine();
                                     umoutp.Close();
                                 }
                             }
@@ -1676,6 +1680,8 @@ namespace SecureRemote2
                                 {
                                     comment.WriteLine("Lines correct: " + str); //write comnents to comments file
                                     comment.WriteLine("Percentage: " + score);
+                                    comment.WriteLine("----------");
+                                    comment.WriteLine();
                                     comment.Close();
 
                                 }
