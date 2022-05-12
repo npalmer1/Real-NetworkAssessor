@@ -230,6 +230,9 @@ namespace SecureRemote2
 
                                             nomrk = true;
                                             task = "0";
+                                            mrk = 0;
+                                            sq = "";
+                                            mrkstr = "";
                                             string[] words = line.Split('■'); // alt 254 special char 
                                             if (words.Length > 0 && line.Trim().Length > 0)
                                             {
@@ -288,14 +291,19 @@ namespace SecureRemote2
                                                         break;
                                                     }
                                                     */
-
+                                                    sq = "";
+                                                    mrkstr = "";
+                                                  
                                                     mrkstr = words[1].ToUpper(); //mark for this configuration command   
-                                                    if (mrkstr.Contains("M"))
+                                                    
+                                                    if (words.Length > 1 && mrkstr.Contains("M"))
                                                     {
-                                                        sq = " ■ ";
+                                                        sq = " ■";
                                                         try
                                                         {
-                                                            string mrkN = mrkstr.Substring(mrkstr.IndexOf("M") + 1).Trim();
+                                                            mrk = 0;
+                                                            string mrkN = "";
+                                                            mrkN = mrkstr.Substring(mrkstr.IndexOf("M") + 1).Trim();
                                                             mrk = Convert.ToInt32(mrkN);
                                                             if (taskno < maxtasks && !checkdefault) //if task less than max and default override not checked
                                                             {
