@@ -17,8 +17,9 @@ namespace SecureRemote2
         static int maxtasks = 200;
         public int totaltasks = 0;
         static int maxPCs = 254;
-        static int maxCriteria = 6;
+        static int maxCriteria = 8;
         public string[] Criteria = new string[maxCriteria];
+        public bool upCase = false;
                  
 
         public struct tasks
@@ -255,8 +256,15 @@ namespace SecureRemote2
                                                     {
                                                         try
                                                         {
-                                                            //task = task.Substring(task.IndexOf("T") +1, task.Length - task.IndexOf("T"));
-                                                            task = task.Substring(task.IndexOf("T") + 1).Trim();
+                                                            if (task.Contains("TA") || task.Contains("TB")) // TA and TB are for alternatives in a task
+                                                            {   //for future expansion
+                                                                task.Substring(task.IndexOf("T") + 2).Trim();
+                                                            }
+                                                            else
+                                                            {
+                                                                task = task.Substring(task.IndexOf("T") + 1).Trim();
+                                                            }
+                                                            
                                                             taskno = Convert.ToInt32(task);
                                                             if (taskno < maxtasks)
                                                             {
@@ -272,25 +280,7 @@ namespace SecureRemote2
                                                 if (words.Length > 1)
                                                 {
 
-                                                    /*      no longer supported - use ■T instead
-                                                    //can either put a task number  in the config command string or put it as a separate heading at top of a list of commands
-                                                    tmptsk = words[1].Trim();
-                                                    if (tmptsk.Contains("Task:")) //if general heading of ■Task: and a task number
-                                                    {
-                                                        tmptsk = tmptsk.Substring(tmptsk.IndexOf("Task:") + 1).Trim();
-                                                        try
-                                                        {
-                                                            taskno = Convert.ToInt32(tmptsk);
-                                                            if (taskno < maxtasks)
-                                                            {
-                                                                tasklist[taskno].taskexist = true;
-                                                                if (taskno > totaltasks) { totaltasks = taskno; }
-                                                            }
-                                                        }
-                                                        catch { }
-                                                        break;
-                                                    }
-                                                    */
+                                                   
                                                     sq = "";
                                                     mrkstr = "";
                                                   
@@ -341,7 +331,7 @@ namespace SecureRemote2
                                                 lineno = 0;
                                                 if (line.Length > 0 && line != exc && !hashcomment)
                                                 {
-
+                                                    string cfgstr = "";
                                                     if (File.Exists(infile[fileno]))
                                                     {
 
@@ -412,7 +402,19 @@ namespace SecureRemote2
                                                                     {
                                                                         if (!lineused[lineno - 1])
                                                                         {
-                                                                            if (l2.StartsWith(altstr.Trim()) && l2.Contains(altend) && altstr.Trim().Length > 0) //if alternative command found
+                                                                            bool contains = false;
+                                                                            if (altstr.StartsWith("*+*"))
+                                                                            {
+                                                                                contains = true;
+                                                                                altstr = altstr.Replace("*+*", "");
+                                                                            }
+                                                                            string line2 = l2;
+                                                                            if (upCase)
+                                                                            {
+                                                                                line2 = line2.ToUpper();
+                                                                                altstr = altstr.ToUpper();
+                                                                            }
+                                                                            if ((line2.StartsWith(altstr.Trim()) || line2.Contains(altstr.Trim()) && contains) && line2.Contains(altend) && altstr.Trim().Length > 0) //if alternative command found
                                                                             {
                                                                                 lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
                                                                                 if (taskno == 0)
@@ -424,7 +426,20 @@ namespace SecureRemote2
                                                                                 break; //ensure that the next lines are not procesed
                                                                             }
                                                                             //if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
-                                                                            if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(cfgcmd.Trim()) && l2.Contains(endstr.Trim())))   //if the file to be marked contains the command then output it to the file
+                                                                            cfgstr = cfgcmd.Trim();
+                                                                            contains = false;
+                                                                            if (cfgstr.StartsWith("*+*"))
+                                                                            {
+                                                                                contains = true;
+                                                                                cfgstr = cfgstr.Replace("*+*","");
+                                                                            }
+                                                                            string endstr1 = endstr.Trim();
+                                                                            if (upCase)
+                                                                            {
+                                                                                cfgstr = cfgstr.ToUpper().Trim();
+                                                                                endstr1 = endstr1.ToUpper().Trim();
+                                                                            }
+                                                                            if ((line2.StartsWith(cfgstr) || line2.Contains(cfgstr) && contains) ||(startwild && line2.StartsWith(cfgstr) && line2.Contains(endstr1)))   //if the file to be marked contains the command then output it to the file
                                                                             {
                                                                                 lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
                                                                                 if (taskno == 0)
@@ -433,7 +448,7 @@ namespace SecureRemote2
                                                                                 }
                                                                                 if (exactwild) //only mark whole line correct if second part correct too (***)
                                                                                 {
-                                                                                    if (l2.Contains(endstr))
+                                                                                    if (line2.Contains(endstr1))
                                                                                     {
                                                                                         wild = false;
 
@@ -453,7 +468,7 @@ namespace SecureRemote2
                                                                                 if (wild) //wildcard for second part of line - (**?) ,mark first and second parts separately
                                                                                 {
                                                                                     tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //don't forget there's an extra mark!
-                                                                                    if (l2.Contains(endstr)) //line is treated as two parts with separate mark for each
+                                                                                    if (line2.Contains(endstr1)) //line is treated as two parts with separate mark for each
                                                                                     {
                                                                                         tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
                                                                                         linecorrect++; //counts number of correct lines
@@ -464,17 +479,19 @@ namespace SecureRemote2
                                                                                 outp.Write("Task: " + task + ". ");
                                                                                 umoutp.Write("Task: " + task + ". ");
 
+                                                                                cfgstr = cfgcmd.Trim();
+                                                                                cfgstr = cfgstr.Replace("*+*", "");
                                                                                 if (wild || exactwild) //if **? or *** wildcard and first and second part found/not found
                                                                                 {
                                                                                     if (wildfound)
                                                                                     {
-                                                                                        outp.WriteLine("Command: " + cfgcmd + " " + endstr);
-                                                                                        umoutp.WriteLine("Command: " + cfgcmd + " " + endstr + sq + mrkstr);
+                                                                                        outp.WriteLine("Command: " + cfgstr + " " + endstr);
+                                                                                        umoutp.WriteLine("Command: " + cfgstr + " " + endstr + sq + mrkstr);
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        outp.WriteLine("Command: partially correct: " + cfgcmd + " " + endstr);
-                                                                                        umoutp.WriteLine("Command: partially correct: " + cfgcmd + " " + endstr + sq + mrkstr);
+                                                                                        outp.WriteLine("Command: partially correct: " + cfgstr + " " + endstr);
+                                                                                        umoutp.WriteLine("Command: partially correct: " + cfgstr + " " + endstr + sq + mrkstr);
                                                                                     }
 
                                                                                 }
@@ -485,8 +502,8 @@ namespace SecureRemote2
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    outp.WriteLine("Command: " + cfgcmd);
-                                                                                    umoutp.WriteLine("Command: " + cfgcmd + sq + mrkstr);
+                                                                                    outp.WriteLine("Command: " + cfgstr);
+                                                                                    umoutp.WriteLine("Command: " + cfgstr + sq + mrkstr);
                                                                                 }
                                                                                 found = true;
                                                                             }
@@ -500,10 +517,11 @@ namespace SecureRemote2
                                                             } //wend
                                                             if (!found && !ends)
                                                             {
+                                                                cfgstr = cfgcmd.Replace("*+*", "");
                                                                 outp.Write("Task: " + task + ". ");
-                                                                outp.WriteLine("Command NOT found: " + cfgcmd + endstr);
+                                                                outp.WriteLine("Command NOT found: " + cfgstr + endstr);
                                                                 umoutp.Write("Task: " + task + ". ");
-                                                                umoutp.WriteLine("Command NOT found: " + cfgcmd + endstr + sq + mrkstr);
+                                                                umoutp.WriteLine("Command NOT found: " + cfgstr + endstr + sq + mrkstr);
                                                             }
 
                                                             nw.Close();

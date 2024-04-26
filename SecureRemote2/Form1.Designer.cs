@@ -81,8 +81,28 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label77 = new System.Windows.Forms.Label();
+            this.wildcardtextBox = new System.Windows.Forms.TextBox();
+            this.label76 = new System.Windows.Forms.Label();
+            this.upCasecheckBox = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.tempButton8 = new System.Windows.Forms.Button();
+            this.tempButton7 = new System.Windows.Forms.Button();
+            this.tempBox8 = new System.Windows.Forms.TextBox();
+            this.label75 = new System.Windows.Forms.Label();
+            this.label74 = new System.Windows.Forms.Label();
+            this.tempBox7 = new System.Windows.Forms.TextBox();
+            this.markButton8 = new System.Windows.Forms.Button();
+            this.markButton7 = new System.Windows.Forms.Button();
+            this.markBox8 = new System.Windows.Forms.TextBox();
+            this.label73 = new System.Windows.Forms.Label();
+            this.markBox7 = new System.Windows.Forms.TextBox();
+            this.label72 = new System.Windows.Forms.Label();
             this.CRcheckBox = new System.Windows.Forms.CheckBox();
             this.CrgroupBox = new System.Windows.Forms.GroupBox();
+            this.criteriaBox8 = new System.Windows.Forms.TextBox();
+            this.criteriaBox7 = new System.Windows.Forms.TextBox();
             this.criteriaBox1 = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
             this.criteriaBox2 = new System.Windows.Forms.TextBox();
@@ -196,7 +216,7 @@
             this.liveRootbutton = new System.Windows.Forms.Button();
             this.label58 = new System.Windows.Forms.Label();
             this.liveRootBox = new System.Windows.Forms.TextBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBoxip = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.fileintextBox = new System.Windows.Forms.TextBox();
             this.checkBox11 = new System.Windows.Forms.CheckBox();
@@ -205,7 +225,7 @@
             this.optPathlabel = new System.Windows.Forms.Label();
             this.DiffSearchBox = new System.Windows.Forms.TextBox();
             this.optPathBox = new System.Windows.Forms.TextBox();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.checkBoxsearch = new System.Windows.Forms.CheckBox();
             this.label55 = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
             this.OutFileBox = new System.Windows.Forms.TextBox();
@@ -218,7 +238,7 @@
             this.liveTempBox = new System.Windows.Forms.TextBox();
             this.label52 = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBoxdiff = new System.Windows.Forms.CheckBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.Runbutton1 = new System.Windows.Forms.Button();
             this.ProcessRichResult = new System.Windows.Forms.RichTextBox();
@@ -279,6 +299,7 @@
             this.folderBrowserDialog3 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveliveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openliveFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.applyButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -352,7 +373,7 @@
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(982, 944);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuration";
@@ -629,7 +650,7 @@
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(982, 944);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Transfer";
@@ -845,6 +866,25 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.tabPage3.Controls.Add(this.applyButton);
+            this.tabPage3.Controls.Add(this.label77);
+            this.tabPage3.Controls.Add(this.wildcardtextBox);
+            this.tabPage3.Controls.Add(this.label76);
+            this.tabPage3.Controls.Add(this.upCasecheckBox);
+            this.tabPage3.Controls.Add(this.checkBox8);
+            this.tabPage3.Controls.Add(this.checkBox7);
+            this.tabPage3.Controls.Add(this.tempButton8);
+            this.tabPage3.Controls.Add(this.tempButton7);
+            this.tabPage3.Controls.Add(this.tempBox8);
+            this.tabPage3.Controls.Add(this.label75);
+            this.tabPage3.Controls.Add(this.label74);
+            this.tabPage3.Controls.Add(this.tempBox7);
+            this.tabPage3.Controls.Add(this.markButton8);
+            this.tabPage3.Controls.Add(this.markButton7);
+            this.tabPage3.Controls.Add(this.markBox8);
+            this.tabPage3.Controls.Add(this.label73);
+            this.tabPage3.Controls.Add(this.markBox7);
+            this.tabPage3.Controls.Add(this.label72);
             this.tabPage3.Controls.Add(this.CRcheckBox);
             this.tabPage3.Controls.Add(this.CrgroupBox);
             this.tabPage3.Controls.Add(this.checkBox6);
@@ -923,16 +963,198 @@
             this.tabPage3.Controls.Add(this.assessButton);
             this.tabPage3.Location = new System.Drawing.Point(4, 27);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(982, 944);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Assess";
             // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(584, 395);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(252, 15);
+            this.label77.TabIndex = 120;
+            this.label77.Text = "(eg. \'C:\\directory\\**\\config.text\' - blank if none)";
+            // 
+            // wildcardtextBox
+            // 
+            this.wildcardtextBox.Location = new System.Drawing.Point(269, 389);
+            this.wildcardtextBox.Name = "wildcardtextBox";
+            this.wildcardtextBox.Size = new System.Drawing.Size(220, 21);
+            this.wildcardtextBox.TabIndex = 119;
+            this.wildcardtextBox.TextChanged += new System.EventHandler(this.wildcardtextBox_TextChanged);
+            this.wildcardtextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.wildcardtextBox_KeyDown);
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Location = new System.Drawing.Point(38, 393);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(219, 15);
+            this.label76.TabIndex = 118;
+            this.label76.Text = "Directory to insert in place of  ** in path:";
+            // 
+            // upCasecheckBox
+            // 
+            this.upCasecheckBox.AutoSize = true;
+            this.upCasecheckBox.Checked = true;
+            this.upCasecheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.upCasecheckBox.Location = new System.Drawing.Point(269, 519);
+            this.upCasecheckBox.Name = "upCasecheckBox";
+            this.upCasecheckBox.Size = new System.Drawing.Size(271, 19);
+            this.upCasecheckBox.TabIndex = 117;
+            this.upCasecheckBox.Text = "Convert all lines to uppercase for comparison";
+            this.upCasecheckBox.UseVisualStyleBackColor = true;
+            this.upCasecheckBox.CheckedChanged += new System.EventHandler(this.upCasecheckBox_CheckedChanged);
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(886, 336);
+            this.checkBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(33, 19);
+            this.checkBox8.TabIndex = 116;
+            this.checkBox8.Text = "8";
+            this.checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(886, 305);
+            this.checkBox7.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(33, 19);
+            this.checkBox7.TabIndex = 115;
+            this.checkBox7.Text = "7";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // tempButton8
+            // 
+            this.tempButton8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tempButton8.Location = new System.Drawing.Point(849, 337);
+            this.tempButton8.Margin = new System.Windows.Forms.Padding(2);
+            this.tempButton8.Name = "tempButton8";
+            this.tempButton8.Size = new System.Drawing.Size(27, 21);
+            this.tempButton8.TabIndex = 114;
+            this.tempButton8.Text = "...";
+            this.tempButton8.UseVisualStyleBackColor = true;
+            this.tempButton8.Click += new System.EventHandler(this.tempButton8_Click);
+            // 
+            // tempButton7
+            // 
+            this.tempButton7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tempButton7.Location = new System.Drawing.Point(849, 306);
+            this.tempButton7.Margin = new System.Windows.Forms.Padding(2);
+            this.tempButton7.Name = "tempButton7";
+            this.tempButton7.Size = new System.Drawing.Size(27, 21);
+            this.tempButton7.TabIndex = 113;
+            this.tempButton7.Text = "...";
+            this.tempButton7.UseVisualStyleBackColor = true;
+            this.tempButton7.Click += new System.EventHandler(this.tempButton7_Click);
+            // 
+            // tempBox8
+            // 
+            this.tempBox8.Location = new System.Drawing.Point(572, 337);
+            this.tempBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.tempBox8.Name = "tempBox8";
+            this.tempBox8.Size = new System.Drawing.Size(271, 21);
+            this.tempBox8.TabIndex = 112;
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label75.Location = new System.Drawing.Point(476, 340);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(91, 15);
+            this.label75.TabIndex = 111;
+            this.label75.Text = "Template file 8:";
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label74.Location = new System.Drawing.Point(476, 309);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(91, 15);
+            this.label74.TabIndex = 110;
+            this.label74.Text = "Template file 7:";
+            // 
+            // tempBox7
+            // 
+            this.tempBox7.Location = new System.Drawing.Point(572, 306);
+            this.tempBox7.Margin = new System.Windows.Forms.Padding(2);
+            this.tempBox7.Name = "tempBox7";
+            this.tempBox7.Size = new System.Drawing.Size(271, 21);
+            this.tempBox7.TabIndex = 109;
+            // 
+            // markButton8
+            // 
+            this.markButton8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.markButton8.Location = new System.Drawing.Point(427, 340);
+            this.markButton8.Margin = new System.Windows.Forms.Padding(2);
+            this.markButton8.Name = "markButton8";
+            this.markButton8.Size = new System.Drawing.Size(27, 21);
+            this.markButton8.TabIndex = 108;
+            this.markButton8.Text = "...";
+            this.markButton8.UseVisualStyleBackColor = true;
+            this.markButton8.Click += new System.EventHandler(this.markButton8_Click);
+            // 
+            // markButton7
+            // 
+            this.markButton7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.markButton7.Location = new System.Drawing.Point(427, 306);
+            this.markButton7.Margin = new System.Windows.Forms.Padding(2);
+            this.markButton7.Name = "markButton7";
+            this.markButton7.Size = new System.Drawing.Size(27, 21);
+            this.markButton7.TabIndex = 107;
+            this.markButton7.Text = "...";
+            this.markButton7.UseVisualStyleBackColor = true;
+            this.markButton7.Click += new System.EventHandler(this.markButton7_Click);
+            // 
+            // markBox8
+            // 
+            this.markBox8.Location = new System.Drawing.Point(146, 340);
+            this.markBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.markBox8.Name = "markBox8";
+            this.markBox8.Size = new System.Drawing.Size(276, 21);
+            this.markBox8.TabIndex = 106;
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label73.Location = new System.Drawing.Point(38, 346);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(106, 15);
+            this.label73.TabIndex = 105;
+            this.label73.Text = "Text file to mark 8:";
+            // 
+            // markBox7
+            // 
+            this.markBox7.Location = new System.Drawing.Point(146, 306);
+            this.markBox7.Margin = new System.Windows.Forms.Padding(2);
+            this.markBox7.Name = "markBox7";
+            this.markBox7.Size = new System.Drawing.Size(276, 21);
+            this.markBox7.TabIndex = 104;
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label72.Location = new System.Drawing.Point(38, 306);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(106, 15);
+            this.label72.TabIndex = 103;
+            this.label72.Text = "Text file to mark 7:";
+            // 
             // CRcheckBox
             // 
             this.CRcheckBox.AutoSize = true;
-            this.CRcheckBox.Location = new System.Drawing.Point(920, 337);
-            this.CRcheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CRcheckBox.Location = new System.Drawing.Point(912, 450);
+            this.CRcheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.CRcheckBox.Name = "CRcheckBox";
             this.CRcheckBox.Size = new System.Drawing.Size(63, 34);
             this.CRcheckBox.TabIndex = 102;
@@ -942,6 +1164,8 @@
             // 
             // CrgroupBox
             // 
+            this.CrgroupBox.Controls.Add(this.criteriaBox8);
+            this.CrgroupBox.Controls.Add(this.criteriaBox7);
             this.CrgroupBox.Controls.Add(this.criteriaBox1);
             this.CrgroupBox.Controls.Add(this.label50);
             this.CrgroupBox.Controls.Add(this.criteriaBox2);
@@ -951,18 +1175,34 @@
             this.CrgroupBox.Controls.Add(this.criteriaBox4);
             this.CrgroupBox.Controls.Add(this.criteriaBox5);
             this.CrgroupBox.Location = new System.Drawing.Point(916, 63);
-            this.CrgroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CrgroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.CrgroupBox.Name = "CrgroupBox";
-            this.CrgroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.CrgroupBox.Size = new System.Drawing.Size(59, 270);
+            this.CrgroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.CrgroupBox.Size = new System.Drawing.Size(59, 333);
             this.CrgroupBox.TabIndex = 100;
             this.CrgroupBox.TabStop = false;
             this.CrgroupBox.Visible = false;
             // 
+            // criteriaBox8
+            // 
+            this.criteriaBox8.Location = new System.Drawing.Point(20, 271);
+            this.criteriaBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.criteriaBox8.Name = "criteriaBox8";
+            this.criteriaBox8.Size = new System.Drawing.Size(24, 21);
+            this.criteriaBox8.TabIndex = 117;
+            // 
+            // criteriaBox7
+            // 
+            this.criteriaBox7.Location = new System.Drawing.Point(20, 240);
+            this.criteriaBox7.Margin = new System.Windows.Forms.Padding(2);
+            this.criteriaBox7.Name = "criteriaBox7";
+            this.criteriaBox7.Size = new System.Drawing.Size(24, 21);
+            this.criteriaBox7.TabIndex = 117;
+            // 
             // criteriaBox1
             // 
             this.criteriaBox1.Location = new System.Drawing.Point(20, 34);
-            this.criteriaBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.criteriaBox1.Margin = new System.Windows.Forms.Padding(2);
             this.criteriaBox1.Name = "criteriaBox1";
             this.criteriaBox1.Size = new System.Drawing.Size(24, 21);
             this.criteriaBox1.TabIndex = 92;
@@ -970,7 +1210,7 @@
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(10, 228);
+            this.label50.Location = new System.Drawing.Point(8, 301);
             this.label50.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(57, 30);
@@ -980,7 +1220,7 @@
             // criteriaBox2
             // 
             this.criteriaBox2.Location = new System.Drawing.Point(20, 69);
-            this.criteriaBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.criteriaBox2.Margin = new System.Windows.Forms.Padding(2);
             this.criteriaBox2.Name = "criteriaBox2";
             this.criteriaBox2.Size = new System.Drawing.Size(24, 21);
             this.criteriaBox2.TabIndex = 93;
@@ -998,7 +1238,7 @@
             // criteriaBox3
             // 
             this.criteriaBox3.Location = new System.Drawing.Point(20, 105);
-            this.criteriaBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.criteriaBox3.Margin = new System.Windows.Forms.Padding(2);
             this.criteriaBox3.Name = "criteriaBox3";
             this.criteriaBox3.Size = new System.Drawing.Size(24, 21);
             this.criteriaBox3.TabIndex = 94;
@@ -1006,7 +1246,7 @@
             // criteriaBox6
             // 
             this.criteriaBox6.Location = new System.Drawing.Point(20, 206);
-            this.criteriaBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.criteriaBox6.Margin = new System.Windows.Forms.Padding(2);
             this.criteriaBox6.Name = "criteriaBox6";
             this.criteriaBox6.Size = new System.Drawing.Size(24, 21);
             this.criteriaBox6.TabIndex = 97;
@@ -1014,7 +1254,7 @@
             // criteriaBox4
             // 
             this.criteriaBox4.Location = new System.Drawing.Point(20, 141);
-            this.criteriaBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.criteriaBox4.Margin = new System.Windows.Forms.Padding(2);
             this.criteriaBox4.Name = "criteriaBox4";
             this.criteriaBox4.Size = new System.Drawing.Size(24, 21);
             this.criteriaBox4.TabIndex = 95;
@@ -1022,7 +1262,7 @@
             // criteriaBox5
             // 
             this.criteriaBox5.Location = new System.Drawing.Point(20, 174);
-            this.criteriaBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.criteriaBox5.Margin = new System.Windows.Forms.Padding(2);
             this.criteriaBox5.Name = "criteriaBox5";
             this.criteriaBox5.Size = new System.Drawing.Size(24, 21);
             this.criteriaBox5.TabIndex = 96;
@@ -1031,17 +1271,18 @@
             // 
             this.checkBox6.AutoSize = true;
             this.checkBox6.Location = new System.Drawing.Point(886, 270);
-            this.checkBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox6.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(33, 19);
             this.checkBox6.TabIndex = 91;
             this.checkBox6.Text = "6";
             this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             // 
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(544, 562);
+            this.label48.Location = new System.Drawing.Point(549, 637);
             this.label48.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(166, 30);
@@ -1051,8 +1292,8 @@
             // tempButton
             // 
             this.tempButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempButton.Location = new System.Drawing.Point(582, 520);
-            this.tempButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tempButton.Location = new System.Drawing.Point(587, 595);
+            this.tempButton.Margin = new System.Windows.Forms.Padding(2);
             this.tempButton.Name = "tempButton";
             this.tempButton.Size = new System.Drawing.Size(75, 37);
             this.tempButton.TabIndex = 89;
@@ -1064,7 +1305,7 @@
             // 
             this.label47.AutoSize = true;
             this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label47.Location = new System.Drawing.Point(486, 276);
+            this.label47.Location = new System.Drawing.Point(476, 275);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(91, 15);
             this.label47.TabIndex = 88;
@@ -1074,7 +1315,7 @@
             // 
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label46.Location = new System.Drawing.Point(44, 279);
+            this.label46.Location = new System.Drawing.Point(34, 275);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(106, 15);
             this.label46.TabIndex = 87;
@@ -1084,7 +1325,7 @@
             // 
             this.tempButton6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tempButton6.Location = new System.Drawing.Point(849, 269);
-            this.tempButton6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tempButton6.Margin = new System.Windows.Forms.Padding(2);
             this.tempButton6.Name = "tempButton6";
             this.tempButton6.Size = new System.Drawing.Size(27, 21);
             this.tempButton6.TabIndex = 86;
@@ -1096,7 +1337,7 @@
             // 
             this.markButton6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.markButton6.Location = new System.Drawing.Point(427, 275);
-            this.markButton6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.markButton6.Margin = new System.Windows.Forms.Padding(2);
             this.markButton6.Name = "markButton6";
             this.markButton6.Size = new System.Drawing.Size(27, 21);
             this.markButton6.TabIndex = 85;
@@ -1107,7 +1348,7 @@
             // tempBox6
             // 
             this.tempBox6.Location = new System.Drawing.Point(573, 271);
-            this.tempBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tempBox6.Margin = new System.Windows.Forms.Padding(2);
             this.tempBox6.Name = "tempBox6";
             this.tempBox6.Size = new System.Drawing.Size(271, 21);
             this.tempBox6.TabIndex = 84;
@@ -1115,7 +1356,7 @@
             // markBox6
             // 
             this.markBox6.Location = new System.Drawing.Point(146, 272);
-            this.markBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.markBox6.Margin = new System.Windows.Forms.Padding(2);
             this.markBox6.Name = "markBox6";
             this.markBox6.Size = new System.Drawing.Size(276, 21);
             this.markBox6.TabIndex = 83;
@@ -1123,7 +1364,7 @@
             // resultselectcheckBox
             // 
             this.resultselectcheckBox.AutoSize = true;
-            this.resultselectcheckBox.Location = new System.Drawing.Point(562, 358);
+            this.resultselectcheckBox.Location = new System.Drawing.Point(555, 428);
             this.resultselectcheckBox.Name = "resultselectcheckBox";
             this.resultselectcheckBox.Size = new System.Drawing.Size(255, 19);
             this.resultselectcheckBox.TabIndex = 82;
@@ -1132,7 +1373,7 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(710, 520);
+            this.clearButton.Location = new System.Drawing.Point(715, 595);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(75, 28);
             this.clearButton.TabIndex = 79;
@@ -1182,7 +1423,7 @@
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(238, 561);
+            this.label43.Location = new System.Drawing.Point(243, 636);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(172, 15);
             this.label43.TabIndex = 73;
@@ -1191,7 +1432,7 @@
             // dirLabel2
             // 
             this.dirLabel2.AutoSize = true;
-            this.dirLabel2.Location = new System.Drawing.Point(261, 484);
+            this.dirLabel2.Location = new System.Drawing.Point(266, 559);
             this.dirLabel2.Name = "dirLabel2";
             this.dirLabel2.Size = new System.Drawing.Size(175, 15);
             this.dirLabel2.TabIndex = 72;
@@ -1200,7 +1441,7 @@
             // 
             // dirBox2
             // 
-            this.dirBox2.Location = new System.Drawing.Point(427, 484);
+            this.dirBox2.Location = new System.Drawing.Point(432, 559);
             this.dirBox2.Name = "dirBox2";
             this.dirBox2.Size = new System.Drawing.Size(54, 21);
             this.dirBox2.TabIndex = 71;
@@ -1210,7 +1451,7 @@
             // allDirsCheckbox
             // 
             this.allDirsCheckbox.AutoSize = true;
-            this.allDirsCheckbox.Location = new System.Drawing.Point(438, 522);
+            this.allDirsCheckbox.Location = new System.Drawing.Point(443, 597);
             this.allDirsCheckbox.Name = "allDirsCheckbox";
             this.allDirsCheckbox.Size = new System.Drawing.Size(124, 19);
             this.allDirsCheckbox.TabIndex = 70;
@@ -1245,7 +1486,7 @@
             // 
             // loadAssessButton
             // 
-            this.loadAssessButton.Location = new System.Drawing.Point(816, 496);
+            this.loadAssessButton.Location = new System.Drawing.Point(821, 571);
             this.loadAssessButton.Name = "loadAssessButton";
             this.loadAssessButton.Size = new System.Drawing.Size(75, 23);
             this.loadAssessButton.TabIndex = 66;
@@ -1255,7 +1496,7 @@
             // 
             // saveAssessButton
             // 
-            this.saveAssessButton.Location = new System.Drawing.Point(816, 437);
+            this.saveAssessButton.Location = new System.Drawing.Point(821, 512);
             this.saveAssessButton.Name = "saveAssessButton";
             this.saveAssessButton.Size = new System.Drawing.Size(75, 23);
             this.saveAssessButton.TabIndex = 65;
@@ -1266,7 +1507,7 @@
             // rawResultBox
             // 
             this.rawResultBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rawResultBox.Location = new System.Drawing.Point(659, 445);
+            this.rawResultBox.Location = new System.Drawing.Point(664, 520);
             this.rawResultBox.Name = "rawResultBox";
             this.rawResultBox.Size = new System.Drawing.Size(58, 21);
             this.rawResultBox.TabIndex = 63;
@@ -1275,7 +1516,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(600, 445);
+            this.label29.Location = new System.Drawing.Point(605, 520);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(45, 15);
             this.label29.TabIndex = 62;
@@ -1284,7 +1525,7 @@
             // defaultMBox
             // 
             this.defaultMBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.defaultMBox.Location = new System.Drawing.Point(723, 389);
+            this.defaultMBox.Location = new System.Drawing.Point(716, 459);
             this.defaultMBox.Name = "defaultMBox";
             this.defaultMBox.Size = new System.Drawing.Size(38, 21);
             this.defaultMBox.TabIndex = 61;
@@ -1294,7 +1535,7 @@
             // 
             this.defaultCheckBox.AutoSize = true;
             this.defaultCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.defaultCheckBox.Location = new System.Drawing.Point(782, 384);
+            this.defaultCheckBox.Location = new System.Drawing.Point(775, 454);
             this.defaultCheckBox.Name = "defaultCheckBox";
             this.defaultCheckBox.Size = new System.Drawing.Size(110, 34);
             this.defaultCheckBox.TabIndex = 60;
@@ -1305,7 +1546,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(562, 384);
+            this.label28.Location = new System.Drawing.Point(555, 454);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(154, 30);
             this.label28.TabIndex = 59;
@@ -1384,7 +1625,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(486, 241);
+            this.label27.Location = new System.Drawing.Point(476, 240);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(91, 15);
             this.label27.TabIndex = 52;
@@ -1414,7 +1655,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(486, 206);
+            this.label25.Location = new System.Drawing.Point(476, 203);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(91, 15);
             this.label25.TabIndex = 49;
@@ -1444,7 +1685,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(486, 170);
+            this.label26.Location = new System.Drawing.Point(476, 169);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(91, 15);
             this.label26.TabIndex = 46;
@@ -1474,7 +1715,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(486, 132);
+            this.label24.Location = new System.Drawing.Point(476, 133);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(91, 15);
             this.label24.TabIndex = 43;
@@ -1492,7 +1733,7 @@
             // commentFile
             // 
             this.commentFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commentFile.Location = new System.Drawing.Point(438, 397);
+            this.commentFile.Location = new System.Drawing.Point(431, 467);
             this.commentFile.Name = "commentFile";
             this.commentFile.Size = new System.Drawing.Size(27, 21);
             this.commentFile.TabIndex = 40;
@@ -1503,7 +1744,7 @@
             // outButton
             // 
             this.outButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.outButton.Location = new System.Drawing.Point(438, 361);
+            this.outButton.Location = new System.Drawing.Point(431, 431);
             this.outButton.Name = "outButton";
             this.outButton.Size = new System.Drawing.Size(27, 21);
             this.outButton.TabIndex = 39;
@@ -1580,7 +1821,7 @@
             // resultBox
             // 
             this.resultBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultBox.Location = new System.Drawing.Point(659, 479);
+            this.resultBox.Location = new System.Drawing.Point(664, 554);
             this.resultBox.Name = "resultBox";
             this.resultBox.Size = new System.Drawing.Size(45, 21);
             this.resultBox.TabIndex = 32;
@@ -1589,7 +1830,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(580, 484);
+            this.label22.Location = new System.Drawing.Point(585, 559);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(67, 15);
             this.label22.TabIndex = 31;
@@ -1599,7 +1840,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(105, 397);
+            this.label21.Location = new System.Drawing.Point(98, 467);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(89, 15);
             this.label21.TabIndex = 30;
@@ -1609,7 +1850,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(118, 361);
+            this.label20.Location = new System.Drawing.Point(111, 431);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(65, 15);
             this.label20.TabIndex = 29;
@@ -1619,7 +1860,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(486, 99);
+            this.label19.Location = new System.Drawing.Point(476, 97);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(91, 15);
             this.label19.TabIndex = 28;
@@ -1629,7 +1870,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(44, 242);
+            this.label18.Location = new System.Drawing.Point(34, 242);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(106, 15);
             this.label18.TabIndex = 27;
@@ -1639,7 +1880,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(44, 210);
+            this.label17.Location = new System.Drawing.Point(34, 208);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(106, 15);
             this.label17.TabIndex = 26;
@@ -1649,7 +1890,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(44, 170);
+            this.label16.Location = new System.Drawing.Point(34, 167);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(106, 15);
             this.label16.TabIndex = 25;
@@ -1659,7 +1900,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(44, 131);
+            this.label15.Location = new System.Drawing.Point(34, 130);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(106, 15);
             this.label15.TabIndex = 24;
@@ -1669,7 +1910,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(44, 98);
+            this.label14.Location = new System.Drawing.Point(38, 98);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(106, 15);
             this.label14.TabIndex = 23;
@@ -1678,7 +1919,7 @@
             // commentBox
             // 
             this.commentBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commentBox.Location = new System.Drawing.Point(200, 397);
+            this.commentBox.Location = new System.Drawing.Point(193, 467);
             this.commentBox.Name = "commentBox";
             this.commentBox.Size = new System.Drawing.Size(222, 21);
             this.commentBox.TabIndex = 21;
@@ -1687,7 +1928,7 @@
             // outBox
             // 
             this.outBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.outBox.Location = new System.Drawing.Point(200, 361);
+            this.outBox.Location = new System.Drawing.Point(193, 431);
             this.outBox.Name = "outBox";
             this.outBox.Size = new System.Drawing.Size(222, 21);
             this.outBox.TabIndex = 20;
@@ -1743,7 +1984,7 @@
             this.groupBox2.Controls.Add(this.radioButton4);
             this.groupBox2.Controls.Add(this.radioButton3);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(36, 437);
+            this.groupBox2.Location = new System.Drawing.Point(41, 512);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(189, 138);
             this.groupBox2.TabIndex = 14;
@@ -1784,7 +2025,7 @@
             // assessButton
             // 
             this.assessButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.assessButton.Location = new System.Drawing.Point(272, 518);
+            this.assessButton.Location = new System.Drawing.Point(277, 593);
             this.assessButton.Name = "assessButton";
             this.assessButton.Size = new System.Drawing.Size(82, 31);
             this.assessButton.TabIndex = 12;
@@ -1806,7 +2047,7 @@
             this.tabPage4.Controls.Add(this.commandBox);
             this.tabPage4.Location = new System.Drawing.Point(4, 27);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(982, 944);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Commands";
@@ -1908,7 +2149,7 @@
             this.tabPage5.Controls.Add(this.termBox);
             this.tabPage5.Location = new System.Drawing.Point(4, 27);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(982, 944);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Terminal";
@@ -1971,7 +2212,7 @@
             this.tabPage7.Controls.Add(this.liveRootbutton);
             this.tabPage7.Controls.Add(this.label58);
             this.tabPage7.Controls.Add(this.liveRootBox);
-            this.tabPage7.Controls.Add(this.checkBox9);
+            this.tabPage7.Controls.Add(this.checkBoxip);
             this.tabPage7.Controls.Add(this.groupBox4);
             this.tabPage7.Controls.Add(this.groupBox3);
             this.tabPage7.Controls.Add(this.OutFileBox);
@@ -1984,11 +2225,11 @@
             this.tabPage7.Controls.Add(this.liveTempBox);
             this.tabPage7.Controls.Add(this.label52);
             this.tabPage7.Controls.Add(this.label51);
-            this.tabPage7.Controls.Add(this.checkBox8);
+            this.tabPage7.Controls.Add(this.checkBoxdiff);
             this.tabPage7.Location = new System.Drawing.Point(4, 27);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage7.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage7.Size = new System.Drawing.Size(982, 944);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Live1";
@@ -1998,7 +2239,7 @@
             // 
             this.loadLivebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loadLivebutton.Location = new System.Drawing.Point(882, 149);
-            this.loadLivebutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loadLivebutton.Margin = new System.Windows.Forms.Padding(2);
             this.loadLivebutton.Name = "loadLivebutton";
             this.loadLivebutton.Size = new System.Drawing.Size(66, 29);
             this.loadLivebutton.TabIndex = 45;
@@ -2010,7 +2251,7 @@
             // 
             this.saveLivebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveLivebutton.Location = new System.Drawing.Point(779, 149);
-            this.saveLivebutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.saveLivebutton.Margin = new System.Windows.Forms.Padding(2);
             this.saveLivebutton.Name = "saveLivebutton";
             this.saveLivebutton.Size = new System.Drawing.Size(68, 29);
             this.saveLivebutton.TabIndex = 44;
@@ -2022,9 +2263,9 @@
             // 
             this.groupBox7.Controls.Add(this.richTextResult2);
             this.groupBox7.Location = new System.Drawing.Point(490, 496);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox7.Size = new System.Drawing.Size(466, 230);
             this.groupBox7.TabIndex = 43;
             this.groupBox7.TabStop = false;
@@ -2034,7 +2275,7 @@
             // richTextResult2
             // 
             this.richTextResult2.Location = new System.Drawing.Point(8, 24);
-            this.richTextResult2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextResult2.Margin = new System.Windows.Forms.Padding(2);
             this.richTextResult2.Name = "richTextResult2";
             this.richTextResult2.Size = new System.Drawing.Size(446, 190);
             this.richTextResult2.TabIndex = 0;
@@ -2044,9 +2285,9 @@
             // 
             this.groupBox6.Controls.Add(this.richDiffResult);
             this.groupBox6.Location = new System.Drawing.Point(490, 198);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox6.Size = new System.Drawing.Size(458, 271);
             this.groupBox6.TabIndex = 42;
             this.groupBox6.TabStop = false;
@@ -2056,7 +2297,7 @@
             // richDiffResult
             // 
             this.richDiffResult.Location = new System.Drawing.Point(12, 26);
-            this.richDiffResult.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richDiffResult.Margin = new System.Windows.Forms.Padding(2);
             this.richDiffResult.Name = "richDiffResult";
             this.richDiffResult.Size = new System.Drawing.Size(434, 225);
             this.richDiffResult.TabIndex = 0;
@@ -2068,9 +2309,9 @@
             this.groupBox5.Controls.Add(this.dirBox3);
             this.groupBox5.Controls.Add(this.label62);
             this.groupBox5.Location = new System.Drawing.Point(22, 63);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox5.Size = new System.Drawing.Size(273, 56);
             this.groupBox5.TabIndex = 41;
             this.groupBox5.TabStop = false;
@@ -2088,7 +2329,7 @@
             // dirBox3
             // 
             this.dirBox3.Location = new System.Drawing.Point(151, 24);
-            this.dirBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dirBox3.Margin = new System.Windows.Forms.Padding(2);
             this.dirBox3.Name = "dirBox3";
             this.dirBox3.Size = new System.Drawing.Size(104, 21);
             this.dirBox3.TabIndex = 39;
@@ -2107,7 +2348,7 @@
             // 
             this.liveRootbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.liveRootbutton.Location = new System.Drawing.Point(386, 125);
-            this.liveRootbutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.liveRootbutton.Margin = new System.Windows.Forms.Padding(2);
             this.liveRootbutton.Name = "liveRootbutton";
             this.liveRootbutton.Size = new System.Drawing.Size(28, 22);
             this.liveRootbutton.TabIndex = 38;
@@ -2129,22 +2370,22 @@
             // 
             this.liveRootBox.Enabled = false;
             this.liveRootBox.Location = new System.Drawing.Point(134, 127);
-            this.liveRootBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.liveRootBox.Margin = new System.Windows.Forms.Padding(2);
             this.liveRootBox.Name = "liveRootBox";
             this.liveRootBox.Size = new System.Drawing.Size(245, 21);
             this.liveRootBox.TabIndex = 36;
             // 
-            // checkBox9
+            // checkBoxip
             // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Location = new System.Drawing.Point(18, 38);
-            this.checkBox9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(188, 19);
-            this.checkBox9.TabIndex = 35;
-            this.checkBox9.Text = "Specify IP address or use list):";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
+            this.checkBoxip.AutoSize = true;
+            this.checkBoxip.Location = new System.Drawing.Point(18, 38);
+            this.checkBoxip.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxip.Name = "checkBoxip";
+            this.checkBoxip.Size = new System.Drawing.Size(188, 19);
+            this.checkBoxip.TabIndex = 35;
+            this.checkBoxip.Text = "Specify IP address or use list):";
+            this.checkBoxip.UseVisualStyleBackColor = true;
+            this.checkBoxip.CheckedChanged += new System.EventHandler(this.checkBoxip_CheckedChanged);
             // 
             // groupBox4
             // 
@@ -2152,9 +2393,9 @@
             this.groupBox4.Controls.Add(this.checkBox11);
             this.groupBox4.Controls.Add(this.label57);
             this.groupBox4.Location = new System.Drawing.Point(18, 496);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(439, 197);
             this.groupBox4.TabIndex = 34;
             this.groupBox4.TabStop = false;
@@ -2163,7 +2404,7 @@
             // fileintextBox
             // 
             this.fileintextBox.Location = new System.Drawing.Point(15, 41);
-            this.fileintextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.fileintextBox.Margin = new System.Windows.Forms.Padding(2);
             this.fileintextBox.Multiline = true;
             this.fileintextBox.Name = "fileintextBox";
             this.fileintextBox.Size = new System.Drawing.Size(404, 153);
@@ -2173,7 +2414,7 @@
             // 
             this.checkBox11.AutoSize = true;
             this.checkBox11.Location = new System.Drawing.Point(15, 17);
-            this.checkBox11.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox11.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox11.Name = "checkBox11";
             this.checkBox11.Size = new System.Drawing.Size(261, 19);
             this.checkBox11.TabIndex = 3;
@@ -2195,13 +2436,13 @@
             this.groupBox3.Controls.Add(this.optPathlabel);
             this.groupBox3.Controls.Add(this.DiffSearchBox);
             this.groupBox3.Controls.Add(this.optPathBox);
-            this.groupBox3.Controls.Add(this.checkBox10);
+            this.groupBox3.Controls.Add(this.checkBoxsearch);
             this.groupBox3.Controls.Add(this.label55);
             this.groupBox3.Controls.Add(this.label60);
             this.groupBox3.Location = new System.Drawing.Point(19, 198);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(433, 284);
             this.groupBox3.TabIndex = 33;
             this.groupBox3.TabStop = false;
@@ -2221,7 +2462,7 @@
             // DiffSearchBox
             // 
             this.DiffSearchBox.Location = new System.Drawing.Point(14, 40);
-            this.DiffSearchBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DiffSearchBox.Margin = new System.Windows.Forms.Padding(2);
             this.DiffSearchBox.Multiline = true;
             this.DiffSearchBox.Name = "DiffSearchBox";
             this.DiffSearchBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -2232,24 +2473,24 @@
             // optPathBox
             // 
             this.optPathBox.Location = new System.Drawing.Point(102, 239);
-            this.optPathBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.optPathBox.Margin = new System.Windows.Forms.Padding(2);
             this.optPathBox.Name = "optPathBox";
             this.optPathBox.Size = new System.Drawing.Size(281, 21);
             this.optPathBox.TabIndex = 35;
             this.optPathBox.Visible = false;
             this.optPathBox.TextChanged += new System.EventHandler(this.optPathBox_TextChanged);
             // 
-            // checkBox10
+            // checkBoxsearch
             // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Location = new System.Drawing.Point(14, 19);
-            this.checkBox10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(116, 19);
-            this.checkBox10.TabIndex = 2;
-            this.checkBox10.Text = "Search in diff file";
-            this.checkBox10.UseVisualStyleBackColor = true;
-            this.checkBox10.CheckedChanged += new System.EventHandler(this.checkBox10_CheckedChanged);
+            this.checkBoxsearch.AutoSize = true;
+            this.checkBoxsearch.Location = new System.Drawing.Point(14, 19);
+            this.checkBoxsearch.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxsearch.Name = "checkBoxsearch";
+            this.checkBoxsearch.Size = new System.Drawing.Size(116, 19);
+            this.checkBoxsearch.TabIndex = 2;
+            this.checkBoxsearch.Text = "Search in diff file";
+            this.checkBoxsearch.UseVisualStyleBackColor = true;
+            this.checkBoxsearch.CheckedChanged += new System.EventHandler(this.checkBoxsearch_CheckedChanged);
             // 
             // label55
             // 
@@ -2274,7 +2515,7 @@
             // OutFileBox
             // 
             this.OutFileBox.Location = new System.Drawing.Point(134, 158);
-            this.OutFileBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OutFileBox.Margin = new System.Windows.Forms.Padding(2);
             this.OutFileBox.Name = "OutFileBox";
             this.OutFileBox.Size = new System.Drawing.Size(162, 21);
             this.OutFileBox.TabIndex = 32;
@@ -2292,7 +2533,7 @@
             // textBox9
             // 
             this.textBox9.Location = new System.Drawing.Point(206, 37);
-            this.textBox9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox9.Margin = new System.Windows.Forms.Padding(2);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(165, 21);
             this.textBox9.TabIndex = 29;
@@ -2301,7 +2542,7 @@
             // Gobutton
             // 
             this.Gobutton.Location = new System.Drawing.Point(447, 144);
-            this.Gobutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Gobutton.Margin = new System.Windows.Forms.Padding(2);
             this.Gobutton.Name = "Gobutton";
             this.Gobutton.Size = new System.Drawing.Size(67, 29);
             this.Gobutton.TabIndex = 20;
@@ -2327,7 +2568,7 @@
             // liveRemoteBox
             // 
             this.liveRemoteBox.Location = new System.Drawing.Point(583, 93);
-            this.liveRemoteBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.liveRemoteBox.Margin = new System.Windows.Forms.Padding(2);
             this.liveRemoteBox.Name = "liveRemoteBox";
             this.liveRemoteBox.Size = new System.Drawing.Size(282, 21);
             this.liveRemoteBox.TabIndex = 10;
@@ -2345,7 +2586,7 @@
             // liveTempBox
             // 
             this.liveTempBox.Location = new System.Drawing.Point(583, 59);
-            this.liveTempBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.liveTempBox.Margin = new System.Windows.Forms.Padding(2);
             this.liveTempBox.Name = "liveTempBox";
             this.liveTempBox.Size = new System.Drawing.Size(282, 21);
             this.liveTempBox.TabIndex = 8;
@@ -2372,17 +2613,17 @@
             this.label51.TabIndex = 6;
             this.label51.Text = "Live system interrogation";
             // 
-            // checkBox8
+            // checkBoxdiff
             // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Location = new System.Drawing.Point(471, 37);
-            this.checkBox8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(164, 19);
-            this.checkBox8.TabIndex = 0;
-            this.checkBox8.Text = "Diff local and remote files";
-            this.checkBox8.UseVisualStyleBackColor = true;
-            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
+            this.checkBoxdiff.AutoSize = true;
+            this.checkBoxdiff.Location = new System.Drawing.Point(471, 37);
+            this.checkBoxdiff.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxdiff.Name = "checkBoxdiff";
+            this.checkBoxdiff.Size = new System.Drawing.Size(164, 19);
+            this.checkBoxdiff.TabIndex = 0;
+            this.checkBoxdiff.Text = "Diff local and remote files";
+            this.checkBoxdiff.UseVisualStyleBackColor = true;
+            this.checkBoxdiff.CheckedChanged += new System.EventHandler(this.checkBoxdiff_CheckedChanged);
             // 
             // tabPage8
             // 
@@ -2401,9 +2642,9 @@
             this.tabPage8.Controls.Add(this.label56);
             this.tabPage8.Controls.Add(this.checkBox12);
             this.tabPage8.Location = new System.Drawing.Point(4, 27);
-            this.tabPage8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage8.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage8.Size = new System.Drawing.Size(982, 944);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "Live2";
@@ -2411,7 +2652,7 @@
             // Runbutton1
             // 
             this.Runbutton1.Location = new System.Drawing.Point(578, 50);
-            this.Runbutton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Runbutton1.Margin = new System.Windows.Forms.Padding(2);
             this.Runbutton1.Name = "Runbutton1";
             this.Runbutton1.Size = new System.Drawing.Size(76, 40);
             this.Runbutton1.TabIndex = 46;
@@ -2422,7 +2663,7 @@
             // ProcessRichResult
             // 
             this.ProcessRichResult.Location = new System.Drawing.Point(292, 50);
-            this.ProcessRichResult.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ProcessRichResult.Margin = new System.Windows.Forms.Padding(2);
             this.ProcessRichResult.Name = "ProcessRichResult";
             this.ProcessRichResult.Size = new System.Drawing.Size(227, 80);
             this.ProcessRichResult.TabIndex = 45;
@@ -2452,7 +2693,7 @@
             // TestSearchBox
             // 
             this.TestSearchBox.Location = new System.Drawing.Point(448, 178);
-            this.TestSearchBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TestSearchBox.Margin = new System.Windows.Forms.Padding(2);
             this.TestSearchBox.Multiline = true;
             this.TestSearchBox.Name = "TestSearchBox";
             this.TestSearchBox.Size = new System.Drawing.Size(375, 108);
@@ -2461,7 +2702,7 @@
             // RichTestResultBox
             // 
             this.RichTestResultBox.Location = new System.Drawing.Point(82, 300);
-            this.RichTestResultBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RichTestResultBox.Margin = new System.Windows.Forms.Padding(2);
             this.RichTestResultBox.Name = "RichTestResultBox";
             this.RichTestResultBox.Size = new System.Drawing.Size(500, 217);
             this.RichTestResultBox.TabIndex = 40;
@@ -2490,7 +2731,7 @@
             // TestBox
             // 
             this.TestBox.Location = new System.Drawing.Point(38, 178);
-            this.TestBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TestBox.Margin = new System.Windows.Forms.Padding(2);
             this.TestBox.Multiline = true;
             this.TestBox.Name = "TestBox";
             this.TestBox.Size = new System.Drawing.Size(372, 108);
@@ -2501,7 +2742,7 @@
             // 
             this.checkBox13.AutoSize = true;
             this.checkBox13.Location = new System.Drawing.Point(38, 157);
-            this.checkBox13.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox13.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox13.Name = "checkBox13";
             this.checkBox13.Size = new System.Drawing.Size(119, 19);
             this.checkBox13.TabIndex = 36;
@@ -2511,7 +2752,7 @@
             // ProcessBox
             // 
             this.ProcessBox.Location = new System.Drawing.Point(39, 50);
-            this.ProcessBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ProcessBox.Margin = new System.Windows.Forms.Padding(2);
             this.ProcessBox.Multiline = true;
             this.ProcessBox.Name = "ProcessBox";
             this.ProcessBox.Size = new System.Drawing.Size(230, 80);
@@ -2531,7 +2772,7 @@
             // 
             this.checkBox12.AutoSize = true;
             this.checkBox12.Location = new System.Drawing.Point(39, 26);
-            this.checkBox12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox12.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox12.Name = "checkBox12";
             this.checkBox12.Size = new System.Drawing.Size(151, 19);
             this.checkBox12.TabIndex = 27;
@@ -2557,9 +2798,9 @@
             this.tabPage9.Controls.Add(this.addBox1);
             this.tabPage9.Controls.Add(this.label66);
             this.tabPage9.Location = new System.Drawing.Point(4, 27);
-            this.tabPage9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage9.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage9.Size = new System.Drawing.Size(982, 944);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "Live3";
@@ -2567,7 +2808,7 @@
             // Runbutton2
             // 
             this.Runbutton2.Location = new System.Drawing.Point(393, 37);
-            this.Runbutton2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Runbutton2.Margin = new System.Windows.Forms.Padding(2);
             this.Runbutton2.Name = "Runbutton2";
             this.Runbutton2.Size = new System.Drawing.Size(69, 41);
             this.Runbutton2.TabIndex = 14;
@@ -2598,7 +2839,7 @@
             // richTextResult4
             // 
             this.richTextResult4.Location = new System.Drawing.Point(498, 331);
-            this.richTextResult4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextResult4.Margin = new System.Windows.Forms.Padding(2);
             this.richTextResult4.Name = "richTextResult4";
             this.richTextResult4.Size = new System.Drawing.Size(409, 223);
             this.richTextResult4.TabIndex = 11;
@@ -2607,7 +2848,7 @@
             // richTextResult3
             // 
             this.richTextResult3.Location = new System.Drawing.Point(498, 63);
-            this.richTextResult3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextResult3.Margin = new System.Windows.Forms.Padding(2);
             this.richTextResult3.Name = "richTextResult3";
             this.richTextResult3.Size = new System.Drawing.Size(409, 227);
             this.richTextResult3.TabIndex = 10;
@@ -2636,7 +2877,7 @@
             // addStringBox2
             // 
             this.addStringBox2.Location = new System.Drawing.Point(53, 386);
-            this.addStringBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.addStringBox2.Margin = new System.Windows.Forms.Padding(2);
             this.addStringBox2.Multiline = true;
             this.addStringBox2.Name = "addStringBox2";
             this.addStringBox2.Size = new System.Drawing.Size(347, 147);
@@ -2645,7 +2886,7 @@
             // addStringBox1
             // 
             this.addStringBox1.Location = new System.Drawing.Point(42, 107);
-            this.addStringBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.addStringBox1.Margin = new System.Windows.Forms.Padding(2);
             this.addStringBox1.Multiline = true;
             this.addStringBox1.Name = "addStringBox1";
             this.addStringBox1.Size = new System.Drawing.Size(350, 166);
@@ -2655,7 +2896,7 @@
             // 
             this.checkBox15.AutoSize = true;
             this.checkBox15.Location = new System.Drawing.Point(42, 301);
-            this.checkBox15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox15.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox15.Name = "checkBox15";
             this.checkBox15.Size = new System.Drawing.Size(111, 19);
             this.checkBox15.TabIndex = 5;
@@ -2666,7 +2907,7 @@
             // 
             this.checkBox14.AutoSize = true;
             this.checkBox14.Location = new System.Drawing.Point(30, 18);
-            this.checkBox14.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox14.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox14.Name = "checkBox14";
             this.checkBox14.Size = new System.Drawing.Size(111, 19);
             this.checkBox14.TabIndex = 4;
@@ -2686,7 +2927,7 @@
             // addBox2
             // 
             this.addBox2.Location = new System.Drawing.Point(53, 338);
-            this.addBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.addBox2.Margin = new System.Windows.Forms.Padding(2);
             this.addBox2.Name = "addBox2";
             this.addBox2.Size = new System.Drawing.Size(280, 21);
             this.addBox2.TabIndex = 2;
@@ -2694,7 +2935,7 @@
             // addBox1
             // 
             this.addBox1.Location = new System.Drawing.Point(42, 58);
-            this.addBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.addBox1.Margin = new System.Windows.Forms.Padding(2);
             this.addBox1.Name = "addBox1";
             this.addBox1.Size = new System.Drawing.Size(280, 21);
             this.addBox1.TabIndex = 1;
@@ -2715,7 +2956,7 @@
             this.tabPage6.Controls.Add(this.richTextBox1);
             this.tabPage6.Location = new System.Drawing.Point(4, 27);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage6.Size = new System.Drawing.Size(982, 944);
             this.tabPage6.TabIndex = 4;
             this.tabPage6.Text = "Help";
@@ -2905,6 +3146,17 @@
             // 
             this.openliveFileDialog.FileName = "openFileDialog5";
             this.openliveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openliveFileDialog_FileOk);
+            // 
+            // applyButton
+            // 
+            this.applyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.applyButton.Location = new System.Drawing.Point(495, 389);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(74, 21);
+            this.applyButton.TabIndex = 121;
+            this.applyButton.Text = "Apply";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // Form1
             // 
@@ -3155,8 +3407,8 @@
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.CheckBox checkBox11;
-        private System.Windows.Forms.CheckBox checkBox10;
-        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBoxsearch;
+        private System.Windows.Forms.CheckBox checkBoxdiff;
         private System.Windows.Forms.Button Filebutton;
         private System.Windows.Forms.Button Gobutton;
         private System.Windows.Forms.OpenFileDialog openFileDialog4;
@@ -3181,7 +3433,7 @@
         private System.Windows.Forms.TextBox ProcessBox;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.CheckBox checkBox12;
-        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.CheckBox checkBoxip;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.TextBox liveRootBox;
         private System.Windows.Forms.Button liveRootbutton;
@@ -3216,6 +3468,27 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog3;
         private System.Windows.Forms.SaveFileDialog saveliveFileDialog;
         private System.Windows.Forms.OpenFileDialog openliveFileDialog;
+        private System.Windows.Forms.Button markButton8;
+        private System.Windows.Forms.Button markButton7;
+        private System.Windows.Forms.TextBox markBox8;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.TextBox markBox7;
+        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.Button tempButton8;
+        private System.Windows.Forms.Button tempButton7;
+        private System.Windows.Forms.TextBox tempBox8;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.TextBox tempBox7;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.TextBox criteriaBox8;
+        private System.Windows.Forms.TextBox criteriaBox7;
+        private System.Windows.Forms.CheckBox upCasecheckBox;
+        private System.Windows.Forms.TextBox wildcardtextBox;
+        private System.Windows.Forms.Label label76;
+        private System.Windows.Forms.Label label77;
+        private System.Windows.Forms.Button applyButton;
     }
 }
 

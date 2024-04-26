@@ -1,0 +1,224 @@
+Ultramarker Export format
+PC: n/a
+Marks for assessment: COM512 TCA 2024
+Criteria: 1
+Marked file: C:\Users\neville\OneDrive - Solent University\Network\NetSec\2024\tca24\TCA_main\pkt_solutions\Bournemouth_running-config.txt
+Task: 2. Command: service timestamps log datetime 
+Task: 0. Command: enable secret 5 
+Task: 6. Command: aaa new-model 
+Task: 6. Command: aaa authentication login default local  
+Task: 6. Command: username admin secret 5  
+Task: 5. Command: crypto isakmp policy  
+Task: 5. Command: encr aes 
+Task: 5. Command: authentication pre-share 
+Task: 5. Command: group  
+Task: 5. Command: crypto isakmp key  address 4.4.4.2
+Task: 5. Command: crypto ipsec transform-set  esp-aes esp-sha-hmac
+Task: 5. Command: crypto map  ipsec-isakmp
+Comment: #description VPN connection to Poole - Task 0
+Task: 5. Command: set peer 4.4.4.2 
+Task: 5. Command: set transform-set  
+Task: 5. Command: match address  
+Task: 0. Command: ip ssh version 2 
+Task: 0. Command: ip domain-name 
+Comment: #interface GigabitEthernet0/0.1 - Task 0
+Task: 4. Command: encapsulation dot1Q 99 native  
+Comment: #interface GigabitEthernet0/0.10 - Task 0
+Task: 3. Command: ip access-group  out
+Comment: #interface GigabitEthernet0/0.20 - Task 0
+Task: 3. Command: ip access-group  out
+Comment: #interface Serial0/0/1 - Task 0
+Task: 5. Command: crypto map  
+Task: 3. Command: ip access-list extended 
+Task: 3. Command: permit ip 192.168.30.0 0.0.0.255 any
+Task: 3. Command: permit ip 194.20.20.0 0.0.0.255 any
+Task: 3. Command: permit ip 194.20.10.0 0.0.0.255 any
+Task: 3. Command: permit tcp any host 194.20.10.3 eq 
+Task: 3. Command: permit tcp any host 194.20.10.3 eq 
+Task: 3. Command: permit udp any host 194.20.10.2 eq domain
+Comment: #deny ip any any - Task 0
+Task: 5. Command: access-list  permit ip 194.20.10.0 0.0.0.255 192.168.30.0 0.0.0.255
+Task: 5. Command: access-list  permit ip 194.20.20.0 0.0.0.255 192.168.30.0 0.0.0.255
+Task: 2. Command: logging 194.20.20.3 
+Task: 0. Command: transport input ssh
+Task: 1. Command: parser view 
+Task: 1. Command: secret 5 
+Task: 1. Command: commands interface include ip 
+Task: 1. Command: parser view 
+Task: 1. Command: secret 5 
+Task: 1. Command: commands exec include show interfaces 
+Task: 1. Command: parser view 
+Task: 1. Command: secret 5 
+Task: 1. Command: commands configure include username 
+Task: 2. Command: ntp server 194.20.20.3 
+Lines correct: 45/45
+Percentage: 100
+----------
+
+Criteria: 2
+Marked file: C:\Users\neville\OneDrive - Solent University\Network\NetSec\2024\tca24\TCA_main\pkt_solutions\Poole_running-config.txt
+Task: 0. Command: service timestamps log datetime 
+Task: 3. Command: aaa new-model 
+Task: 3. Command: aaa authentication login default group radius local 
+Task: 3. Command: aaa authorization exec default group radius 
+Task: 3. Command: aaa accounting exec default start-stop group radius 
+Task: 3. Command: username  secret 5
+Task: 2. Command: crypto isakmp policy  
+Task: 2. Command: encr aes  
+Task: 2. Command: authentication pre-share 
+Task: 2. Command: group  
+Task: 2. Command: crypto isakmp key  address 5.5.5.2
+Task: 2. Command: crypto ipsec transform-set  esp-aes esp-sha-hmac
+Task: 2. Command: crypto map  ipsec-isakmp
+Task: 2. Command: set peer 5.5.5.2 
+Task: 2. Command: set transform-set  
+Task: 2. Command: match address  
+Task: 1. Command: class-map type inspect match-any  
+Task: 1. Command: match protocol tcp 
+Task: 1. Command: match protocol udp 
+Task: 1. Command: match protocol icmp 
+Task: 1. Command: class-map type inspect match-any 
+Task: 1. Command: match access-group 
+Task: 1. Command: policy-map type inspect 
+Task: 1. Command: class type inspect 
+Task: 1. Command: inspect 
+Task: 1. Command: policy-map type inspect 
+Task: 1. Command: class type inspect 
+Task: 1. Command: inspect 
+Task: 1. Command: zone security POOLE 
+Task: 1. Command: zone security OUTSIDE 
+Task: 1. Command: zone-pair security  source POOLE destination OUTSIDE
+Task: 1. Command: service-policy type inspect  
+Task: 1. Command: zone-pair security  source OUTSIDE destination POOLE
+Task: 1. Command: service-policy type inspect  
+Comment: ##interface g0/0 - Task 0
+Task: 1. Command: zone-member security POOLE 
+Comment: #interface s0/0/0 - Task 0
+Task: 1. Command: zone-member security OUTSIDE 
+Task: 2. Command: crypto map  
+Task: 1. Command: access-list  permit ip 194.20.10.0 0.0.0.255 any
+Task: 1. Command: access-list  permit ip 194.20.20.0 0.0.0.255 any
+Task: 2. Command: access-list  permit ip 192.168.30.0 0.0.0.255 194.20.10.0 0.0.0.255
+Task: 2. Command: access-list  permit ip 192.168.30.0 0.0.0.255 194.20.20.0 0.0.0.255
+Task: 3. Command: radius server 
+Task: 3. Command: address ipv4 192.168.30.2 
+Task: 3. Command: key secret1234 
+Comment: #radius server 192.168.30.2 - Task 0
+Comment: #address ipv4 192.168.30.2 auth-port 1645 - Task 0
+Comment: #key secret1234 - Task 0
+Task: 0. Command: logging 192.168.30.2 
+Task: 0. Command: ntp server 192.168.30.2 
+Lines correct: 55/55
+Percentage: 100
+----------
+
+Criteria: 3
+Marked file: C:\Users\neville\OneDrive - Solent University\Network\NetSec\2024\tca24\TCA_main\pkt_solutions\Switch1_running-config.txt
+Task: 1. Command: ip dhcp snooping  
+Task: 1. Command: spanning-tree portfast default 
+Task: 1. Command: spanning-tree portfast bpduguard default 
+Comment: #interface FastEthernet0/1 - Task 0
+Task: 1. Command: ip dhcp snooping limit rate  
+Task: 1. Command: switchport mode access 
+Task: 1. Command: switchport port-security 
+Task: 1. Command: switchport port-security maximum 2 
+Task: 1. Command: switchport port-security mac-address sticky 
+Comment: #interface FastEthernet0/2 - Task 0
+Task: 1. Command: ip dhcp snooping limit rate  
+Task: 1. Command: switchport mode access 
+Task: 1. Command: switchport port-security 
+Task: 1. Command: switchport port-security maximum 2 
+Task: 1. Command: switchport port-security mac-address sticky 
+Comment: #interface FastEthernet0/3 - Task 0
+Task: 1. Command: ip dhcp snooping limit rate  
+Task: 1. Command: switchport mode access 
+Task: 1. Command: switchport port-security 
+Task: 1. Command: switchport port-security maximum 2 
+Task: 1. Command: switchport port-security mac-address sticky 
+Comment: #interface FastEthernet0/4 - Task 0
+Task: 1. Command: ip dhcp snooping limit rate  
+Task: 1. Command: switchport mode access 
+Task: 1. Command: switchport port-security 
+Task: 1. Command: switchport port-security maximum 2 
+Task: 1. Command: switchport port-security mac-address sticky 
+Comment: #interface FastEthernet0/5 - Task 0
+Task: 1. Command: shutdown 
+Comment: #interface FastEthernet0/6 - Task 0
+Task: 1. Command: shutdown 
+Comment: #interface FastEthernet0/7 - Task 0
+Task: 1. Command: shutdown 
+Comment: #interface FastEthernet0/8 - Task 0
+Task: 1. Command: shutdown 
+Comment: #interface FastEthernet0/9 - Task 0
+Task: 1. Command: shutdown 
+Comment: #interface FastEthernet0/10 - Task 0
+Task: 1. Command: shutdown 
+Comment: #interface GigabitEthernet0/1 - Task 0
+Task: 1. Command: ip dhcp snooping trust 
+Comment: #interface GigabitEthernet0/2 - Task 0
+Comment: #shutdown - Task 0
+Task: 0. Command: monitor session 1 source interface Gig0/1 
+Task: 0. Command: monitor session 1 destination interface Fa0/4 
+Lines correct: 32/32
+Percentage: 100
+----------
+
+Criteria: 4
+Marked file: C:\Users\neville\OneDrive - Solent University\Network\NetSec\2024\tca24\TCA_main\pkt_solutions\Switch2_running-config.txt
+Task: 0. Command: spanning-tree portfast default 
+Task: 0. Command: spanning-tree portfast bpduguard default 
+Comment: #interface FastEthernet0/1 - Task 0
+Comment: #interface FastEthernet0/2 - Task 0
+Comment: #interface FastEthernet0/3 - Task 0
+Comment: #interface FastEthernet0/4 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/5 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/6 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/7 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/8 - Task 0
+Comment: #interface FastEthernet0/24 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface GigabitEthernet0/1 - Task 0
+Task: 0. Command: switchport trunk native vlan 99 
+Task: 0. Command: switchport nonegotiate 
+Comment: #interface GigabitEthernet0/2 - Task 0
+Task: 0. Command: switchport trunk native vlan 99 
+Task: 0. Command: switchport nonegotiate 
+Task: 0. Command: interface Vlan99 
+Lines correct: 12/12
+Percentage: 100
+----------
+
+Criteria: 5
+Marked file: C:\Users\neville\OneDrive - Solent University\Network\NetSec\2024\tca24\TCA_main\pkt_solutions\Switch3_running-config.txt
+Task: 0. Command: spanning-tree portfast default 
+Task: 0. Command: spanning-tree portfast bpduguard default 
+Comment: #interface FastEthernet0/1 - Task 0
+Comment: #interface FastEthernet0/2 - Task 0
+Comment: #interface FastEthernet0/3 - Task 0
+Comment: #interface FastEthernet0/4 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/5 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/6 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/7 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/8 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface FastEthernet0/24 - Task 0
+Task: 0. Command: shutdown 
+Comment: #interface GigabitEthernet0/1 - Task 0
+Comment: #interface GigabitEthernet0/2 - Task 0
+Task: 0. Command: switchport trunk native vlan 99 
+Task: 0. Command: switchport nonegotiate 
+Task: 0. Command: interface Vlan99 
+Lines correct: 11/11
+Percentage: 100
+----------
+
+Overall lines: 155/155
+Overall Result %: 100

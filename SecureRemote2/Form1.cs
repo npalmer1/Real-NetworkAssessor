@@ -59,7 +59,7 @@ namespace SecureRemote2
         string ConfigDir = "C:\\NetworkAssessor";
         string scriptDir = "C:\\Users\\Administrator\\Documents\\";
         bool checkall = true;
-        static int MaxFiles = 6;
+        static int MaxFiles = 8;
         string nl = Environment.NewLine;
 
         //password to encrypt passwords when saving:
@@ -97,12 +97,14 @@ namespace SecureRemote2
         string secondFile = "";
         bool timerCount = false;
 
+        bool upCase = true;  //allow upper case comparison
+
 
         SshClient ssh; //used by ssh shell later on
         ShellStream SSHstream; //stream used by ssh shell
 
         bool BlinkTest = false;
-        string commandResult = ""; //return reult of command
+        string commandResult = ""; //return reult of command     
 
         public Form1()
         {
@@ -122,7 +124,7 @@ namespace SecureRemote2
             MastercheckBox.Checked = true;
 
             //baseip = "172.16.199.0";
-            this.Text = "Real Network Assessor                   " + theVersion + "                               (c) 2022 /5                    ";
+            this.Text = "Real Network Assessor                   " + theVersion + "                               (c) 2024 /4                    ";
             try
             {
                 bool isExists = Directory.Exists(ConfigDir);
@@ -988,6 +990,7 @@ namespace SecureRemote2
             {
                 try
                 {
+                    //scp.OperationTimeout = new TimeSpan(0, 0, 5);
                     scp.OperationTimeout = new TimeSpan(0, 0, 2);
                     scp.Connect();
                     //scp.Download("C:/test", new DirectoryInfo(@"C:\Temp\ScpDownloadTest"));
@@ -1045,14 +1048,111 @@ namespace SecureRemote2
             return true;
         }
 
-        private bool GetFiles_PC_List(bool device, bool useBase, string BaseDir, string remote, string local, bool to, bool FolderorFile)
+        /*private async void GetFilesAsync(string remote, string local, string ip, bool to, bool deleteOld, bool Folder) //to transfer a file from linux to this PC
         {
+
+            string fname = remote.Replace('/', '\\');
+            fname = Path.GetFileName(fname);
+            string fnamepath = local + "\\" + fname;
+            if (!to) //if receiving remote file - backup and delete old file and create local directory if necessary
+            {
+                try
+                {
+                    if (!Directory.Exists(local))
+                    {
+                        Directory.CreateDirectory(local);
+                    }
+                    else if (deleteOld)
+                    {
+                        if (File.Exists(fnamepath + ".old"))
+                        {
+                            File.Delete(fnamepath + ".old");
+                        }
+                        if (File.Exists(fnamepath))
+                        {
+                            File.Copy(fnamepath, fnamepath + ".old");
+                            File.Delete(fnamepath);
+                        }
+                    }
+                    else { }
+                }
+                catch
+                {
+                    MessageBox.Show("Cannot create local file/directory");
+                    return false;
+                }
+            }
+            using (var scp = new ScpClient(CreateConnectionInfo(ip)))
+            {
+                try
+                {
+                    //scp.OperationTimeout = new TimeSpan(0, 0, 5);
+                    scp.OperationTimeout = new TimeSpan(0, 0, 2);
+                    scp.Connect();
+                    //scp.Download("C:/test", new DirectoryInfo(@"C:\Temp\ScpDownloadTest"));
+                    //scp.Download("/etc/firefox", new DirectoryInfo(@"C:\Temp\ScpDownloadTest"));
+                }
+                catch
+                {
+                    DialogResult r = MessageBox.Show("Cannot connect - check username/password or IP");
+                    checkall = false;
+                    return false;
+                }
+                if (checkBlankDir(false, remote, local))
+                {
+                    try
+                    {
+                        if (to) //send local folder to remote PC
+                        {
+                            //scp.Download(local, new DirectoryInfo(@remote));
+                            if (Folder)
+                            {
+                                RunACommand(ip, "mkdir " + remote);
+                                scp.Upload(new DirectoryInfo(@local), remote);
+                            }
+                            else
+                            {
+                                scp.Upload(new FileInfo(@local + "\\" + fname), remote);
+                            }
+                        }
+                        else  //retrieve folder from remote to local
+                        {
+                            if (Folder)
+                            {
+                                scp.Download(remote, new DirectoryInfo(@local));    //otherwise from remote to local
+                            }
+                            else
+                            {
+                                scp.Download(remote, new FileInfo(@local + "\\" + fname)); //file and not folder
+                            }
+
+                        }
+                        scp.Disconnect();
+                    }
+                    catch
+                    {
+                        DialogResult r = MessageBox.Show("Cannot connect - check path");
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Local or remote destination blank");
+                    return true; //only return false if cannot connect
+                }
+            }
+            return true;
+        }*/
+
+       private bool GetFiles_PC_List(bool device, bool useBase, string BaseDir, string remote, string local, bool to, bool FolderorFile)       
+       {
 
             bool a;
             bool noselected = true;
             int i;
             string istr;
             a = false;
+            
             pc = "";
             int offset = 1;
             int count = 0;
@@ -1094,15 +1194,16 @@ namespace SecureRemote2
                                 local = based + "\\" + BaseDir.Trim() + Convert.ToString(offset + i);
                             }
                         }
-                        i = i + offset;
-                        istr = (i).ToString();
+                        int i1 = i + offset;
+                        istr = (i1).ToString();
 
                         pc = baseip.Substring(0, baseip.Length - 1) + istr;
                         if (!device) //if its not a network device
                         {
                             //if (FindRemoteFolder(pc, remote))   //folder found and not empty
                             //{
-                            a = GetFiles(remote, local, pc, to, true, FolderorFile ); 
+                            //
+                            a = GetFiles(remote, local, pc, to, true, FolderorFile);                            
                             noconn = false;
                             foldercount++;
                             //}                            
@@ -1120,11 +1221,13 @@ namespace SecureRemote2
             {
                 MessageBox.Show("Folder on remote is empty or not found");
                 return false;
+                
             }
             else if (!noselected && foldercount < count)
             {
                 MessageBox.Show("Folder not found on all PCs, or some folders empty");
                 return a;
+               
             }
             if (noselected)
             {
@@ -1135,17 +1238,18 @@ namespace SecureRemote2
                 MessageBox.Show("No selected PCs connected");
             }
             return a;
+           
         }
 
-        private void Transfer(bool to)
+        private void TransferTo(bool to)
         {
 
             //localStr = localBox.Text + "\\" + dirBox.Text;
 
             checkall = true;
-            bool Folder = true;
+            bool Folder = true;           
 
-            if (GetFiles_PC_List(deviceCheckBox.Checked, useBasecheckBox.Checked, dirBox.Text, remoteStr, localStr, to, Folder))
+            if (GetFiles_PC_List(deviceCheckBox.Checked, useBasecheckBox.Checked, dirBox.Text, remoteStr, localStr, to, Folder))            
             {
                 if (checkall)
                 { MessageBox.Show("Folder transferred"); }
@@ -1166,7 +1270,7 @@ namespace SecureRemote2
             if (radioButton1.Checked)
             { to = false; }
             else { to = true; }
-            Transfer(to);   //transfer to/from remote 
+            TransferTo(to);   //transfer to/from remote 
         }
 
 
@@ -1498,6 +1602,12 @@ namespace SecureRemote2
                 case 5:
                     ret = checkBox6.Checked;
                     break;
+                case 6:
+                    ret = checkBox7.Checked;
+                    break;
+                case 7:
+                    ret = checkBox8.Checked;
+                    break;
                 default:
                     ret = false;
                     break;
@@ -1564,6 +1674,7 @@ namespace SecureRemote2
             string umf = Path.GetFileNameWithoutExtension(parser.fout);
             string umpath = Path.GetDirectoryName(parser.fout);
             parser.umfout = umpath + "\\" + umf + ".UM";
+            parser.upCase = upCase;
 
             if (defaultCheckBox.Checked) //is a default mark selected?
             {
@@ -1817,7 +1928,7 @@ namespace SecureRemote2
             string str = "1";
             for (int i = 0; i < MaxFiles; i++)
             {
-                if (i > 5)
+                if (i > MaxFiles-1) //if more than 8 files to mark
                 {
                     return;
                 }
@@ -1840,6 +1951,12 @@ namespace SecureRemote2
                         break;
                     case 5:
                         str = criteriaBox6.Text;
+                        break;
+                    case 6:
+                        str = criteriaBox7.Text;
+                        break;
+                    case 7:
+                        str = criteriaBox8.Text;
                         break;
                 }
                 if (str.Trim() == "")
@@ -1978,12 +2095,16 @@ namespace SecureRemote2
             parser.infile[3] = markBox4.Text;
             parser.infile[4] = markBox5.Text;
             parser.infile[5] = markBox6.Text;
+            parser.infile[6] = markBox7.Text;
+            parser.infile[7] = markBox8.Text;
             parser.ftemplate[0] = tempBox1.Text;
             parser.ftemplate[1] = tempBox2.Text;
             parser.ftemplate[2] = tempBox3.Text;
             parser.ftemplate[3] = tempBox4.Text;
             parser.ftemplate[4] = tempBox5.Text;
             parser.ftemplate[5] = tempBox6.Text;
+            parser.ftemplate[6] = tempBox7.Text;
+            parser.ftemplate[7] = tempBox8.Text;
             parser.fout = outBox.Text;
             parser.fcomment = commentBox.Text;
         }
@@ -1993,7 +2114,7 @@ namespace SecureRemote2
             string path2 = "";
             string path3 = "";
             string path4 = "";
-            int number = 5;
+            int number = MaxFiles;
             bool f = true;
 
             for (int i = 0; i < number; i++)
@@ -2038,6 +2159,18 @@ namespace SecureRemote2
                                 {
                                     path1 = Directory.GetParent(Path.GetFullPath(markBox6.Text)).FullName;
                                     path2 = Directory.GetParent(Path.GetFullPath(tempBox6.Text)).FullName;
+                                    break;
+                                }
+                            case 6:
+                                {
+                                    path1 = Directory.GetParent(Path.GetFullPath(markBox7.Text)).FullName;
+                                    path2 = Directory.GetParent(Path.GetFullPath(tempBox7.Text)).FullName;
+                                    break;
+                                }
+                            case 7:
+                                {
+                                    path1 = Directory.GetParent(Path.GetFullPath(markBox8.Text)).FullName;
+                                    path2 = Directory.GetParent(Path.GetFullPath(tempBox8.Text)).FullName;
                                     break;
                                 }
                             default:
@@ -2139,6 +2272,15 @@ namespace SecureRemote2
                 case 5:
                     markBox5.Text = parser.infile[4];
                     break;
+                case 6:
+                    markBox6.Text = parser.infile[5];
+                    break;
+                case 7:
+                    markBox7.Text = parser.infile[6];
+                    break;
+                case 8:
+                    markBox8.Text = parser.infile[7];
+                    break;
             }
         }
 
@@ -2176,6 +2318,15 @@ namespace SecureRemote2
                 case 5:
                     tempBox5.Text = parser.ftemplate[4];
                     break;
+                case 6:
+                    tempBox6.Text = parser.ftemplate[5];
+                    break;
+                case 7:
+                    tempBox7.Text = parser.ftemplate[6];
+                    break;
+                case 8:
+                    tempBox8.Text = parser.ftemplate[7];
+                    break;
             }
             //ftemplate = openFileDialog1.FileName;
             //tempBox1.Text = ftemplate;
@@ -2212,6 +2363,7 @@ namespace SecureRemote2
         }
         private void markDialog(int n)
         {
+            wildcardtextBox.Enabled = true;
             bool ck = false;
             if (validRoot())
             {
@@ -2233,6 +2385,12 @@ namespace SecureRemote2
                         break;
                     case 6:
                         ck = checkBox6.Checked;
+                        break;
+                    case 7:
+                        ck = checkBox7.Checked;
+                        break;
+                    case 8:
+                        ck = checkBoxdiff.Checked;
                         break;
                     default:
                         ck = false;
@@ -2284,6 +2442,7 @@ namespace SecureRemote2
                 saveFileDialog1.Filter = "";
                 saveFileDialog1.FileName = "";
                 saveFileDialog1.ShowDialog();
+                wildcardtextBox.Enabled = true;
             }
         }
 
@@ -2297,6 +2456,7 @@ namespace SecureRemote2
                 saveFileDialog2.Filter = "";
                 saveFileDialog2.FileName = "";
                 saveFileDialog2.ShowDialog();
+                wildcardtextBox.Enabled = true;
             }
         }
 
@@ -2519,6 +2679,14 @@ namespace SecureRemote2
             {
                 t[5] = '1';
             }
+            if (checkBox7.Checked)
+            {
+                t[6] = '1';
+            }
+            if (checkBox8.Checked)
+            {
+                t[7] = '1';
+            }
             return String.Concat(t);
         }
 
@@ -2537,8 +2705,8 @@ namespace SecureRemote2
                     sw.WriteLine("Mark file 4: " + markBox4.Text);
                     sw.WriteLine("Mark file 5: " + markBox5.Text);
                     sw.WriteLine("Mark file 6: " + markBox6.Text);
-                    sw.WriteLine("Mark file 7: ");
-                    sw.WriteLine("Mark file 8: ");
+                    sw.WriteLine("Mark file 7: " + markBox7.Text);
+                    sw.WriteLine("Mark file 8: " + markBox8.Text);
                     sw.WriteLine("Mark file 9: ");
                     sw.WriteLine("Mark file 10: ");
 
@@ -2548,8 +2716,8 @@ namespace SecureRemote2
                     sw.WriteLine("Template file 4: " + tempBox4.Text);
                     sw.WriteLine("Template file 5: " + tempBox5.Text);
                     sw.WriteLine("Template file 6: " + tempBox6.Text);
-                    sw.WriteLine("Template file 7: ");
-                    sw.WriteLine("Template file 8: ");
+                    sw.WriteLine("Template file 7: " + tempBox7.Text);
+                    sw.WriteLine("Template file 8: " + tempBox8.Text);
                     sw.WriteLine("Template file 9: ");
                     sw.WriteLine("Template file 10: ");
 
@@ -2628,6 +2796,9 @@ namespace SecureRemote2
             checkBox4.Checked = false;
             checkBox5.Checked = false;
             checkBox6.Checked = false;
+            checkBox7.Checked = false;
+            checkBox8.Checked = false;
+
 
             if (str[0] == '1')
             {
@@ -2652,6 +2823,14 @@ namespace SecureRemote2
             if (str[5] == '1')
             {
                 checkBox6.Checked = true;
+            }
+            if (str[6] == '1')
+            {
+                checkBox7.Checked = true;
+            }
+            if (str[7] == '1')
+            {
+                checkBox8.Checked = true;
             }
 
         }
@@ -2720,6 +2899,30 @@ namespace SecureRemote2
                             markBox5.Text = str;
                             parser.infile[4] = str;
                         }
+                        else if (str.StartsWith("Mark file 6: "))
+                        {
+                            i = str.IndexOf("Mark file 6: ");
+                            k = "Mark file 6: ".Length;
+                            str = str.Substring(i + k, str.Length - k);
+                            markBox6.Text = str;
+                            parser.infile[5] = str;
+                        }
+                        else if (str.StartsWith("Mark file 7: "))
+                        {
+                            i = str.IndexOf("Mark file 7: ");
+                            k = "Mark file 7: ".Length;
+                            str = str.Substring(i + k, str.Length - k);
+                            markBox7.Text = str;
+                            parser.infile[6] = str;
+                        }
+                        else if (str.StartsWith("Mark file 8: "))
+                        {
+                            i = str.IndexOf("Mark file 8: ");
+                            k = "Mark file 8: ".Length;
+                            str = str.Substring(i + k, str.Length - k);
+                            markBox8.Text = str;
+                            parser.infile[7] = str;
+                        }
 
 
                         else if (str.StartsWith("Template file 1: "))
@@ -2761,6 +2964,30 @@ namespace SecureRemote2
                             str = str.Substring(i + k, str.Length - k);
                             tempBox5.Text = str;
                             parser.ftemplate[4] = str;
+                        }
+                        else if (str.StartsWith("Template file 6: "))
+                        {
+                            i = str.IndexOf("Template file 6: ");
+                            k = "Template file 6: ".Length;
+                            str = str.Substring(i + k, str.Length - k);
+                            tempBox6.Text = str;
+                            parser.ftemplate[5] = str;
+                        }
+                        else if (str.StartsWith("Template file 7: "))
+                        {
+                            i = str.IndexOf("Template file 7: ");
+                            k = "Template file 7: ".Length;
+                            str = str.Substring(i + k, str.Length - k);
+                            tempBox7.Text = str;
+                            parser.ftemplate[6] = str;
+                        }
+                        else if (str.StartsWith("Template file 8: "))
+                        {
+                            i = str.IndexOf("Template file 8: ");
+                            k = "Template file 8: ".Length;
+                            str = str.Substring(i + k, str.Length - k);
+                            tempBox8.Text = str;
+                            parser.ftemplate[7] = str;
                         }
 
                         else if (str.StartsWith("Output file: "))
@@ -2827,11 +3054,18 @@ namespace SecureRemote2
             markBox3.Text = "";
             markBox4.Text = "";
             markBox5.Text = "";
+            markBox6.Text = "";
+            markBox7.Text = "";
+            markBox8.Text = "";
+
             tempBox1.Text = "";
             tempBox2.Text = "";
             tempBox3.Text = "";
             tempBox4.Text = "";
             tempBox5.Text = "";
+            tempBox6.Text = "";
+            tempBox7.Text = "";
+            tempBox8.Text = "";
             outBox.Text = "";
             commentBox.Text = "";
         }
@@ -2977,61 +3211,73 @@ namespace SecureRemote2
         private void markBox1_TextChanged(object sender, EventArgs e)
         {
             parser.infile[0] = markBox1.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void markBox2_TextChanged(object sender, EventArgs e)
         {
             parser.infile[1] = markBox2.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void markBox3_TextChanged(object sender, EventArgs e)
         {
             parser.infile[2] = markBox3.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void markBox4_TextChanged(object sender, EventArgs e)
         {
             parser.infile[3] = markBox4.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void markBox5_TextChanged(object sender, EventArgs e)
         {
             parser.infile[4] = markBox5.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void tempBox1_TextChanged(object sender, EventArgs e)
         {
             parser.ftemplate[0] = tempBox1.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void tempBox2_TextChanged(object sender, EventArgs e)
         {
             parser.ftemplate[0] = tempBox1.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void tempBox3_TextChanged(object sender, EventArgs e)
         {
             parser.ftemplate[0] = tempBox1.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void tempBox4_TextChanged(object sender, EventArgs e)
         {
             parser.ftemplate[0] = tempBox1.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void tempBox5_TextChanged(object sender, EventArgs e)
         {
             parser.ftemplate[0] = tempBox1.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void outBox_TextChanged(object sender, EventArgs e)
         {
             parser.fout = outBox.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private void commentBox_TextChanged(object sender, EventArgs e)
         {
             parser.fcomment = commentBox.Text;
+            wildcardtextBox.Enabled = true;
         }
 
         private bool testCheck(int n) //is this template selected
@@ -3054,6 +3300,12 @@ namespace SecureRemote2
                     res = checkBox5.Checked;
                     break;
                 case 6:
+                    res = checkBox6.Checked;
+                    break;
+                case 7:
+                    res = checkBox6.Checked;
+                    break;
+                case 8:
                     res = checkBox6.Checked;
                     break;
                 default:
@@ -3611,9 +3863,9 @@ namespace SecureRemote2
                     sw.WriteLine("Optional path1: " + optPathBox.Text);
                     sw.WriteLine("Optional path2: " + addBox1.Text);
                     sw.WriteLine("Optional path3: " + addBox2.Text);
-                    sw.WriteLine("Check8: " + checkBox8.Checked.ToString());
-                    sw.WriteLine("Check9: " + checkBox9.Checked.ToString());
-                    sw.WriteLine("Check10: " + checkBox10.Checked.ToString());
+                    sw.WriteLine("Check8: " + checkBoxdiff.Checked.ToString());
+                    sw.WriteLine("Check9: " + checkBoxip.Checked.ToString());
+                    sw.WriteLine("Check10: " + checkBoxsearch.Checked.ToString());
                     sw.WriteLine("Check11: " + checkBox11.Checked.ToString());
                     sw.WriteLine("Check12: " + checkBox12.Checked.ToString());
                     sw.WriteLine("Check13: " + checkBox13.Checked.ToString());
@@ -3652,9 +3904,9 @@ namespace SecureRemote2
             string str = "";
             string str2 = "";
             bool r = true;
-            checkBox8.Checked = false;
-            checkBox9.Checked = false;
-            checkBox10.Checked = false;
+            checkBoxdiff.Checked = false;
+            checkBoxip.Checked = false;
+            checkBoxsearch.Checked = false;
             checkBox11.Checked = false;
             checkBox12.Checked = false;
             checkBox13.Checked = false;
@@ -3707,15 +3959,15 @@ namespace SecureRemote2
                         }
                         if (str.Contains("Check8: True"))
                         {
-                            checkBox8.Checked = true;
+                            checkBoxdiff.Checked = true;
                         }
                         if (str.Contains("Check9: True"))
                         {
-                            checkBox9.Checked = true;
+                            checkBoxip.Checked = true;
                         }
                         if (str.Contains("Check10: True"))
                         {
-                            checkBox10.Checked = true;
+                            checkBoxsearch.Checked = true;
                         }
                         if (str.Contains("Check11: True"))
                         {
@@ -3827,7 +4079,7 @@ namespace SecureRemote2
             {
 
             }
-            if (checkBox9.Checked) //if ip from text box on form
+            if (checkBoxip.Checked) //if ip from text box on form
             {
 
                 //added to use common code:
@@ -3862,7 +4114,7 @@ namespace SecureRemote2
             
             net = baseip.Substring(0, baseip.Length - 1);
             host = Convert.ToString(ipstr);
-            if (!checkBox9.Checked) //if just a number add network to it
+            if (!checkBoxip.Checked) //if just a number add network to it
             {
                host = net + host;
             }
@@ -3872,7 +4124,7 @@ namespace SecureRemote2
             WriteOutputFile(outfilepath, false, "#Live test: " + DateTime.Now.ToString() + nl + "#PC: " + ipstr + nl + "#------------------------------");
             appendfile = true;
 
-            if (checkBox8.Checked)
+            if (checkBoxdiff.Checked)
             {
                 char exist = CheckRemoteFile(liveRemoteBox.Text, host); //if remote file exists
                 if (exist == 'F')   //if remote file found
@@ -3959,7 +4211,7 @@ namespace SecureRemote2
            
             bool somerun = false; ;
 
-            bool single = checkBox9.Checked; //using ip box on form or not?
+            bool single = checkBoxip.Checked; //using ip box on form or not?
 
             if (IPrangeCheckBox.Checked)
             {
@@ -4042,7 +4294,7 @@ namespace SecureRemote2
             if (richDiffResult.Text.Trim() != "")
             {
                 //create new output file then append to it
-                if (checkBox10.Checked && DiffSearchBox.Text != null && DiffSearchBox.Text.Trim() != "")
+                if (checkBoxsearch.Checked && DiffSearchBox.Text != null && DiffSearchBox.Text.Trim() != "")
                 {
                     richTextResult2.Text = SearchDiff("", tempPath, outfile, appendfile, DiffSearchBox );
                     appendfile = true;
@@ -4657,9 +4909,9 @@ namespace SecureRemote2
         }
 
 
-        private void checkBox8_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxdiff_CheckedChanged(object sender, EventArgs e)
         {
-            bool b = checkBox8.Checked;
+            bool b = checkBoxdiff.Checked;
             groupBox3.Visible = b;
             groupBox4.Visible = b;
             groupBox6.Visible = b;
@@ -4720,7 +4972,7 @@ namespace SecureRemote2
 
         }
 
-        private void checkBox10_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxsearch_CheckedChanged(object sender, EventArgs e)
         {
 
         }
@@ -4792,15 +5044,140 @@ namespace SecureRemote2
 
         }
 
+        private void markButton7_Click(object sender, EventArgs e)
+        {
+            markDialog(7);
+        }
+
+        private void markButton8_Click(object sender, EventArgs e)
+        {
+            markDialog(8);
+        }
+
+        private void tempButton7_Click(object sender, EventArgs e)
+        {
+            tempDialog(7);
+        }
+
+        private void tempButton8_Click(object sender, EventArgs e)
+        {
+            tempDialog(8);
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void upCasecheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (upCasecheckBox.Checked)
+            {
+                upCase = true;
+                parser.upCase = true;
+            }
+            else
+            {
+                upCase = false;
+                parser.upCase = false;
+            }
+        }
+        private void checkFileforWildcardPath(string str)
+        {
+            string replace = "";
+            if (str != "**")
+            {
+                replace = "**";
+            }
+            else  //if str = "**"
+            {
+                replace = wildcardtextBox.Text;
+            }
+
+            if (markBox1.Text.Contains(replace))
+            {
+                markBox1.Text = markBox1.Text.Replace(replace, str);
+            }
+            if (markBox2.Text.Contains(replace))
+            {
+                markBox2.Text = markBox2.Text.Replace(replace, str);
+            }
+            if (markBox3.Text.Contains(replace))
+            {
+                markBox3.Text = markBox3.Text.Replace(replace, str);
+            }
+            if (markBox4.Text.Contains(replace))
+            {
+                markBox4.Text = markBox4.Text.Replace(replace, str);
+            }
+            if (markBox5.Text.Contains(replace))
+            {
+                markBox5.Text = markBox5.Text.Replace(replace, str);
+            }
+            if (markBox6.Text.Contains(replace))
+            {
+                markBox6.Text = markBox6.Text.Replace(replace, str);
+            }
+            if (markBox7.Text.Contains(replace))
+            {
+                markBox7.Text = markBox7.Text.Replace(replace, str);
+            }
+            if (markBox8.Text.Contains(replace))
+            {
+                markBox8.Text = markBox8.Text.Replace(replace, str);
+            }
+
+            if (outBox.Text.Contains(replace))
+            {
+                outBox.Text = outBox.Text.Replace(replace, str);
+            }
+            if (commentBox.Text.Contains(replace))
+            {
+                commentBox.Text = commentBox.Text.Replace(replace, str);
+            }
+
+        }
+
+        private void wildcardtextBox_TextChanged(object sender, EventArgs e)
+        {          
+                               
+        }
+
+        private void wildcardtextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+          
+        }
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+            if (wildcardtextBox.Text.Trim() == "" || wildcardtextBox.Text == null)
+            {
+                MessageBox.Show("Directory box is empty");
+                return;
+            }
+            if (applyButton.Text == "Apply")
+            {
+                applyButton.Text = "Revert";
+                checkFileforWildcardPath(wildcardtextBox.Text);
+                wildcardtextBox.Enabled = false;
+            }
+            else if (applyButton.Text == "Revert")
+            {
+                applyButton.Text = "Apply";
+                checkFileforWildcardPath("**");
+                wildcardtextBox.Enabled = true;
+            }
+        }
+
         private void dirBox3_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxip_CheckedChanged(object sender, EventArgs e)
         {
-            groupBox5.Visible = !checkBox9.Checked;
-            textBox9.Visible = checkBox9.Checked;
+            groupBox5.Visible = !checkBoxip.Checked;
+            textBox9.Visible = checkBoxip.Checked;
         }
 
 
