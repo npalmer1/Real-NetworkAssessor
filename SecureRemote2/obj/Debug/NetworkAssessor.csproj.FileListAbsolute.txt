@@ -35,10 +35,8 @@ C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Deb
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csproj.CoreCompileInputs.cache
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.exe.manifest
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.application
-C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csproj.CopyComplete
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.exe
 C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.pdb
-C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csprojAssemblyReference.cache
 C:\RealNetworkAssessor\SecureRemote2\bin\Debug\NetworkAssessor.exe.config
 C:\RealNetworkAssessor\SecureRemote2\bin\Debug\NetworkAssessor.exe.manifest
 C:\RealNetworkAssessor\SecureRemote2\bin\Debug\NetworkAssessor.application
@@ -60,3 +58,11 @@ C:\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.application
 C:\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csproj.CopyComplete
 C:\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.exe
 C:\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.pdb
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkAssessor.csproj.AssemblyReference.cache
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\obj\Debug\NetworkA.CAD50A05.Up2Date
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Neville\source\repos\npalmer1\RealNetworkAssessor\SecureRemote2\bin\Debug\System.Threading.Tasks.Extensions.xml

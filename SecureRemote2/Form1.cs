@@ -16,6 +16,9 @@ using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
+using System.Runtime.InteropServices.ComTypes;
+using Renci.SshNet.Common;
+using System.Linq.Expressions;
 
 
 namespace SecureRemote2
@@ -105,6 +108,8 @@ namespace SecureRemote2
 
         bool BlinkTest = false;
         string commandResult = ""; //return reult of command     
+
+        string keyfilepath;
 
         public Form1()
         {
@@ -262,7 +267,8 @@ namespace SecureRemote2
             else
             {
                 f = 1;
-                t = noPCs;
+                //t = noPCs;
+                t = 254;
             }
             //populate the list box with PCs and indicate whether connected (PC) or not (xx)
             for (int i = f; i < t + 1; i++)
@@ -460,6 +466,10 @@ namespace SecureRemote2
                             connPCs[i] = 0;
                         }
                     }
+                    else
+                    {
+                        connPCs[i] = 0;
+                    }
                 }
             }
             catch
@@ -472,19 +482,34 @@ namespace SecureRemote2
 
         //==================================================================================
 
+        //https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
 
-        public ConnectionInfo CreateConnectionInfo(string ip_address)     //create connection to ubuntu server
+        private ConnectionInfo CreateConnectionInfo(string ip_address)     //create connection to ubuntu server
         {
             //string ip_address = ipBox.Text;
             string username = userBox.Text;
-            string password = passBox.Text;
-
+            string password = passBox.Text;           
+            
+            //keyfilepath = "C:\\cygwin64\\home\\Neville\\.ssh\\id_rsa";  //private keyfile
             ConnectionInfo connectionInfo;
+            try
+            {
+                if (keycheckBox.Checked)
+                {
+                    connectionInfo = new ConnectionInfo(ip_address, username, new PrivateKeyAuthenticationMethod(username, new PrivateKeyFile(keyfilepath)));
+                }
+                else
+                {
+                    connectionInfo = new ConnectionInfo(ip_address, username, new PasswordAuthenticationMethod(username, password));
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error connecting: " + e.Message);
+                connectionInfo = null;
+            }
+            
 
-            connectionInfo = new ConnectionInfo(ip_address,
-                                        username,
-                                        new PasswordAuthenticationMethod(username, password),
-                                        new PrivateKeyAuthenticationMethod("rsa.key"));
             /*using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
@@ -501,7 +526,7 @@ namespace SecureRemote2
                  connectionInfo = new ConnectionInfo(
                      IPBox.Text.Trim(),
                      userBox.Text.Trim(),
-                     authenticationMethod);
+                     authenticationMethod;
              }*/
             return connectionInfo;
         }
@@ -1344,6 +1369,13 @@ namespace SecureRemote2
                         }
                         sw.WriteLine("PC base fixed: " + fix);
                         sw.WriteLine("Initial root: " + initialRootBox.Text.Trim());
+                        string PKI = "false";
+                        if (keycheckBox.Checked)
+                        {
+                            PKI = "true";
+                        }
+                        sw.WriteLine("PKI: " + PKI);
+                        sw.WriteLine("Keyfile: " + keyfilepath);
                         sw.Close();
                     }
                 }
@@ -1518,6 +1550,28 @@ namespace SecureRemote2
                             rootDir = str;
                         }
                         catch { }
+                    }
+                    str = sw.ReadLine();
+                    if (str.Contains("PKI: "))
+                    {
+                        str = str.Replace("PKI: ", "");
+                        str = str.Trim();
+                        if (str == "true")
+                        {
+                            keycheckBox.Checked = true; 
+                        }
+                        else
+                        {
+                            keycheckBox.Checked = false;
+                        }
+                    }
+                    str = sw.ReadLine();
+                    if (str.Contains("Keyfile: "))
+                    {
+                        str = str.Replace("Keyfile: ", "");
+                        str = str.Trim();
+                        keyfilepath = str;
+                        keytextBox.Text = keyfilepath;
                     }
 
                     sw.Close();
@@ -3499,7 +3553,87 @@ namespace SecureRemote2
             LoadScript(openFileDialog3.FileName);
         }
 
+        private void testSSH()
+        {
+            string username = userBox.Text;
+            string password = passBox.Text;
+            int connectionRetryAttempts = 3;
 
+            int f = 0;
+            if (IPrangeCheckBox.Checked)
+            {
+                f = ipfrom;
+            }
+            else
+            {
+                f = 1;
+            }
+            int i = PClistBox.SelectedIndex;           
+            if (i < 0)
+            {
+                MessageBox.Show("Select at least one PC to target");
+                return;
+            }
+
+            if (PClistBox.Items[i].ToString().Contains("xx"))
+            {
+                MessageBox.Show("No connection to selected PC");
+                return;
+            }
+            i = i + f;
+            string istr = (i).ToString();
+            string ip = baseip.Substring(0, baseip.Length - 1) + istr;
+
+            bool ok = false;
+            string error = "";
+
+            int attempts = 0;
+            try
+            {
+                if (IsValidIP(ip))
+                {
+                    using (SshClient client = new SshClient(CreateConnectionInfo(ip)))
+                    {
+                        if (client == null)
+                        {
+                            return;
+                        }
+                        do
+                        {
+                            try
+                            {
+                                client.Connect();
+                                ok = true;
+                            }
+                            catch (Exception e)
+                            {
+                                error = e.Message.ToString();
+                                attempts++;
+                            }
+                        } while (attempts < connectionRetryAttempts && !client.IsConnected);
+
+                        if (ok)
+                        {
+                            SshCommand cmd = client.RunCommand("echo 'SSH test successful!'");
+
+                        }
+
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+            if (!ok)
+            {                    
+                MessageBox.Show("Problem connecting, error: " + error);                   
+            }
+            else
+            {
+                MessageBox.Show("Test successful after " + (attempts +1).ToString() + " attempts");
+            }
+        }
 
 
         private string removeString(string str, string prompt)
@@ -3535,16 +3669,22 @@ namespace SecureRemote2
             i = i + f;
             string istr = (i).ToString();
             string ip = baseip.Substring(0, baseip.Length - 1) + istr;
+            string username = userBox.Text;
+            string password = passBox.Text;
 
             try
             {
                 if (IsValidIP(ip))
                 {
+                    //ssh = new SshClient(ip, username, password);
+                    //ssh = new SshClient(ip, password);
+                    
                     ssh = new SshClient(CreateConnectionInfo(ip));
                     try
                     {
                         ssh.Connect();
                     }
+
                     catch { MessageBox.Show("Cannot connect - check connection"); return false; }
                     SSHstream = ssh.CreateShellStream("dumb", 0, 0, 0, 0, 1000);
                     SSHstream.Write(Environment.NewLine);
@@ -5169,6 +5309,24 @@ namespace SecureRemote2
             }
         }
 
+        private void testSSHbutton_Click(object sender, EventArgs e)
+        {
+            testSSH();
+        }
+
+        private void keybutton_Click(object sender, EventArgs e)
+        {
+            openkeyFileDialog.FileName = "";
+            openkeyFileDialog.ShowDialog();
+        }
+
+        private void openkeyFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            keyfilepath = openkeyFileDialog.FileName;
+            keytextBox.Text = keyfilepath;
+        }
+
+    
         private void dirBox3_TextChanged(object sender, EventArgs e)
         {
 

@@ -31,6 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label78 = new System.Windows.Forms.Label();
+            this.testSSHbutton = new System.Windows.Forms.Button();
+            this.keybutton = new System.Windows.Forms.Button();
+            this.keytextBox = new System.Windows.Forms.TextBox();
+            this.keylabel = new System.Windows.Forms.Label();
+            this.keycheckBox = new System.Windows.Forms.CheckBox();
             this.allowDiffcheckbox = new System.Windows.Forms.CheckBox();
             this.initialRootButton = new System.Windows.Forms.Button();
             this.label45 = new System.Windows.Forms.Label();
@@ -81,6 +87,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.applyButton = new System.Windows.Forms.Button();
             this.label77 = new System.Windows.Forms.Label();
             this.wildcardtextBox = new System.Windows.Forms.TextBox();
             this.label76 = new System.Windows.Forms.Label();
@@ -299,7 +306,7 @@
             this.folderBrowserDialog3 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveliveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openliveFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.applyButton = new System.Windows.Forms.Button();
+            this.openkeyFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -343,6 +350,12 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.tabPage1.Controls.Add(this.label78);
+            this.tabPage1.Controls.Add(this.testSSHbutton);
+            this.tabPage1.Controls.Add(this.keybutton);
+            this.tabPage1.Controls.Add(this.keytextBox);
+            this.tabPage1.Controls.Add(this.keylabel);
+            this.tabPage1.Controls.Add(this.keycheckBox);
             this.tabPage1.Controls.Add(this.allowDiffcheckbox);
             this.tabPage1.Controls.Add(this.initialRootButton);
             this.tabPage1.Controls.Add(this.label45);
@@ -379,12 +392,73 @@
             this.tabPage1.Text = "Configuration";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label78.Location = new System.Drawing.Point(67, 189);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(445, 26);
+            this.label78.TabIndex = 33;
+            this.label78.Text = "Note: if using username/password - the sshd_config file entry PasswordAuthenicati" +
+    "on should \r\nbe set to yes and if using PKI authentication PubkeyAuthentication s" +
+    "hould be set to yes";
+            // 
+            // testSSHbutton
+            // 
+            this.testSSHbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testSSHbutton.Location = new System.Drawing.Point(778, 157);
+            this.testSSHbutton.Name = "testSSHbutton";
+            this.testSSHbutton.Size = new System.Drawing.Size(142, 23);
+            this.testSSHbutton.TabIndex = 32;
+            this.testSSHbutton.Text = "Test SSH Connection";
+            this.testSSHbutton.UseVisualStyleBackColor = true;
+            this.testSSHbutton.Click += new System.EventHandler(this.testSSHbutton_Click);
+            // 
+            // keybutton
+            // 
+            this.keybutton.Location = new System.Drawing.Point(688, 157);
+            this.keybutton.Margin = new System.Windows.Forms.Padding(0);
+            this.keybutton.Name = "keybutton";
+            this.keybutton.Size = new System.Drawing.Size(27, 21);
+            this.keybutton.TabIndex = 31;
+            this.keybutton.Text = "...";
+            this.keybutton.UseVisualStyleBackColor = true;
+            this.keybutton.Click += new System.EventHandler(this.keybutton_Click);
+            // 
+            // keytextBox
+            // 
+            this.keytextBox.Location = new System.Drawing.Point(226, 157);
+            this.keytextBox.Name = "keytextBox";
+            this.keytextBox.Size = new System.Drawing.Size(449, 21);
+            this.keytextBox.TabIndex = 30;
+            // 
+            // keylabel
+            // 
+            this.keylabel.AutoSize = true;
+            this.keylabel.Location = new System.Drawing.Point(56, 160);
+            this.keylabel.Name = "keylabel";
+            this.keylabel.Size = new System.Drawing.Size(161, 15);
+            this.keylabel.TabIndex = 29;
+            this.keylabel.Text = "SSH PKI private key file:";
+            // 
+            // keycheckBox
+            // 
+            this.keycheckBox.AutoSize = true;
+            this.keycheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.keycheckBox.Location = new System.Drawing.Point(226, 132);
+            this.keycheckBox.Name = "keycheckBox";
+            this.keycheckBox.Size = new System.Drawing.Size(286, 19);
+            this.keycheckBox.TabIndex = 28;
+            this.keycheckBox.Text = "Use PKI instead of username/password for SSH";
+            this.keycheckBox.UseVisualStyleBackColor = true;
+            // 
             // allowDiffcheckbox
             // 
             this.allowDiffcheckbox.AutoSize = true;
             this.allowDiffcheckbox.Checked = true;
             this.allowDiffcheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.allowDiffcheckbox.Location = new System.Drawing.Point(421, 389);
+            this.allowDiffcheckbox.Location = new System.Drawing.Point(422, 465);
             this.allowDiffcheckbox.Name = "allowDiffcheckbox";
             this.allowDiffcheckbox.Size = new System.Drawing.Size(321, 19);
             this.allowDiffcheckbox.TabIndex = 27;
@@ -393,7 +467,7 @@
             // 
             // initialRootButton
             // 
-            this.initialRootButton.Location = new System.Drawing.Point(647, 277);
+            this.initialRootButton.Location = new System.Drawing.Point(653, 342);
             this.initialRootButton.Name = "initialRootButton";
             this.initialRootButton.Size = new System.Drawing.Size(28, 23);
             this.initialRootButton.TabIndex = 26;
@@ -404,7 +478,7 @@
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(78, 277);
+            this.label45.Location = new System.Drawing.Point(84, 342);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(267, 15);
             this.label45.TabIndex = 25;
@@ -413,7 +487,7 @@
             // initialRootBox
             // 
             this.initialRootBox.Enabled = false;
-            this.initialRootBox.Location = new System.Drawing.Point(351, 277);
+            this.initialRootBox.Location = new System.Drawing.Point(357, 342);
             this.initialRootBox.Name = "initialRootBox";
             this.initialRootBox.Size = new System.Drawing.Size(279, 21);
             this.initialRootBox.TabIndex = 24;
@@ -432,9 +506,10 @@
             this.PCCheckBox.AutoSize = true;
             this.PCCheckBox.Checked = true;
             this.PCCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.PCCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PCCheckBox.Location = new System.Drawing.Point(467, 72);
             this.PCCheckBox.Name = "PCCheckBox";
-            this.PCCheckBox.Size = new System.Drawing.Size(370, 19);
+            this.PCCheckBox.Size = new System.Drawing.Size(316, 19);
             this.PCCheckBox.TabIndex = 22;
             this.PCCheckBox.Text = "Fix directory name for files uploaded from each PC at:";
             this.PCCheckBox.UseVisualStyleBackColor = true;
@@ -442,7 +517,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(553, 343);
+            this.label37.Location = new System.Drawing.Point(554, 419);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(75, 15);
             this.label37.TabIndex = 21;
@@ -450,7 +525,7 @@
             // 
             // masterBox
             // 
-            this.masterBox.Location = new System.Drawing.Point(634, 341);
+            this.masterBox.Location = new System.Drawing.Point(635, 417);
             this.masterBox.Name = "masterBox";
             this.masterBox.Size = new System.Drawing.Size(30, 21);
             this.masterBox.TabIndex = 20;
@@ -460,7 +535,7 @@
             // IPrangeCheckBox
             // 
             this.IPrangeCheckBox.AutoSize = true;
-            this.IPrangeCheckBox.Location = new System.Drawing.Point(647, 500);
+            this.IPrangeCheckBox.Location = new System.Drawing.Point(654, 519);
             this.IPrangeCheckBox.Name = "IPrangeCheckBox";
             this.IPrangeCheckBox.Size = new System.Drawing.Size(93, 19);
             this.IPrangeCheckBox.TabIndex = 19;
@@ -471,7 +546,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(481, 499);
+            this.label33.Location = new System.Drawing.Point(488, 518);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(141, 15);
             this.label33.TabIndex = 18;
@@ -479,9 +554,9 @@
             // 
             // scriptDirButton
             // 
-            this.scriptDirButton.Location = new System.Drawing.Point(517, 222);
+            this.scriptDirButton.Location = new System.Drawing.Point(518, 298);
             this.scriptDirButton.Name = "scriptDirButton";
-            this.scriptDirButton.Size = new System.Drawing.Size(25, 23);
+            this.scriptDirButton.Size = new System.Drawing.Size(30, 23);
             this.scriptDirButton.TabIndex = 17;
             this.scriptDirButton.Text = "...";
             this.scriptDirButton.UseVisualStyleBackColor = true;
@@ -490,7 +565,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(66, 225);
+            this.label32.Location = new System.Drawing.Point(67, 301);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(135, 15);
             this.label32.TabIndex = 16;
@@ -498,7 +573,7 @@
             // 
             // scriptDirBox
             // 
-            this.scriptDirBox.Location = new System.Drawing.Point(217, 222);
+            this.scriptDirBox.Location = new System.Drawing.Point(218, 298);
             this.scriptDirBox.Name = "scriptDirBox";
             this.scriptDirBox.Size = new System.Drawing.Size(279, 21);
             this.scriptDirBox.TabIndex = 15;
@@ -506,7 +581,7 @@
             // MastercheckBox
             // 
             this.MastercheckBox.AutoSize = true;
-            this.MastercheckBox.Location = new System.Drawing.Point(421, 343);
+            this.MastercheckBox.Location = new System.Drawing.Point(422, 419);
             this.MastercheckBox.Name = "MastercheckBox";
             this.MastercheckBox.Size = new System.Drawing.Size(108, 19);
             this.MastercheckBox.TabIndex = 14;
@@ -516,7 +591,8 @@
             // 
             // editNetButton
             // 
-            this.editNetButton.Location = new System.Drawing.Point(348, 146);
+            this.editNetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editNetButton.Location = new System.Drawing.Point(370, 260);
             this.editNetButton.Name = "editNetButton";
             this.editNetButton.Size = new System.Drawing.Size(111, 23);
             this.editNetButton.TabIndex = 13;
@@ -526,7 +602,7 @@
             // 
             // saveConfigButton
             // 
-            this.saveConfigButton.Location = new System.Drawing.Point(147, 338);
+            this.saveConfigButton.Location = new System.Drawing.Point(148, 414);
             this.saveConfigButton.Name = "saveConfigButton";
             this.saveConfigButton.Size = new System.Drawing.Size(75, 23);
             this.saveConfigButton.TabIndex = 11;
@@ -537,7 +613,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(33, 499);
+            this.label6.Location = new System.Drawing.Point(40, 518);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(206, 15);
             this.label6.TabIndex = 10;
@@ -546,7 +622,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(371, 501);
+            this.label5.Location = new System.Drawing.Point(378, 520);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(27, 15);
             this.label5.TabIndex = 9;
@@ -555,7 +631,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(254, 500);
+            this.label4.Location = new System.Drawing.Point(261, 519);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(44, 15);
             this.label4.TabIndex = 8;
@@ -563,7 +639,7 @@
             // 
             // ipToBox
             // 
-            this.ipToBox.Location = new System.Drawing.Point(400, 497);
+            this.ipToBox.Location = new System.Drawing.Point(407, 516);
             this.ipToBox.Name = "ipToBox";
             this.ipToBox.Size = new System.Drawing.Size(39, 21);
             this.ipToBox.TabIndex = 7;
@@ -571,7 +647,7 @@
             // 
             // ipFromBox
             // 
-            this.ipFromBox.Location = new System.Drawing.Point(304, 497);
+            this.ipFromBox.Location = new System.Drawing.Point(311, 516);
             this.ipFromBox.Name = "ipFromBox";
             this.ipFromBox.Size = new System.Drawing.Size(40, 21);
             this.ipFromBox.TabIndex = 6;
@@ -579,14 +655,14 @@
             // 
             // ipBox
             // 
-            this.ipBox.Location = new System.Drawing.Point(196, 146);
+            this.ipBox.Location = new System.Drawing.Point(218, 260);
             this.ipBox.Name = "ipBox";
             this.ipBox.Size = new System.Drawing.Size(100, 21);
             this.ipBox.TabIndex = 5;
             // 
             // passBox
             // 
-            this.passBox.Location = new System.Drawing.Point(196, 110);
+            this.passBox.Location = new System.Drawing.Point(198, 92);
             this.passBox.Name = "passBox";
             this.passBox.PasswordChar = '*';
             this.passBox.Size = new System.Drawing.Size(100, 21);
@@ -594,7 +670,7 @@
             // 
             // userBox
             // 
-            this.userBox.Location = new System.Drawing.Point(196, 73);
+            this.userBox.Location = new System.Drawing.Point(198, 55);
             this.userBox.Name = "userBox";
             this.userBox.Size = new System.Drawing.Size(100, 21);
             this.userBox.TabIndex = 3;
@@ -602,7 +678,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(91, 153);
+            this.label3.Location = new System.Drawing.Point(113, 267);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 15);
             this.label3.TabIndex = 2;
@@ -611,7 +687,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(88, 110);
+            this.label2.Location = new System.Drawing.Point(90, 92);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 15);
             this.label2.TabIndex = 1;
@@ -620,7 +696,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(85, 73);
+            this.label1.Location = new System.Drawing.Point(87, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 15);
             this.label1.TabIndex = 0;
@@ -967,6 +1043,17 @@
             this.tabPage3.Size = new System.Drawing.Size(982, 944);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Assess";
+            // 
+            // applyButton
+            // 
+            this.applyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.applyButton.Location = new System.Drawing.Point(495, 389);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(74, 21);
+            this.applyButton.TabIndex = 121;
+            this.applyButton.Text = "Apply";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // label77
             // 
@@ -2070,7 +2157,7 @@
             this.sendLabel.ForeColor = System.Drawing.Color.Black;
             this.sendLabel.Location = new System.Drawing.Point(180, 403);
             this.sendLabel.Name = "sendLabel";
-            this.sendLabel.Size = new System.Drawing.Size(298, 16);
+            this.sendLabel.Size = new System.Drawing.Size(297, 16);
             this.sendLabel.TabIndex = 8;
             this.sendLabel.Text = "Please wait - sending to selected connected PCs";
             this.sendLabel.Visible = false;
@@ -3147,16 +3234,10 @@
             this.openliveFileDialog.FileName = "openFileDialog5";
             this.openliveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openliveFileDialog_FileOk);
             // 
-            // applyButton
+            // openkeyFileDialog
             // 
-            this.applyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.applyButton.Location = new System.Drawing.Point(495, 389);
-            this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(74, 21);
-            this.applyButton.TabIndex = 121;
-            this.applyButton.Text = "Apply";
-            this.applyButton.UseVisualStyleBackColor = true;
-            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
+            this.openkeyFileDialog.FileName = "openFileDialog5";
+            this.openkeyFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openkeyFileDialog_FileOk);
             // 
             // Form1
             // 
@@ -3489,6 +3570,13 @@
         private System.Windows.Forms.Label label76;
         private System.Windows.Forms.Label label77;
         private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.CheckBox keycheckBox;
+        private System.Windows.Forms.Button keybutton;
+        private System.Windows.Forms.TextBox keytextBox;
+        private System.Windows.Forms.Label keylabel;
+        private System.Windows.Forms.OpenFileDialog openkeyFileDialog;
+        private System.Windows.Forms.Button testSSHbutton;
+        private System.Windows.Forms.Label label78;
     }
 }
 
