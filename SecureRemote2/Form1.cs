@@ -46,7 +46,7 @@ namespace SecureRemote2
         // int defaultMark = 1;
         //bool[] lineused = new bool[maxlines];
         bool assessReady = false;
-        static int maxPCs = 254;
+        static int maxPCs = 120;//254;
         int[] connPCs = new int[maxPCs + 1];
         int noPCs = 0;
         int ipfrom = 1;
@@ -2045,7 +2045,8 @@ namespace SecureRemote2
             else
             {
                 offset = 1;
-                rangemax = noPCs;
+                //rangemax = noPCs;
+                rangemax = maxPCs;
             }
             //origrootpath = Directory.GetParent(Path.GetFullPath(parser.ftemplate[0])).FullName; //parent directory
             origrootpath = rootDir;
