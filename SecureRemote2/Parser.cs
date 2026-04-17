@@ -229,7 +229,8 @@ namespace SecureRemote2
                                             if (line.Contains("%ALT%")) //if there is an alternative command line
                                             {
                                                 //extract all after %ALT% - whihc is the alternative command
-                                                altstr = line.Substring(line.IndexOf("%ALT%" + 5)); //altstr contains alternative commands
+                                                altstr = line.Substring(line.IndexOf("%ALT%") + 5); //altstr contains alternative commands
+                                                
                                                 line = line.Substring(0, line.IndexOf("%ALT%"));  //beginning of line without alt line
                                                 alt = true;
                                             }
@@ -396,9 +397,11 @@ namespace SecureRemote2
                                                             }
                                                             wildfound = false;
                                                             if (altstr.Contains("**A")) //if alternative command has a wildcard
-                                                            {
-                                                                altstr = altstr.Substring(0, altstr.IndexOf("**A"));
-                                                                altend = altstr.Substring(altstr.IndexOf("**A" + 3));
+                                                            {                                                               
+                                                                altend = altstr.Substring(altstr.IndexOf("**A") + 3); // extract end first
+                                                                altstr = altstr.Substring(0, altstr.IndexOf("**A"));  // then truncate
+                                                                altwild = true;
+
                                                                 altwild = true;
                                                             }
                                                             else
@@ -420,7 +423,7 @@ namespace SecureRemote2
                                                                     {
                                                                         if (!lineused[lineno - 1])
                                                                         {
-                                                                            lineused[lineno - 1] = false;
+                                                                            
                                                                             bool contains = false;
                                                                             if (altstr.StartsWith("*+*"))
                                                                             {
@@ -460,6 +463,7 @@ namespace SecureRemote2
                                                                             bool mainMatch;
                                                                             if (startwild)
                                                                             {
+                                                                                contains = true; //?
                                                                                 int idx = line2.IndexOf(cfgstr);
                                                                                 if (idx > -1)
                                                                                 {
@@ -492,10 +496,7 @@ namespace SecureRemote2
                                                                             {
                                                                                 if (line2.Trim() != "")
                                                                                 {
-                                                                                    if (cfgstr.ToUpper().StartsWith("permit ip 195.10.3.0 0.0.0.255 198.4.10.0 0.0.0.255"))
-                                                                                    {
-                                                                                        string cf = cfgcmd;
-                                                                                    }
+                                                                                   
                                                                                     lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
                                                                                     if (taskno == 0)
                                                                                     {
