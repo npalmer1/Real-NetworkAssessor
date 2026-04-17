@@ -121,7 +121,8 @@ namespace SecureRemote2
             bool found = false;
             bool wild = false; //**?
             bool exactwild = false; //***
-            bool startwild = false; //**#
+            bool firstpartwild = false; //**#
+            bool startwild = false; //*+* - wild card at startof line
             string endstr = "";
             bool wildfound = false;
             bool first = true;
@@ -131,7 +132,10 @@ namespace SecureRemote2
             bool ends = false;
             bool hashcomment = false;
 
-
+            for (int i = 0; i < lineused.Count(); i++)
+            {
+                lineused[i] = false;
+            }
             try
             {
                 if (!File.Exists(ftemplate[fileno]))
@@ -170,6 +174,7 @@ namespace SecureRemote2
                                 {
                                     alt = false;
                                     line = sw.ReadLine().Trim();  //read line from template file
+                                    line = line.TrimStart();
                                     if (line.StartsWith("#") || line.StartsWith("# ")  || line.StartsWith("  #") )  //is it a comment? - don't mark it, but write it as a comment
                                     {
                                         hashcomment = true;
@@ -331,6 +336,8 @@ namespace SecureRemote2
                                                 lineno = 0;
                                                 if (line.Length > 0 && line != exc && !hashcomment)
                                                 {
+                                                    
+                                                    //cfgcmd contains the coammnd from template that you are looking for 
                                                     string cfgstr = "";
                                                     if (File.Exists(infile[fileno]))
                                                     {
@@ -341,6 +348,7 @@ namespace SecureRemote2
 
                                                             found = false;
                                                             inc = 0;    //if command line contains wildcards
+                                                           
                                                             if (cfgcmd.Contains("**?")) //if **? is wildcard then mark line in two parts
                                                             {
                                                                 wild = true;
@@ -360,14 +368,24 @@ namespace SecureRemote2
                                                             }
                                                             if (cfgcmd.Contains("**#")) //if **# is wildcard then only first part of line need be correct
                                                             {
-                                                                startwild = true;
+                                                                firstpartwild = true;
 
+                                                            }
+                                                            else
+                                                            {
+                                                                firstpartwild = false;
+                                                            }
+                                                            if (cfgcmd.StartsWith("*+*")) //start of line wildcard
+                                                            {
+                                                                startwild = true;
+                                                                cfgcmd = cfgcmd.Replace("*+*", "");
+                                                                cfgcmd = cfgcmd.TrimStart();
                                                             }
                                                             else
                                                             {
                                                                 startwild = false;
                                                             }
-                                                            if (wild || exactwild || startwild)
+                                                            if (wild || exactwild || firstpartwild)
                                                             {
                                                                 endstr = cfgcmd.Substring(cfgcmd.IndexOf("**") + 3).Trim(); //end of string after wildcard
                                                                 cfgcmd = cfgcmd.Substring(0, cfgcmd.IndexOf("**")); // string up to wildcard
@@ -391,22 +409,24 @@ namespace SecureRemote2
                                                             if (!ends)
                                                             {
 
-                                                                while (!nw.EndOfStream) //while not end of input file
+                                                                while (!nw.EndOfStream) //while not end of input file - reading from file to mark
                                                                 {
-
+                                                                    
                                                                     l2 = nw.ReadLine(); //keep reading from input file (until end)
-                                                                    l2 = l2.Trim();
-
+                                                                    l2 = l2.Trim();                                                                                                                                   
+                                                                    
                                                                     lineno++;
-                                                                    if (inc < 1)
+                                                                    if (inc < 1)    
                                                                     {
                                                                         if (!lineused[lineno - 1])
                                                                         {
+                                                                            lineused[lineno - 1] = false;
                                                                             bool contains = false;
                                                                             if (altstr.StartsWith("*+*"))
                                                                             {
                                                                                 contains = true;
                                                                                 altstr = altstr.Replace("*+*", "");
+                                                                                altstr = altstr.TrimStart();
                                                                             }
                                                                             string line2 = l2;
                                                                             if (upCase)
@@ -425,87 +445,123 @@ namespace SecureRemote2
                                                                                 inc++;
                                                                                 break; //ensure that the next lines are not procesed
                                                                             }
-                                                                            //if (l2.StartsWith(cfgcmd.Trim()) || (startwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
+                                                                            //if (l2.StartsWith(cfgcmd.Trim()) || (firstpartwild && l2.StartsWith(endstr.Trim())) )   //if the file to be marked contains the command then output it to the file
                                                                             cfgstr = cfgcmd.Trim();
                                                                             contains = false;
-                                                                            if (cfgstr.StartsWith("*+*"))
-                                                                            {
-                                                                                contains = true;
-                                                                                cfgstr = cfgstr.Replace("*+*","");
-                                                                            }
+                                                                           
                                                                             string endstr1 = endstr.Trim();
                                                                             if (upCase)
                                                                             {
                                                                                 cfgstr = cfgstr.ToUpper().Trim();
                                                                                 endstr1 = endstr1.ToUpper().Trim();
                                                                             }
-                                                                            if ((line2.StartsWith(cfgstr) || line2.Contains(cfgstr) && contains) ||(startwild && line2.StartsWith(cfgstr) && line2.Contains(endstr1)))   //if the file to be marked contains the command then output it to the file
+                                                                            //if ((line2.StartsWith(cfgstr) || line2.Contains(cfgstr) && contains) ||(firstpartwild && line2.StartsWith(cfgstr) && (line2.Contains(endstr1) && endstr.Trim() != "")))   //if the file to be marked contains the command then output it to the file
+                                                                            //if ((line2.StartsWith(cfgstr) && line2.Contains(endstr1) && endstr1 != "") || (line2.Contains(cfgstr) && contains && line2.Contains(endstr1) && endstr1.Trim() != "") ||(line2.StartsWith(cfgstr) && endstr1 == ""))
+                                                                            bool mainMatch;
+                                                                            if (startwild)
                                                                             {
-                                                                                lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
-                                                                                if (taskno == 0)
+                                                                                int idx = line2.IndexOf(cfgstr);
+                                                                                if (idx > -1)
                                                                                 {
-                                                                                    tasklist[taskno].taskexist = true;
-                                                                                }
-                                                                                if (exactwild) //only mark whole line correct if second part correct too (***)
-                                                                                {
-                                                                                    if (line2.Contains(endstr1))
+                                                                                    string str = line2.Substring(idx);
+                                                                                    if (firstpartwild || wild || exactwild)
                                                                                     {
-                                                                                        wild = false;
-
-                                                                                        tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
-                                                                                        linecorrect++; //counts number of correct lines
-                                                                                        inc++;
-                                                                                        wildfound = true;
-                                                                                    }
-                                                                                }
-                                                                                else //either whole line or first part of line are correct (wildcard **#)
-                                                                                {
-                                                                                    tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
-                                                                                    linecorrect++; //counts number of correct lines
-                                                                                    inc++;
-
-                                                                                }
-                                                                                if (wild) //wildcard for second part of line - (**?) ,mark first and second parts separately
-                                                                                {
-                                                                                    tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //don't forget there's an extra mark!
-                                                                                    if (line2.Contains(endstr1)) //line is treated as two parts with separate mark for each
-                                                                                    {
-                                                                                        tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
-                                                                                        linecorrect++; //counts number of correct lines
-                                                                                        inc++;
-                                                                                        wildfound = true;
-                                                                                    }
-                                                                                }
-                                                                                outp.Write("Task: " + task + ". ");
-                                                                                umoutp.Write("Task: " + task + ". ");
-
-                                                                                cfgstr = cfgcmd.Trim();
-                                                                                cfgstr = cfgstr.Replace("*+*", "");
-                                                                                if (wild || exactwild) //if **? or *** wildcard and first and second part found/not found
-                                                                                {
-                                                                                    if (wildfound)
-                                                                                    {
-                                                                                        outp.WriteLine("Command: " + cfgstr + " " + endstr);
-                                                                                        umoutp.WriteLine("Command: " + cfgstr + " " + endstr + sq + mrkstr);
+                                                                                        mainMatch = str.StartsWith(cfgstr) && str.Contains(endstr1); // line2.Contains(cfgstr);
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        outp.WriteLine("Command: partially correct: " + cfgstr + " " + endstr);
-                                                                                        umoutp.WriteLine("Command: partially correct: " + cfgstr + " " + endstr + sq + mrkstr);
+                                                                                        mainMatch = str.StartsWith(cfgstr);
                                                                                     }
-
-                                                                                }
-                                                                                else if (startwild)
-                                                                                {
-                                                                                    outp.WriteLine("Command: " + endstr);
-                                                                                    umoutp.WriteLine("Command: " + endstr + sq + mrkstr);
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    outp.WriteLine("Command: " + cfgstr);
-                                                                                    umoutp.WriteLine("Command: " + cfgstr + sq + mrkstr);
+                                                                                    mainMatch = line2.StartsWith(cfgstr);
                                                                                 }
-                                                                                found = true;
+                                                                            
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                mainMatch = line2.StartsWith(cfgstr);
+                                                                            }
+                                                                            if (mainMatch && (
+                                                                                (exactwild && line2.Contains(endstr1)) ||           // *** - whole line must match
+                                                                                (wild && line2.Contains(endstr1)) ||                // **? - two part match
+                                                                                (firstpartwild && line2.StartsWith(cfgstr)) ||      // **# - first part only
+                                                                                (endstr1 == "")                                     // no wildcard - just match cfgstr
+                                                                            ))
+                                                                            {
+                                                                                if (line2.Trim() != "")
+                                                                                {
+                                                                                    if (cfgstr.ToUpper().StartsWith("permit ip 195.10.3.0 0.0.0.255 198.4.10.0 0.0.0.255"))
+                                                                                    {
+                                                                                        string cf = cfgcmd;
+                                                                                    }
+                                                                                    lineused[lineno - 1] = true; //mark line as found - to reduce effect of duplication of commands                                                                                                                               
+                                                                                    if (taskno == 0)
+                                                                                    {
+                                                                                        tasklist[taskno].taskexist = true;
+                                                                                    }
+                                                                                    if (exactwild) //only mark whole line correct if second part correct too (***)
+                                                                                    {
+                                                                                        if (line2.Contains(endstr1))
+                                                                                        {
+                                                                                            wild = false;
+
+                                                                                            tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
+                                                                                            linecorrect++; //counts number of correct lines
+                                                                                            inc++;
+                                                                                            wildfound = true;
+                                                                                        }
+                                                                                    }
+                                                                                    else //either whole line or first part of line are correct (wildcard **#)
+                                                                                    {
+                                                                                        tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
+                                                                                        linecorrect++; //counts number of correct lines
+                                                                                        inc++;
+
+                                                                                    }
+                                                                                    if (wild) //wildcard for second part of line - (**?) ,mark first and second parts separately
+                                                                                    {
+                                                                                        tasklist[taskno].taskmax = mrk + tasklist[taskno].taskmax; //don't forget there's an extra mark!
+                                                                                        if (line2.Contains(endstr1)) //line is treated as two parts with separate mark for each
+                                                                                        {
+                                                                                            tasklist[taskno].tasktotal = tasklist[taskno].tasktotal + mrk; //add mark to total for task
+                                                                                            linecorrect++; //counts number of correct lines
+                                                                                            inc++;
+                                                                                            wildfound = true;
+                                                                                        }
+                                                                                    }
+                                                                                    outp.Write("Task: " + task + ". ");
+                                                                                    umoutp.Write("Task: " + task + ". ");
+
+                                                                                    cfgstr = cfgcmd.Trim();
+                                                                                    cfgstr = cfgstr.Replace("*+*", "");
+                                                                                    if (wild || exactwild) //if **? or *** wildcard and first and second part found/not found
+                                                                                    {
+                                                                                        if (wildfound)
+                                                                                        {
+                                                                                            outp.WriteLine("Command: " + cfgstr + " " + endstr);
+                                                                                            umoutp.WriteLine("Command: " + cfgstr + " " + endstr + sq + mrkstr);
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            outp.WriteLine("Command: partially correct: " + cfgstr + " " + endstr);
+                                                                                            umoutp.WriteLine("Command: partially correct: " + cfgstr + " " + endstr + sq + mrkstr);
+                                                                                        }
+
+                                                                                    }
+                                                                                    else if (firstpartwild)
+                                                                                    {
+                                                                                        outp.WriteLine("Command: " + endstr);
+                                                                                        umoutp.WriteLine("Command: " + endstr + sq + mrkstr);
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        outp.WriteLine("Command: " + cfgstr);
+                                                                                        umoutp.WriteLine("Command: " + cfgstr + sq + mrkstr);
+                                                                                    }
+                                                                                    found = true;
+                                                                                }
                                                                             }
 
                                                                         } //lineused
@@ -577,7 +633,7 @@ namespace SecureRemote2
                     outp.Close();
                 } //using fout
 
-            } //tryured
+            } //try
             catch
             {
                 DialogResult r = MessageBox.Show("Error occurred processing files");
